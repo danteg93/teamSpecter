@@ -132,6 +132,10 @@ Prefab:
       propertyPath: playerNumber
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5037976, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11462864, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -151,8 +155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerNumber: 1
   Speed: 0
-  playerNumber: 2
+  AttackPower: 0
 --- !u!1001 &698269642
 Prefab:
   m_ObjectHideFlags: 0
@@ -192,17 +197,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.41273052
-      objectReference: {fileID: 0}
-    - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.15571292
-      objectReference: {fileID: 0}
     - target: {fileID: 185174, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_Name
       value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.20741598
+      objectReference: {fileID: 0}
+    - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.20741603
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037976, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11462864, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -223,8 +232,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerNumber: 1
   Speed: 10
-  playerNumber: 1
+  AttackPower: 5000
 --- !u!1 &808100820
 GameObject:
   m_ObjectHideFlags: 0
