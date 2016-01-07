@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlatformScript : MonoBehaviour {
+public class Gamemode : MonoBehaviour {
 
   // Use this for initialization
   void Start() {
