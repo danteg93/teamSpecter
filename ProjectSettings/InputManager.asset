@@ -38,8 +38,8 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Attack
-    descriptiveName: 
+    m_Name: Slash
+    descriptiveName: Slash
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: space
@@ -55,15 +55,15 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Block
-    descriptiveName: 
+    descriptiveName: Block
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: left ctrl
+    positiveButton: f
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 1000
+    gravity: 3
     dead: 0.001
-    sensitivity: 1000
+    sensitivity: 3
     snap: 0
     invert: 0
     type: 0
