@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
   // Use this for initialization
-  public float PlayerNumber = 1;
+  public bool KeyboardControl = true;
+  public int playerNumber;
   public float Speed = 0f;
   public float AttackPower = 0f;
 
@@ -21,12 +22,12 @@ public class PlayerController : MonoBehaviour {
   void FixedUpdate() {
 
     //if player is 1 the execute the joystick movement else do keyboard and mouse
-    if (PlayerNumber == 1) {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalLeftStick") * Speed, -Input.GetAxis("VerticalLeftStick") * Speed);
+    if (KeyboardControl) {
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
       executeJoyStickRotation();
     }
     else {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("Horizontal") * Speed, Input.GetAxis("Vertical") * Speed);
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementK") * Speed, Input.GetAxis("VerticalMovementK") * Speed);
       executeMouseRotation();
     }
 
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour {
 
   private void executeJoyStickRotation() {
     //Vector3 that says where the joystick is
-    Vector3 joyStickLocation = new Vector3(Input.GetAxis("HorizontalRightStick"), Input.GetAxis("VerticalRightStick"));
+    Vector3 joyStickLocation = new Vector3(Input.GetAxis("HorizontalRotationJ1"), Input.GetAxis("VerticalRotationJ1"));
     if (joyStickLocation.magnitude != 0){ //this wont reset your rotation if you randomly let go off the controller
       joyStickLocation.Normalize();
       float angleToStick = (Mathf.Atan2(joyStickLocation.x, joyStickLocation.y) * Mathf.Rad2Deg);
