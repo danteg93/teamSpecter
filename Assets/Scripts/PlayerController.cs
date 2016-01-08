@@ -20,14 +20,18 @@ public class PlayerController : MonoBehaviour {
 
   // Update is called once per frame
   void FixedUpdate() {
+    if (playerNumber != 1) {
+      return;
+    }
+ 
     //if player is 1 the execute the joystick movement else do keyboard and mouse
     if (KeyboardControl) {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
-      executeJoyStickRotation();
-    }
-    else {
       GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementK") * Speed, Input.GetAxis("VerticalMovementK") * Speed);
       executeMouseRotation();
+    }
+    else {
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
+      executeJoyStickRotation();
     }
 
     // Perform an attack if the player is pressing an attack key
@@ -58,6 +62,7 @@ public class PlayerController : MonoBehaviour {
     // Check if a player is trying to block
     if (Input.GetAxis("Block") != 0) {
       isBlocking = true;
+      print("blocking");
     } else if (Input.GetAxis("Block") == 0) {
       isBlocking = false;
     }
@@ -89,7 +94,7 @@ public class PlayerController : MonoBehaviour {
 
   public void Kill() {
     timesDead++;
+    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     transform.position = initialPosition;
-    Debug.Log(timesDead);
   }
 }
