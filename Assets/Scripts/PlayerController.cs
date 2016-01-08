@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour {
 
   private int timesDead = 0;
   private Vector3 initialPosition;
-  private bool m_isAttacking = false;
-  private bool m_isBlocking = false;
+  private bool isAttacking = false;
+  private bool isBlocking = false;
 
   void Start() {
     timesDead = 0;
@@ -27,17 +27,17 @@ public class PlayerController : MonoBehaviour {
     if (Input.GetAxis("Attack") != 0) {
       // Prevent the attack from occurring multiple times in one key press and
       // the player from using multiple abilities at once (i.e. attack & block)
-      if (!m_isAttacking) {
-        m_isAttacking = true;
+      if (!isAttacking) {
+        isAttacking = true;
 
         // Find all objects in range of the player, and push other player objects away
         // TODO: This needs to only select things in front of the player
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1);
         int i = 0;
         while (i < hitColliders.Length) {
-          if (hitColliders[i].gameObject.GetComponent<PlayerController>() != null) {
-            PlayerController player = hitColliders[i].gameObject.GetComponent<PlayerController>();
-            if (player != this && !player.isBlocking()) {
+          if (hitColliders[i].GetComponent<PlayerController>() != null) {
+            PlayerController player = hitColliders[i].GetComponent<PlayerController>();
+            if (player != this && !player.IsBlocking()) {
               player.GetComponent<Rigidbody2D>().AddForce(transform.right * AttackPower);
             }
           }
@@ -45,22 +45,22 @@ public class PlayerController : MonoBehaviour {
         }
       }
     } else if (Input.GetAxis("Attack") == 0) {
-      m_isAttacking = false;
+      isAttacking = false;
     }
 
     // Check if a player is trying to block
     if (Input.GetAxis("Block") != 0) {
-      m_isBlocking = true;
+      isBlocking = true;
     } else if (Input.GetAxis("Block") != 0) {
-      m_isBlocking = false;
+      isBlocking = false;
     }
   }
 
-  public bool isBlocking() {
-    return m_isBlocking;
+  public bool IsBlocking() {
+    return isBlocking;
   }
 
-  public void kill() {
+  public void Kill() {
     timesDead++;
     transform.position = initialPosition;
     Debug.Log(timesDead);
