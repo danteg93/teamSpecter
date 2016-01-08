@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-
   // Use this for initialization
-  public float PlayerNumber = 1;
+  public bool KeyboardControl = true;
+  public int playerNumber;
   public float Speed = 0f;
   public float AttackPower = 0f;
 
@@ -20,8 +20,16 @@ public class PlayerController : MonoBehaviour {
 
   // Update is called once per frame
   void FixedUpdate() {
-    // Update movement if the player is pressing any movement key
-    GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("Horizontal") * Speed, Input.GetAxis("Vertical") * Speed);
+
+    //if player is 1 the execute the joystick movement else do keyboard and mouse
+    if (KeyboardControl) {
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
+      executeJoyStickRotation();
+    }
+    else {
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementK") * Speed, Input.GetAxis("VerticalMovementK") * Speed);
+      executeMouseRotation();
+    }
 
     // Perform an attack if the player is pressing an attack key
     if (Input.GetAxis("Attack") != 0) {
@@ -54,15 +62,34 @@ public class PlayerController : MonoBehaviour {
     } else if (Input.GetAxis("Block") != 0) {
       isBlocking = false;
     }
+
+  }
+
+  private void executeMouseRotation() {
+    //Vector3 from the object to the mouse
+    Vector3 objectToMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+    objectToMouse.Normalize();
+    //Good old arctan2 lmao
+    float angleToMouse = (Mathf.Atan2(objectToMouse.y, objectToMouse.x) * Mathf.Rad2Deg) + 90.0f; //The 90 assumes that the front of the sprite is the bottom part.  
+    //Do you even quaternion bro?
+    transform.rotation = Quaternion.Euler(0f, 0f, angleToMouse);
+  }
+
+  private void executeJoyStickRotation() {
+    //Vector3 that says where the joystick is
+    Vector3 joyStickLocation = new Vector3(Input.GetAxis("HorizontalRotationJ1"), Input.GetAxis("VerticalRotationJ1"));
+    if (joyStickLocation.magnitude != 0){ //this wont reset your rotation if you randomly let go off the controller
+      joyStickLocation.Normalize();
+      float angleToStick = (Mathf.Atan2(joyStickLocation.x, joyStickLocation.y) * Mathf.Rad2Deg);
+      transform.rotation = Quaternion.Euler(0f, 0f, angleToStick);
+    }
   }
 
   public bool IsBlocking() {
     return isBlocking;
   }
-
   public void Kill() {
     timesDead++;
     transform.position = initialPosition;
-    Debug.Log(timesDead);
   }
 }
