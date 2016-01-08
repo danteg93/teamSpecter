@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
   // Use this for initialization
-  public bool KeyboardControl = true;
-  public int playerNumber;
+  public bool UseKeyboardControl = true;
+  public int PlayerNumber = 0;
   public float Speed = 0f;
   public float AttackPower = 0f;
 
@@ -14,21 +14,20 @@ public class PlayerController : MonoBehaviour {
   private bool isBlocking = false;
 
   void Start() {
-    timesDead = 0;
     initialPosition = gameObject.transform.position;
   }
 
   // Update is called once per frame
   void FixedUpdate() {
-
-    //if player is 1 the execute the joystick movement else do keyboard and mouse
-    if (KeyboardControl) {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
-      executeJoyStickRotation();
-    }
-    else {
+    // If the player is using the keyboard and mouse, execute that movement. Otherwise,
+    // find the appropriate joystick for the player
+    if (UseKeyboardControl) {
       GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementK") * Speed, Input.GetAxis("VerticalMovementK") * Speed);
       executeMouseRotation();
+    }
+    else {
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
+      executeJoyStickRotation();
     }
 
     // Perform an attack if the player is pressing an attack key
@@ -65,6 +64,15 @@ public class PlayerController : MonoBehaviour {
 
   }
 
+  public bool IsBlocking() {
+    return isBlocking;
+  }
+
+  public void Kill() {
+    timesDead++;
+    transform.position = initialPosition;
+  }
+
   private void executeMouseRotation() {
     //Vector3 from the object to the mouse
     Vector3 objectToMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
@@ -76,20 +84,12 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void executeJoyStickRotation() {
-    //Vector3 that says where the joystick is
-    Vector3 joyStickLocation = new Vector3(Input.GetAxis("HorizontalRotationJ1"), Input.GetAxis("VerticalRotationJ1"));
-    if (joyStickLocation.magnitude != 0){ //this wont reset your rotation if you randomly let go off the controller
+    //Vector2 that says where the joystick is
+    Vector2 joyStickLocation = new Vector2(Input.GetAxis("HorizontalRotationJ" + PlayerNumber), Input.GetAxis("VerticalRotationJ" + PlayerNumber));
+    if (joyStickLocation.magnitude != 0) { //this wont reset your rotation if you randomly let go off the controller
       joyStickLocation.Normalize();
       float angleToStick = (Mathf.Atan2(joyStickLocation.x, joyStickLocation.y) * Mathf.Rad2Deg);
       transform.rotation = Quaternion.Euler(0f, 0f, angleToStick);
     }
-  }
-
-  public bool IsBlocking() {
-    return isBlocking;
-  }
-  public void Kill() {
-    timesDead++;
-    transform.position = initialPosition;
   }
 }
