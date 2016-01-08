@@ -13,8 +13,8 @@ public class Gamemode : MonoBehaviour {
 
   }
   void OnTriggerExit2D(Collider2D coll) {
-    if (coll.gameObject.tag == "Player") {
-      coll.transform.gameObject.GetComponent<PlayerController>().kill();
+    if (coll.tag == "Player") {
+      coll.transform.GetComponent<PlayerController>().Kill();
     }
   }
 }
