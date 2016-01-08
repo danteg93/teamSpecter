@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
   // Use this for initialization
-  public bool UseKeyboardControl = true;
+  public bool UseKeyboardControl = false;
   public int PlayerNumber = 0;
   public float Speed = 0f;
   public float AttackPower = 0f;
