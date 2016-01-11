@@ -136,6 +136,18 @@ Prefab:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5037976, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037976, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_Mass
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165318, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11462864, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -158,7 +170,6 @@ MonoBehaviour:
   UseKeyboardControl: 0
   PlayerNumber: 2
   Speed: 10
-  AttackPower: 0
 --- !u!1001 &698269642
 Prefab:
   m_ObjectHideFlags: 0
@@ -214,6 +225,18 @@ Prefab:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5037976, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037976, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_Mass
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165318, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11462864, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -236,7 +259,6 @@ MonoBehaviour:
   UseKeyboardControl: 1
   PlayerNumber: 1
   Speed: 10
-  AttackPower: 5000
 --- !u!1 &808100820
 GameObject:
   m_ObjectHideFlags: 0
