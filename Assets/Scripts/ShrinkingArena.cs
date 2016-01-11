@@ -13,12 +13,12 @@ public class ShrinkingArena : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //Shrink the arena starting 15 seconds in and every 10 seconds after.
-        InvokeRepeating("Shrink", 15, 10);
+        InvokeRepeating("Shrink", 3, 3);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (transform.localScale.x == 0.5 && transform.localScale.y == 0.5)
+        if (transform.localScale.x <= 0.5 && transform.localScale.y <= 0.5)
         {
             CancelInvoke("Shrink");
         }
