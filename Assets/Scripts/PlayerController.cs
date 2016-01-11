@@ -2,15 +2,15 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+
   // Use this for initialization
   public bool KeyboardControl = true;
-  public int playerNumber;
+  public int PlayerNumber;
   public float Speed = 0f;
-  public float AttackPower = 0f;
 
   private int timesDead = 0;
   private Vector3 initialPosition;
-  private bool isAttacking = false;
+  private bool isPressingAttack = false;
   private bool isBlocking = false;
 
   void Start() {
@@ -19,50 +19,28 @@ public class PlayerController : MonoBehaviour {
   }
 
   // Update is called once per frame
-  void FixedUpdate() {
-
+  void FixedUpdate() { 
     //if player is 1 the execute the joystick movement else do keyboard and mouse
     if (KeyboardControl) {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
-      executeJoyStickRotation();
-    }
-    else {
       GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementK") * Speed, Input.GetAxis("VerticalMovementK") * Speed);
       executeMouseRotation();
     }
-
-    // Perform an attack if the player is pressing an attack key
-    if (Input.GetAxis("Attack") != 0) {
-      // Prevent the attack from occurring multiple times in one key press and
-      // the player from using multiple abilities at once (i.e. attack & block)
-      if (!isAttacking) {
-        isAttacking = true;
-
-        // Find all objects in range of the player, and push other player objects away
-        // TODO: This needs to only select things in front of the player
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1);
-        int i = 0;
-        while (i < hitColliders.Length) {
-          if (hitColliders[i].GetComponent<PlayerController>() != null) {
-            PlayerController player = hitColliders[i].GetComponent<PlayerController>();
-            if (player != this && !player.IsBlocking()) {
-              player.GetComponent<Rigidbody2D>().AddForce(transform.right * AttackPower);
-            }
-          }
-          i++;
-        }
-      }
-    } else if (Input.GetAxis("Attack") == 0) {
-      isAttacking = false;
+    else {
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
+      executeJoyStickRotation();
     }
 
-    // Check if a player is trying to block
-    if (Input.GetAxis("Block") != 0) {
-      isBlocking = true;
-    } else if (Input.GetAxis("Block") != 0) {
-      isBlocking = false;
-    }
+    processAttackInput();
+    processBlockInput();
+  }
 
+  public bool IsBlocking() {
+    return isBlocking;
+  }
+
+  public void Kill() {
+    timesDead++;
+    transform.position = initialPosition;
   }
 
   private void executeMouseRotation() {
@@ -78,18 +56,47 @@ public class PlayerController : MonoBehaviour {
   private void executeJoyStickRotation() {
     //Vector3 that says where the joystick is
     Vector3 joyStickLocation = new Vector3(Input.GetAxis("HorizontalRotationJ1"), Input.GetAxis("VerticalRotationJ1"));
-    if (joyStickLocation.magnitude != 0){ //this wont reset your rotation if you randomly let go off the controller
+    if (joyStickLocation.magnitude != 0) { //this wont reset your rotation if you randomly let go off the controller
       joyStickLocation.Normalize();
       float angleToStick = (Mathf.Atan2(joyStickLocation.x, joyStickLocation.y) * Mathf.Rad2Deg);
       transform.rotation = Quaternion.Euler(0f, 0f, angleToStick);
     }
   }
 
-  public bool IsBlocking() {
-    return isBlocking;
+  private void processAttackInput() {
+    // Perform an attack if the player is pressing an attack key
+    if (Input.GetAxis("Slash") != 0) {
+      // Prevent the attack from occurring multiple times in one key press and
+      // the player from using multiple abilities at once (i.e. attack & block)
+      if (!isPressingAttack) {
+        isPressingAttack = true;
+
+        // Find all objects in range of the player, and push other player objects away
+        // TODO: This needs to only select things in front of the player
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1);
+        int i = 0;
+        while (i < hitColliders.Length) {
+          if (hitColliders[i].GetComponent<PlayerController>() != null) {
+            PlayerController player = hitColliders[i].GetComponent<PlayerController>();
+            if (player != this && !player.IsBlocking()) {
+              player.Kill();
+            }
+          }
+          i++;
+        }
+      }
+    } else if (Input.GetAxis("Slash") == 0) {
+      isPressingAttack = false;
+    }
   }
-  public void Kill() {
-    timesDead++;
-    transform.position = initialPosition;
+
+  private void processBlockInput() {
+    // Check if a player is trying to block
+    if (Input.GetAxis("Block") != 0) {
+      isBlocking = true;
+      print("blocking");
+    } else if (Input.GetAxis("Block") == 0) {
+      isBlocking = false;
+    }
   }
 }

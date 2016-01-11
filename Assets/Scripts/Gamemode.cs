@@ -12,6 +12,7 @@ public class Gamemode : MonoBehaviour {
   void Update() {
 
   }
+
   void OnTriggerExit2D(Collider2D coll) {
     if (coll.tag == "Player") {
       coll.transform.GetComponent<PlayerController>().Kill();
