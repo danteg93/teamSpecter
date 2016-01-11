@@ -8,6 +8,8 @@ public class ShrinkingArena : MonoBehaviour {
     {
         //subtract 0.5 from the scale of the arena
         transform.localScale += new Vector3(-0.5F, -0.5F, 0);
+        Debug.Log(transform.localScale.x);
+        Debug.Log(transform.localScale.y);
     }
 
 	// Use this for initialization
@@ -18,6 +20,9 @@ public class ShrinkingArena : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (transform.localScale.x == 0.5 && transform.localScale.y == 0.5)
+        {
+            CancelInvoke("Shrink");
+        }
 	}
 }
