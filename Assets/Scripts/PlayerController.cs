@@ -4,8 +4,8 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
   // Use this for initialization
-  public bool KeyboardControl = true;
-  public int PlayerNumber;
+  public bool UseKeyboardControl = false;
+  public int PlayerNumber = 0;
   public float Speed = 0f;
 
   private int timesDead = 0;
@@ -14,19 +14,19 @@ public class PlayerController : MonoBehaviour {
   private bool isBlocking = false;
 
   void Start() {
-    timesDead = 0;
     initialPosition = gameObject.transform.position;
   }
 
   // Update is called once per frame
-  void FixedUpdate() { 
-    //if player is 1 the execute the joystick movement else do keyboard and mouse
-    if (KeyboardControl) {
+  void FixedUpdate() {
+    // If the player is using the keyboard and mouse, execute that movement. Otherwise,
+    // find the appropriate joystick for the player
+    if (UseKeyboardControl) {
       GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementK") * Speed, Input.GetAxis("VerticalMovementK") * Speed);
       executeMouseRotation();
     }
     else {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ1") * Speed, -Input.GetAxis("VerticalMovementJ1") * Speed);
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
       executeJoyStickRotation();
     }
 
@@ -54,8 +54,8 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void executeJoyStickRotation() {
-    //Vector3 that says where the joystick is
-    Vector3 joyStickLocation = new Vector3(Input.GetAxis("HorizontalRotationJ1"), Input.GetAxis("VerticalRotationJ1"));
+    //Vector2 that says where the joystick is
+    Vector2 joyStickLocation = new Vector2(Input.GetAxis("HorizontalRotationJ" + PlayerNumber), Input.GetAxis("VerticalRotationJ" + PlayerNumber));
     if (joyStickLocation.magnitude != 0) { //this wont reset your rotation if you randomly let go off the controller
       joyStickLocation.Normalize();
       float angleToStick = (Mathf.Atan2(joyStickLocation.x, joyStickLocation.y) * Mathf.Rad2Deg);
