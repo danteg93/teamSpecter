@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Projectile : MonoBehaviour {
+public class ProjectileController : MonoBehaviour {
 
   private float selfDestroyTimer = 1;
   // Use this for initialization
