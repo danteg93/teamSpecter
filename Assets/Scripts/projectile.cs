@@ -11,8 +11,8 @@ public class projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 position = this.transform.position;
-		position.y--;
+		Vector3 position = this.transform.position; // testing purposes only
+		position.y--;						// testing purposes only
 		this.transform.position = position;
 
 		selfDestroyTimer -= Time.deltaTime;
@@ -20,14 +20,14 @@ public class projectile : MonoBehaviour {
 		if (selfDestroyTimer <= 0) {
 			Destroy (gameObject);
 		}
-		}
+	}
 
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if(col.gameObject.tag == "Player")
 		{
 			Debug.Log ("destroyed player");
-			Destroy(col.gameObject);
+			col.transform.gameObject.GetComponent<PlayerController>().kill(); //call player kill function
 			Destroy (gameObject);
 		}
 	}
