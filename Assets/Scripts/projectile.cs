@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour {
   void OnCollisionEnter2D(Collision2D col) {
     if (col.gameObject.tag == "Player") {
       Debug.Log("destroyed player");
-      col.transform.gameObject.GetComponent<PlayerController>().kill(); //call player kill function
+      col.transform.gameObject.GetComponent<PlayerController>().Kill(); //call player kill function
       Destroy(gameObject);
     }
   }
