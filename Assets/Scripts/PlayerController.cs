@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour {
         while (i < hitColliders.Length) {
           if (hitColliders[i].GetComponent<PlayerController>() != null) {
             PlayerController player = hitColliders[i].GetComponent<PlayerController>();
-            print(player.PlayerNumber);
             if (player != this && !player.IsBlocking()) {
               player.Kill();
             }
