@@ -17,10 +17,14 @@ public class PlayerController : MonoBehaviour {
   void Start() {
     projectileCooldown = ProjectileCooldown;
   }
+
   // Update is called once per frame
   void Update() {
     processShootBullet();
+    processSlashInput();
+    processBlockInput();
   }
+
   void FixedUpdate() {
     // If the player is using the keyboard and mouse, execute that movement. Otherwise,
     // find the appropriate joystick for the player
@@ -32,9 +36,6 @@ public class PlayerController : MonoBehaviour {
       GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
       executeJoyStickRotation();
     }
-
-    processAttackInput();
-    processBlockInput();
   }
 
   public bool IsBlocking() {
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  private void processAttackInput() {
+  private void processSlashInput() {
     float slashInput;
     if (UseKeyboardControl) {
       slashInput = Input.GetAxis("Slash");
