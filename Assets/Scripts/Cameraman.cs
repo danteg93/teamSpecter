@@ -23,13 +23,14 @@ public class Cameraman : MonoBehaviour {
 
   }
 
+  public void CameraShake(float shakeDuration, float shakePower) {
+    shakeAmount = shakePower;
+    shakeTimer = shakeDuration;
+  }
+
   private void executeCameraShake() {
     Vector2 ShakePos = Random.insideUnitCircle * shakeAmount;
     transform.position = new Vector3(transform.position.x + ShakePos.x, transform.position.y, transform.position.z);
     shakeTimer -= Time.deltaTime;
-  }
-  public void CameraShake(float shakeDuration, float shakePower) {
-    shakeAmount = shakePower;
-    shakeTimer = shakeDuration;
   }
 }
