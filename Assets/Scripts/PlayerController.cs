@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void Kill() {
+    Cameraman.cameraman.CameraShake(0.5f, 0.1f);
     Destroy(this.gameObject);
   }
 
