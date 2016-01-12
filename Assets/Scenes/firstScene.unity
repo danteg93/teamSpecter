@@ -167,9 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseKeyboardControl: 0
+  UseKeyboardControl: 1
   PlayerNumber: 2
   Speed: 10
+  projectile: {fileID: 11463822, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
 --- !u!1001 &698269642
 Prefab:
   m_ObjectHideFlags: 0
@@ -256,9 +257,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseKeyboardControl: 1
+  UseKeyboardControl: 0
   PlayerNumber: 1
   Speed: 10
+  projectile: {fileID: 11463822, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
 --- !u!1 &808100820
 GameObject:
   m_ObjectHideFlags: 0

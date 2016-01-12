@@ -29,6 +29,9 @@ public class ProjectileController : MonoBehaviour {
       Destroy(gameObject);
     }
   }
+  public void die() {
+    Debug.Log("Die");
+  }
 
 
 }

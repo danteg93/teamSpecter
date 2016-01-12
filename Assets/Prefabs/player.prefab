@@ -70,10 +70,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 185174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c00ba60df36d4e2c938514b7f0e0a63, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementOffset: 0.5
+  UseKeyboardControl: 0
+  PlayerNumber: 0
+  Speed: 0
+  projectile: {fileID: 0}
 --- !u!212 &21294044
 SpriteRenderer:
   m_ObjectHideFlags: 1
