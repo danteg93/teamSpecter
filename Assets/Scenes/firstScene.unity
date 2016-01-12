@@ -167,10 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseKeyboardControl: 1
+  UseKeyboardControl: 0
   PlayerNumber: 2
+  ProjectileCooldown: 1
   Speed: 10
-  projectile: {fileID: 11463822, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
+  projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
 --- !u!1001 &698269642
 Prefab:
   m_ObjectHideFlags: 0
@@ -259,8 +260,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseKeyboardControl: 0
   PlayerNumber: 1
+  ProjectileCooldown: 1
   Speed: 10
-  projectile: {fileID: 11463822, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
+  projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
 --- !u!1 &808100820
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +332,7 @@ GameObject:
   - 4: {fileID: 808152312}
   - 61: {fileID: 808152310}
   - 114: {fileID: 808152311}
+  - 114: {fileID: 808152313}
   m_Layer: 0
   m_Name: platform
   m_TagString: Untagged
@@ -379,6 +382,17 @@ Transform:
   - {fileID: 808100821}
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &808152313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 808152309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca80ada75f38a4248aeb318071fd319d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1021937436
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,11 +20,6 @@ public class Cameraman : MonoBehaviour {
     if (shakeTimer >= 0) {
       executeCameraShake();
     }
-
-    if (Input.GetKey("=")) {
-      CameraShake(1, 0.1f);
-    }
-
   }
 
   public void CameraShake(float shakeDuration, float shakePower) {

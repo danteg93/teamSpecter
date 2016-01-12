@@ -268,7 +268,7 @@ InputManager:
     negativeButton: 
     positiveButton: 0
     altNegativeButton: 
-    altPositiveButton: joystick button 0
+    altPositiveButton: joystick 1 button 0
     gravity: 1000
     dead: 0.3
     sensitivity: 1
@@ -282,7 +282,7 @@ InputManager:
     descriptiveName: Player 2 Shoot
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 0
+    positiveButton: joystick 2 button 0
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

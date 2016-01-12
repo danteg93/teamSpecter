@@ -75,8 +75,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseKeyboardControl: 0
   PlayerNumber: 0
+  ProjectileCooldown: 1
   Speed: 0
-  projectile: {fileID: 0}
+  projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
 --- !u!212 &21294044
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -113,7 +114,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 185174}

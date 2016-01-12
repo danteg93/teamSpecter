@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
   public int PlayerNumber = 0;
   public float ProjectileCooldown = 1.0f;
   public float Speed = 0f;
-  public ProjectileController projectile;
+  public GameObject projectile;
   
   private bool isPressingAttack = false;
   private bool isBlocking = false;
@@ -31,9 +31,6 @@ public class PlayerController : MonoBehaviour {
     else {
       GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
       executeJoyStickRotation();
-    }
-    if (Input.GetKey("-")) {
-      projectile.die();
     }
 
     processAttackInput();
@@ -114,11 +111,13 @@ public class PlayerController : MonoBehaviour {
 
   private void processShootBullet() {
     if (!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0 && projectileCooldown == ProjectileCooldown) {
-      Instantiate(projectile, transform.position, transform.rotation);
+      ProjectileController temp = ((GameObject)Instantiate(projectile, transform.position, transform.rotation)).GetComponent<ProjectileController>();
+      temp.SetOwnerAndShoot(transform.gameObject.name);
       projectileCooldown -= Time.deltaTime;
     }
     else if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 && projectileCooldown == ProjectileCooldown) {
-      Instantiate(projectile, transform.position, transform.rotation);
+      ProjectileController temp = ((GameObject)Instantiate(projectile, transform.position, transform.rotation)).GetComponent<ProjectileController>();
+      temp.SetOwnerAndShoot(transform.gameObject.name);
       projectileCooldown -= Time.deltaTime;
     }
     else if (projectileCooldown < ProjectileCooldown && projectileCooldown > 0) {
