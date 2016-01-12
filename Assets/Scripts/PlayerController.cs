@@ -7,15 +7,9 @@ public class PlayerController : MonoBehaviour {
   public bool UseKeyboardControl = false;
   public int PlayerNumber = 0;
   public float Speed = 0f;
-
-  private int timesDead = 0;
-  private Vector3 initialPosition;
+  
   private bool isPressingAttack = false;
   private bool isBlocking = false;
-
-  void Start() {
-    initialPosition = gameObject.transform.position;
-  }
 
   // Update is called once per frame
   void FixedUpdate() {
@@ -39,8 +33,7 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void Kill() {
-    timesDead++;
-    transform.position = initialPosition;
+    Destroy(this.gameObject);
   }
 
   private void executeMouseRotation() {
@@ -64,8 +57,15 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void processAttackInput() {
+    float slashInput;
+    if (UseKeyboardControl) {
+      slashInput = Input.GetAxis("Slash");
+    } else {
+      slashInput = Input.GetAxis("SlashJ" + PlayerNumber);
+    }
+ 
     // Perform an attack if the player is pressing an attack key
-    if (Input.GetAxis("Slash") != 0) {
+    if (slashInput != 0) {
       // Prevent the attack from occurring multiple times in one key press and
       // the player from using multiple abilities at once (i.e. attack & block)
       if (!isPressingAttack) {
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour {
           i++;
         }
       }
-    } else if (Input.GetAxis("Slash") == 0) {
+    } else if (slashInput == 0) {
       isPressingAttack = false;
     }
   }
@@ -94,7 +94,6 @@ public class PlayerController : MonoBehaviour {
     // Check if a player is trying to block
     if (Input.GetAxis("Block") != 0) {
       isBlocking = true;
-      print("blocking");
     } else if (Input.GetAxis("Block") == 0) {
       isBlocking = false;
     }
