@@ -3,10 +3,14 @@ using System.Collections;
 
 public class Cameraman : MonoBehaviour {
 
+  public static Cameraman cameraman;
   private float shakeTimer;
   private float shakeAmount;
 
   // Use this for initialization
+  void Awake() {
+    cameraman = this;
+  }
   void Start() {
     transform.position = new Vector3(0, 0, -10);
   }
