@@ -6,12 +6,21 @@ public class PlayerController : MonoBehaviour {
   // Use this for initialization
   public bool UseKeyboardControl = false;
   public int PlayerNumber = 0;
+  public float ProjectileCooldown = 1.0f;
   public float Speed = 0f;
+  public GameObject projectile;
   
   private bool isPressingAttack = false;
   private bool isBlocking = false;
+  private float projectileCooldown;
 
+  void Start() {
+    projectileCooldown = ProjectileCooldown;
+  }
   // Update is called once per frame
+  void Update() {
+    processShootBullet();
+  }
   void FixedUpdate() {
     // If the player is using the keyboard and mouse, execute that movement. Otherwise,
     // find the appropriate joystick for the player
@@ -97,6 +106,25 @@ public class PlayerController : MonoBehaviour {
       isBlocking = true;
     } else if (Input.GetAxis("Block") == 0) {
       isBlocking = false;
+    }
+  }
+
+  private void processShootBullet() {
+    if (!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0 && projectileCooldown == ProjectileCooldown) {
+      ProjectileController temp = ((GameObject)Instantiate(projectile, transform.position, transform.rotation)).GetComponent<ProjectileController>();
+      temp.SetOwnerAndShoot(transform.gameObject.name);
+      projectileCooldown -= Time.deltaTime;
+    }
+    else if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 && projectileCooldown == ProjectileCooldown) {
+      ProjectileController temp = ((GameObject)Instantiate(projectile, transform.position, transform.rotation)).GetComponent<ProjectileController>();
+      temp.SetOwnerAndShoot(transform.gameObject.name);
+      projectileCooldown -= Time.deltaTime;
+    }
+    else if (projectileCooldown < ProjectileCooldown && projectileCooldown > 0) {
+      projectileCooldown -= Time.deltaTime;
+    }
+    else if(projectileCooldown <= 0){
+      projectileCooldown = ProjectileCooldown;
     }
   }
 }
