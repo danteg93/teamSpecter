@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseKeyboardControl: 0
+  UseKeyboardControl: 1
   PlayerNumber: 2
   ProjectileCooldown: 1
   Speed: 10
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseKeyboardControl: 1
+  UseKeyboardControl: 0
   PlayerNumber: 1
   ProjectileCooldown: 1
   Speed: 10
