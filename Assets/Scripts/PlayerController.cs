@@ -12,10 +12,10 @@ public class PlayerController : MonoBehaviour {
   
   private bool isPressingAttack = false;
   private bool isBlocking = false;
-  private float projectileCooldown;
+  private float projectileCooldownTimer;
 
   void Start() {
-    projectileCooldown = ProjectileCooldown;
+    projectileCooldownTimer = ProjectileCooldown;
   }
 
   // Update is called once per frame
@@ -111,21 +111,19 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void processShootBullet() {
-    if (!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0 && projectileCooldown == ProjectileCooldown) {
+    //If player is using keyboard controls then listen for keyboard press
+    //else, listen for joystick press
+    //also, projectileCooldown needs to be reset
+    if (((!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0) || (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0)) && projectileCooldownTimer == ProjectileCooldown) {
       ProjectileController temp = ((GameObject)Instantiate(projectile, transform.position, transform.rotation)).GetComponent<ProjectileController>();
       temp.SetOwnerAndShoot(transform.gameObject.name);
-      projectileCooldown -= Time.deltaTime;
+      projectileCooldownTimer -= Time.deltaTime;
     }
-    else if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 && projectileCooldown == ProjectileCooldown) {
-      ProjectileController temp = ((GameObject)Instantiate(projectile, transform.position, transform.rotation)).GetComponent<ProjectileController>();
-      temp.SetOwnerAndShoot(transform.gameObject.name);
-      projectileCooldown -= Time.deltaTime;
+    else if (projectileCooldownTimer < ProjectileCooldown && projectileCooldownTimer > 0) {
+      projectileCooldownTimer -= Time.deltaTime;
     }
-    else if (projectileCooldown < ProjectileCooldown && projectileCooldown > 0) {
-      projectileCooldown -= Time.deltaTime;
-    }
-    else if(projectileCooldown <= 0){
-      projectileCooldown = ProjectileCooldown;
+    else if (projectileCooldownTimer <= 0) {
+      projectileCooldownTimer = ProjectileCooldown;
     }
   }
 }
