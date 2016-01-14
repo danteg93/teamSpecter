@@ -13,11 +13,21 @@ public class PlayerController : MonoBehaviour {
   private bool isPressingAttack = false;
   private bool isBlocking = false;
   private float projectileCooldownTimer;
+  private float accelerateTimer = 0f;
+  private float accelerateTimerX = 0f;
+  private float accelerateTimerY = 0f;
+  private bool slowingDown = false;
+  private int directionX;
+  private int directionY;
 
   void Start() {
     projectileCooldownTimer = ProjectileCooldown;
   }
-
+  void OnGUI()
+  {
+    GUI.Label(new Rect(10, 10, 100, 20), "X: " + directionX.ToString());
+    GUI.Label(new Rect(10, 30, 100, 20), "Y: " + directionY.ToString());
+  }
   // Update is called once per frame
   void Update() {
     processShootBullet();
@@ -33,8 +43,112 @@ public class PlayerController : MonoBehaviour {
       executeMouseRotation();
     }
     else {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
+      accelerateMovement();
+      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed * accelerateTimer + accelerateTimerX*directionX, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed * accelerateTimer + accelerateTimerY * directionY
+        );
+
       executeJoyStickRotation();
+    }
+  }
+
+  // accelerateMovement calculates a factor for character to reach max speed, 
+  // and accelerateTimerX/accelerateTimerY allow character to turn smoothly and
+  // keep moving for a little distance even if the joystick is released
+  private void accelerateMovement()
+  {
+
+    // directions decide which direction the character is going to slide after release the joystick
+    if (Input.GetAxis("HorizontalMovementJ" + PlayerNumber) != 0 || Input.GetAxis("VerticalMovementJ" + PlayerNumber) != 0)
+    {
+ 
+      if (Input.GetAxis("HorizontalMovementJ" + PlayerNumber) > 0)
+      {
+        directionX = 1;
+      }
+      else if(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) < 0)
+      {
+        directionX = -1;
+      }
+      if (Input.GetAxis("HorizontalMovementJ" + PlayerNumber) == 0)
+      {
+        directionX = 0;
+      }
+      if (Input.GetAxis("VerticalMovementJ" + PlayerNumber) > 0)
+      {
+        directionY = -1;
+      }
+      else if (Input.GetAxis("VerticalMovementJ" + PlayerNumber) < 0)
+      {
+        directionY = 1;
+      }
+      if (Input.GetAxis("VerticalMovementJ" + PlayerNumber) == 0)
+      {
+        directionY = 0;
+      }
+    }
+
+
+
+    // accelerateTimeris a common accelrate factor for the character to gradutely reach max speed
+    if (Input.GetAxis("HorizontalMovementJ" + PlayerNumber) != 0 || Input.GetAxis("VerticalMovementJ" + PlayerNumber) != 0)
+    {
+      if (accelerateTimer <= 1)
+      {
+        accelerateTimer += Time.deltaTime ;
+      }
+    }
+    else
+    {
+      if (accelerateTimer > 0)
+      {
+        slowingDown = true;
+        accelerateTimer -= Time.deltaTime ;
+      }
+      else
+      {
+        accelerateTimer = 0;
+        slowingDown = false;
+      }
+     
+    }
+
+    // accelerateTimerX/accelerateTimerY 
+    if (Input.GetAxis("VerticalMovementJ" + PlayerNumber) != 0)
+    {
+      if (accelerateTimerY <= 1)
+      {
+        accelerateTimerY += Time.deltaTime * 2;
+      }
+    }
+    else
+    {
+      if (accelerateTimerY > 0)
+      {
+        accelerateTimerY -= Time.deltaTime * 2;
+      }
+      else
+      {
+        accelerateTimerY = 0;
+      }
+    }
+
+    if (Input.GetAxis("HorizontalMovementJ" + PlayerNumber) != 0)
+    {
+      if (accelerateTimerX <= 1)
+      {
+        accelerateTimerX += Time.deltaTime * 2;
+      }
+    }
+    else
+    {
+      if (accelerateTimerX > 0)
+      {
+        accelerateTimerX -= Time.deltaTime * 2;
+      }
+      else
+      {
+        accelerateTimerX = 0;
+      }
     }
   }
 

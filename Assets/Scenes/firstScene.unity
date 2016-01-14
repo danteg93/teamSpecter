@@ -148,6 +148,14 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11462864, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -170,7 +178,7 @@ MonoBehaviour:
   UseKeyboardControl: 1
   PlayerNumber: 2
   ProjectileCooldown: 1
-  Speed: 10
+  Speed: 5
   projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
 --- !u!1001 &698269642
 Prefab:
@@ -217,11 +225,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.20741598
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.20741603
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5037976, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_Constraints
@@ -261,7 +269,7 @@ MonoBehaviour:
   UseKeyboardControl: 0
   PlayerNumber: 1
   ProjectileCooldown: 1
-  Speed: 10
+  Speed: 5
   projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
 --- !u!1 &808100820
 GameObject:
@@ -388,7 +396,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808152309}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca80ada75f38a4248aeb318071fd319d, type: 3}
   m_Name: 
