@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour {
   private float projectileCooldownTimer;
   private float previousVelocityMagnitude;
 
-
   void Start() {
     projectileCooldownTimer = ProjectileCooldown;
     previousVelocityMagnitude = 0.0f;
