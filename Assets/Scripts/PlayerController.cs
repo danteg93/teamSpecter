@@ -9,13 +9,17 @@ public class PlayerController : MonoBehaviour {
   public float ProjectileCooldown = 1.0f;
   public float Speed = 0f;
   public GameObject projectile;
+  public float AccelerationFactor = 0.55f;
   
   private bool isPressingAttack = false;
   private bool isBlocking = false;
   private float projectileCooldownTimer;
+  private float previousVelocityMagnitude;
+
 
   void Start() {
     projectileCooldownTimer = ProjectileCooldown;
+    previousVelocityMagnitude = 0.0f;
   }
 
   // Update is called once per frame
@@ -26,14 +30,15 @@ public class PlayerController : MonoBehaviour {
   }
 
   void FixedUpdate() {
+    //Execute movement of the player. Code was way too similar, with the exception of one variable
+    //so I left it as one function :P
+    executeMovement();
     // If the player is using the keyboard and mouse, execute that movement. Otherwise,
     // find the appropriate joystick for the player
     if (UseKeyboardControl) {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementK") * Speed, Input.GetAxis("VerticalMovementK") * Speed);
       executeMouseRotation();
     }
     else {
-      GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
       executeJoyStickRotation();
     }
   }
@@ -45,6 +50,28 @@ public class PlayerController : MonoBehaviour {
   public void Kill() {
     Cameraman.cameraman.CameraShake(0.5f, 0.1f);
     Destroy(this.gameObject);
+  }
+
+  private void executeMovement() {
+    //Vector calculated from the input, it gives a direction of where to move next.
+    Vector2 newVelocity;
+    if (UseKeyboardControl) {
+      //Getting the axis raw (lawl) stops unity from smoothing out key presses (reason why we had sliding with keyboard and not with sticks)
+      newVelocity = new Vector2(Input.GetAxisRaw("HorizontalMovementK") * Speed, Input.GetAxisRaw("VerticalMovementK") * Speed);
+    }
+    else {
+      newVelocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
+    }
+    //This block performs the "acceleration" of the rigid body. 
+    if (newVelocity.magnitude - previousVelocityMagnitude < 0.0f && GetComponent<Rigidbody2D>().velocity.magnitude != 0.0f) {
+      GetComponent<Rigidbody2D>().velocity = Vector2.MoveTowards(GetComponent<Rigidbody2D>().velocity, Vector2.zero, AccelerationFactor);
+    }
+    //if nah, then move in the direction that you wanted to face to begin with.
+    else {
+      GetComponent<Rigidbody2D>().velocity = Vector2.MoveTowards(GetComponent<Rigidbody2D>().velocity, newVelocity, AccelerationFactor);
+    }
+    //set previous velocity for delta calculations; 
+    previousVelocityMagnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
   }
 
   private void executeMouseRotation() {
