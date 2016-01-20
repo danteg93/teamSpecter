@@ -61,15 +61,13 @@ public class PlayerController : MonoBehaviour {
     else {
       newVelocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
     }
-    //This block performs the "acceleration" of the rigid body. 
+    //if the direction of the movement has changed and you are not static then you will want to "deaccelerate"
     if (newVelocity.magnitude - previousVelocityMagnitude < 0.0f && GetComponent<Rigidbody2D>().velocity.magnitude != 0.0f) {
-      GetComponent<Rigidbody2D>().velocity = Vector2.MoveTowards(GetComponent<Rigidbody2D>().velocity, Vector2.zero, AccelerationFactor);
+      newVelocity = Vector2.zero;
     }
-    //if nah, then move in the direction that you wanted to face to begin with.
-    else {
-      GetComponent<Rigidbody2D>().velocity = Vector2.MoveTowards(GetComponent<Rigidbody2D>().velocity, newVelocity, AccelerationFactor);
-    }
-    //set previous velocity for delta calculations; 
+    //change the direction towards the direction of the new velocity
+    GetComponent<Rigidbody2D>().velocity = Vector2.MoveTowards(GetComponent<Rigidbody2D>().velocity, newVelocity, AccelerationFactor);
+    //set previous velocity for delta calculations;
     previousVelocityMagnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
   }
 
