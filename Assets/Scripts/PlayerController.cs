@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
   private bool isBlocking = false;
   private float projectileCooldownTimer;
   private float previousVelocityMagnitude = 0.0f;
+  private Vector2 movementDirection = Vector2.zero;
 
   void Start() {
     projectileCooldownTimer = ProjectileCooldown;
@@ -69,6 +70,9 @@ public class PlayerController : MonoBehaviour {
     GetComponent<Rigidbody2D>().velocity = Vector2.MoveTowards(GetComponent<Rigidbody2D>().velocity, newVelocity, AccelerationFactor);
     //set previous velocity for delta calculations;
     previousVelocityMagnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
+    //kept newVeloctiy because these methods are asynced, so other functions that might use movementDirection
+    //could potentially access it while being updated. 
+    movementDirection = newVelocity.normalized;
   }
 
   private void executeMouseRotation() {
@@ -93,9 +97,14 @@ public class PlayerController : MonoBehaviour {
 
   private void executeDash() {
     if (UseKeyboardControl && Input.GetKeyDown("n")) {
-      float adjustedRotationRadians = (transform.rotation.eulerAngles.z - 90.0f) * Mathf.Deg2Rad;
-      Vector2 facingDirection = new Vector2(Mathf.Cos(adjustedRotationRadians), Mathf.Sin(adjustedRotationRadians));
-      GetComponent<Rigidbody2D>().velocity +=  (facingDirection * 10.0f);
+      if (movementDirection.magnitude != 0.0f) {
+        GetComponent<Rigidbody2D>().velocity += (movementDirection * 10.0f);
+      }
+      else {
+        float adjustedRotationRadians = (transform.rotation.eulerAngles.z - 90.0f) * Mathf.Deg2Rad;
+        Vector2 facingDirection = new Vector2(Mathf.Cos(adjustedRotationRadians), Mathf.Sin(adjustedRotationRadians));
+        GetComponent<Rigidbody2D>().velocity += (facingDirection * 10.0f);
+      }
       //Debug.Log(transform.forward * 10);
     }
   }
