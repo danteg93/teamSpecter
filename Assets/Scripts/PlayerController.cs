@@ -10,12 +10,13 @@ public class PlayerController : MonoBehaviour {
   public float Speed = 0f;
   public GameObject projectile;
   public float AccelerationFactor = 0.55f;
+  public float DashPower = 15.0f;
   
   private bool isPressingAttack = false;
   private bool isPressingDash = false;
   private bool isBlocking = false;
   private float projectileCooldownTimer;
-  private float previousVelocityMagnitude = 0.0f;
+  private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
   void Start() {
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour {
     else {
       executeJoyStickRotation();
     }
+    //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
     executeDash();
   }
 
@@ -64,13 +66,13 @@ public class PlayerController : MonoBehaviour {
       newVelocity = new Vector2(Input.GetAxis("HorizontalMovementJ" + PlayerNumber) * Speed, -Input.GetAxis("VerticalMovementJ" + PlayerNumber) * Speed);
     }
     //if the direction of the movement has changed and you are not static then you will want to "deaccelerate"
-    if (newVelocity.magnitude - previousVelocityMagnitude < 0.0f && GetComponent<Rigidbody2D>().velocity.magnitude != 0.0f) {
+    if (newVelocity.magnitude - previousVelocity.magnitude < 0.0f && GetComponent<Rigidbody2D>().velocity.magnitude != 0.0f) {
       newVelocity = Vector2.zero;
     }
     //change the direction towards the direction of the new velocity
     GetComponent<Rigidbody2D>().velocity = Vector2.MoveTowards(GetComponent<Rigidbody2D>().velocity, newVelocity, AccelerationFactor);
     //set previous velocity for delta calculations;
-    previousVelocityMagnitude = GetComponent<Rigidbody2D>().velocity.magnitude;
+    previousVelocity = GetComponent<Rigidbody2D>().velocity;
     //kept newVeloctiy because these methods are asynced, so other functions that might use movementDirection
     //could potentially access it while being updated. 
     movementDirection = newVelocity.normalized;
@@ -97,6 +99,8 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void executeDash() {
+    Vector2 dashVector;
+    //get the value for the dash input
     float dashInput;
     if (UseKeyboardControl) {
       dashInput = Input.GetAxis("Dash");
@@ -104,21 +108,33 @@ public class PlayerController : MonoBehaviour {
     else {
       dashInput = Input.GetAxis("DashJ" + PlayerNumber);
     }
+    //makes sure that this doesnt get called a million times
     if (dashInput != 0 && !isPressingDash) {
       isPressingDash = true;
+      //movement Direction gets calculated in the executeMovement function.
+      //If you are moving, the dash will take you in that direction.
       if (movementDirection.magnitude != 0.0f) {
-        GetComponent<Rigidbody2D>().velocity += (movementDirection * 10.0f);
+        //Set the vector of the dash to be the movementDirection (normalized by trig) times the dash factor
+        dashVector = movementDirection * DashPower;
       }
+      //If you are not moving, the dash will take you in the direction you are facing
       else {
+        //Get the adjusted rotation (in rads) of the current rotation of the sprite.
         float adjustedRotationRadians = (transform.rotation.eulerAngles.z - 90.0f) * Mathf.Deg2Rad;
+        //Using the magic of trig, calculate a vector (comes out normalized) that will move you in the direction
+        //of the angle you are facing. Do you even unit circle bro?
         Vector2 facingDirection = new Vector2(Mathf.Cos(adjustedRotationRadians), Mathf.Sin(adjustedRotationRadians));
-        GetComponent<Rigidbody2D>().velocity += (facingDirection * 10.0f);
+        //Multiply it by the dash factor
+        dashVector = facingDirection * DashPower;
       }
-      //Debug.Log(transform.forward * 10);
+      //Set the veloctiy
+      GetComponent<Rigidbody2D>().velocity = dashVector;
+      
     }
     else if(dashInput == 0) {
       isPressingDash = false;
     }
+    //Debug.Log(previousVelocity.magnitude);
   }
 
   private void processSlashInput() {
