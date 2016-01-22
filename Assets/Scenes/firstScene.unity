@@ -172,6 +172,7 @@ MonoBehaviour:
   ProjectileCooldown: 1
   Speed: 10
   projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
+  AccelerationFactor: 0.55
 --- !u!1001 &698269642
 Prefab:
   m_ObjectHideFlags: 0
@@ -263,6 +264,7 @@ MonoBehaviour:
   ProjectileCooldown: 1
   Speed: 10
   projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
+  AccelerationFactor: 0.55
 --- !u!1 &808100820
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,8 +375,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808152309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.2025, y: 0.19844, z: 0}
+  m_LocalScale: {x: 3.699996, y: 2.5875003, z: 1}
   m_Children:
   - {fileID: 1021937437}
   - {fileID: 1464735173}
@@ -388,7 +390,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808152309}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca80ada75f38a4248aeb318071fd319d, type: 3}
   m_Name: 
@@ -572,7 +574,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.18
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

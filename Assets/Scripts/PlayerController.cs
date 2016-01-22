@@ -14,11 +14,10 @@ public class PlayerController : MonoBehaviour {
   private bool isPressingAttack = false;
   private bool isBlocking = false;
   private float projectileCooldownTimer;
-  private float previousVelocityMagnitude;
+  private float previousVelocityMagnitude = 0.0f;
 
   void Start() {
     projectileCooldownTimer = ProjectileCooldown;
-    previousVelocityMagnitude = 0.0f;
   }
 
   // Update is called once per frame
@@ -40,6 +39,7 @@ public class PlayerController : MonoBehaviour {
     else {
       executeJoyStickRotation();
     }
+    executeDash();
   }
 
   public bool IsBlocking() {
@@ -88,6 +88,15 @@ public class PlayerController : MonoBehaviour {
       joyStickLocation.Normalize();
       float angleToStick = (Mathf.Atan2(joyStickLocation.x, joyStickLocation.y) * Mathf.Rad2Deg);
       transform.rotation = Quaternion.Euler(0f, 0f, angleToStick);
+    }
+  }
+
+  private void executeDash() {
+    if (UseKeyboardControl && Input.GetKeyDown("n")) {
+      float adjustedRotationRadians = (transform.rotation.eulerAngles.z - 90.0f) * Mathf.Deg2Rad;
+      Vector2 facingDirection = new Vector2(Mathf.Cos(adjustedRotationRadians), Mathf.Sin(adjustedRotationRadians));
+      GetComponent<Rigidbody2D>().velocity +=  (facingDirection * 10.0f);
+      //Debug.Log(transform.forward * 10);
     }
   }
 
