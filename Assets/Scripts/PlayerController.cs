@@ -128,8 +128,7 @@ public class PlayerController : MonoBehaviour {
         dashVector = facingDirection * DashPower;
       }
       //Set the veloctiy
-      GetComponent<Rigidbody2D>().velocity = dashVector;
-      
+      GetComponent<Rigidbody2D>().velocity += dashVector;
     }
     else if(dashInput == 0) {
       isPressingDash = false;
