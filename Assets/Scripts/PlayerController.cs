@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
   public float AccelerationFactor = 0.55f;
   
   private bool isPressingAttack = false;
+  private bool isPressingDash = false;
   private bool isBlocking = false;
   private float projectileCooldownTimer;
   private float previousVelocityMagnitude = 0.0f;
@@ -96,7 +97,15 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void executeDash() {
-    if (UseKeyboardControl && Input.GetKeyDown("n")) {
+    float dashInput;
+    if (UseKeyboardControl) {
+      dashInput = Input.GetAxis("Dash");
+    }
+    else {
+      dashInput = Input.GetAxis("DashJ" + PlayerNumber);
+    }
+    if (dashInput != 0 && !isPressingDash) {
+      isPressingDash = true;
       if (movementDirection.magnitude != 0.0f) {
         GetComponent<Rigidbody2D>().velocity += (movementDirection * 10.0f);
       }
@@ -106,6 +115,9 @@ public class PlayerController : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity += (facingDirection * 10.0f);
       }
       //Debug.Log(transform.forward * 10);
+    }
+    else if(dashInput == 0) {
+      isPressingDash = false;
     }
   }
 
