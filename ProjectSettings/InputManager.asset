@@ -70,6 +70,22 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
+    m_Name: DashK
+    descriptiveName: Keyboard Dash
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: left shift
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: HorizontalRotationJ1
     descriptiveName: 
     descriptiveNegativeName: 
@@ -164,6 +180,22 @@ InputManager:
     invert: 0
     type: 2
     axis: 8
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: DashJ1
+    descriptiveName: Player 1 Dash
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 5
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
     joyNum: 1
   - serializedVersion: 3
     m_Name: HorizontalRotationJ2
@@ -262,6 +294,22 @@ InputManager:
     axis: 8
     joyNum: 2
   - serializedVersion: 3
+    m_Name: DashJ2
+    descriptiveName: Player 2 Dash
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 5
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 2
+  - serializedVersion: 3
     m_Name: HorizontalRotationJ3
     descriptiveName: Player 3 Rotation
     descriptiveNegativeName: 
@@ -358,6 +406,22 @@ InputManager:
     axis: 8
     joyNum: 3
   - serializedVersion: 3
+    m_Name: DashJ3
+    descriptiveName: Player 3 Dash
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 5
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 3
+  - serializedVersion: 3
     m_Name: HorizontalRotationJ4
     descriptiveName: Player 4 Rotation
     descriptiveNegativeName: 
@@ -452,4 +516,20 @@ InputManager:
     invert: 0
     type: 2
     axis: 8
+    joyNum: 4
+  - serializedVersion: 3
+    m_Name: DashJ4
+    descriptiveName: Player 4 Dash
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 5
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
     joyNum: 4
