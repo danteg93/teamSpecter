@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//TODO dash CD
+
 public class PlayerController : MonoBehaviour {
 
   // Use this for initialization
   public bool UseKeyboardControl = false;
   public int PlayerNumber = 0;
   public float ProjectileCooldown = 1.0f;
+  public float DashCooldown = 1.0f;
   public float Speed = 0f;
   public GameObject projectile;
   public float AccelerationFactor = 0.55f;
@@ -16,11 +19,13 @@ public class PlayerController : MonoBehaviour {
   private bool isPressingDash = false;
   private bool isBlocking = false;
   private float projectileCooldownTimer;
+  private float dashCooldownTimer;
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
   void Start() {
     projectileCooldownTimer = ProjectileCooldown;
+    dashCooldownTimer = DashCooldown;
   }
 
   // Update is called once per frame
@@ -109,8 +114,9 @@ public class PlayerController : MonoBehaviour {
       dashInput = Input.GetAxis("DashJ" + PlayerNumber);
     }
     //makes sure that this doesnt get called a million times
-    if (dashInput != 0 && !isPressingDash) {
+    if (dashInput != 0 && !isPressingDash && dashCooldownTimer == DashCooldown) {
       isPressingDash = true;
+      dashCooldownTimer -= Time.deltaTime;
       //movement Direction gets calculated in the executeMovement function.
       //If you are moving, the dash will take you in that direction.
       if (movementDirection.magnitude != 0.0f) {
@@ -133,7 +139,13 @@ public class PlayerController : MonoBehaviour {
     else if(dashInput == 0) {
       isPressingDash = false;
     }
-    //Debug.Log(previousVelocity.magnitude);
+    //Decrease the timer
+    if (dashCooldownTimer < DashCooldown && dashCooldownTimer > 0) {
+      dashCooldownTimer -= Time.deltaTime;
+    }
+    else if (dashCooldownTimer <= 0) {
+      dashCooldownTimer = DashCooldown;
+    }
   }
 
   private void processSlashInput() {
