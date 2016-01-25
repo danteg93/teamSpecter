@@ -214,29 +214,6 @@ Prefab:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &411143055 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 185174, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
-  m_PrefabInternal: {fileID: 876058641}
---- !u!114 &411143056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 411143055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseKeyboardControl: 0
-  PlayerNumber: 2
-  ProjectileCooldown: 1
-  DashCooldown: 1
-  Speed: 5
-  projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
-  AccelerationFactor: 0.55
-  DashPower: 15
 --- !u!1001 &591423893
 Prefab:
   m_ObjectHideFlags: 0
@@ -328,29 +305,6 @@ Prefab:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &591423894 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 185174, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
-  m_PrefabInternal: {fileID: 591423893}
---- !u!114 &591423895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 591423894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseKeyboardControl: 0
-  PlayerNumber: 3
-  ProjectileCooldown: 1
-  DashCooldown: 1
-  Speed: 5
-  projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
-  AccelerationFactor: 0.55
-  DashPower: 15
 --- !u!1001 &698269642
 Prefab:
   m_ObjectHideFlags: 0
@@ -488,29 +442,6 @@ Prefab:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &973159821 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 185174, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
-  m_PrefabInternal: {fileID: 276399620}
---- !u!114 &973159822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 973159821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseKeyboardControl: 0
-  PlayerNumber: 4
-  ProjectileCooldown: 1
-  DashCooldown: 1
-  Speed: 5
-  projectile: {fileID: 144756, guid: d35e5691b5e16f5408b59f9941c70a2a, type: 2}
-  AccelerationFactor: 0.55
-  DashPower: 15
 --- !u!1 &1267544605
 GameObject:
   m_ObjectHideFlags: 0
