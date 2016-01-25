@@ -7,7 +7,7 @@ public class ShrinkingArena : MonoBehaviour {
     void Shrink()
     {
         //subtract 0.5 from the scale of the arena
-        transform.localScale += new Vector3(-0.5F, -0.5F, 0);
+        transform.localScale += new Vector3(-0.1F, -0.1F, 0);
     }
 
 	// Use this for initialization

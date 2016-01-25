@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour {
   // Update is called once per frame
   void Update() {
     processShootBullet();
-    processSlashInput();
     processBlockInput();
   }
 
@@ -108,7 +107,7 @@ public class PlayerController : MonoBehaviour {
     //get the value for the dash input
     float dashInput;
     if (UseKeyboardControl) {
-      dashInput = Input.GetAxis("Dash");
+      dashInput = Input.GetAxis("DashK");
     }
     else {
       dashInput = Input.GetAxis("DashJ" + PlayerNumber);
@@ -148,10 +147,11 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  // Removed until our first character is complete.
   private void processSlashInput() {
     float slashInput;
     if (UseKeyboardControl) {
-      slashInput = Input.GetAxis("Slash");
+      slashInput = Input.GetAxis("SlashK");
     } else {
       slashInput = Input.GetAxis("SlashJ" + PlayerNumber);
     }
@@ -184,9 +184,9 @@ public class PlayerController : MonoBehaviour {
 
   private void processBlockInput() {
     // Check if a player is trying to block
-    if (Input.GetAxis("Block") != 0) {
+    if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0) {
       isBlocking = true;
-    } else if (Input.GetAxis("Block") == 0) {
+    } else if (UseKeyboardControl && Input.GetAxis("BlockK") == 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0) {
       isBlocking = false;
     }
   }
