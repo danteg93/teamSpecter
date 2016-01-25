@@ -35,10 +35,11 @@ public class Gamemode : MonoBehaviour {
     } else {
       winText += "The game ended in a tie!";
     }
+    winText += "\nPress \'Start\' to Restart";
 
     // Display the game over text and a button to restart the level
     GUI.Box(new Rect(0, 0, Screen.width, Screen.height), winText);
-    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart")) {
+    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("GeneralPause") != 0) {
       gameOverOn = false;
       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
