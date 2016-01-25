@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
   public float DashCooldown = 1.0f;
   public float Speed = 0f;
   public GameObject projectile;
+  public GameObject shield;
   public float AccelerationFactor = 0.55f;
   public float DashPower = 15.0f;
   
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour {
   void Start() {
     projectileCooldownTimer = ProjectileCooldown;
     dashCooldownTimer = DashCooldown;
+    shield = (GameObject)Instantiate(shield, transform.position, transform.rotation);
+    shield.transform.parent = transform;
   }
 
   // Update is called once per frame
@@ -184,10 +187,12 @@ public class PlayerController : MonoBehaviour {
 
   private void processBlockInput() {
     // Check if a player is trying to block
-    if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0) {
+    if ((UseKeyboardControl && Input.GetAxis("BlockK") != 0) || (!UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0)) {
       isBlocking = true;
-    } else if (UseKeyboardControl && Input.GetAxis("BlockK") == 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0) {
+      shield.GetComponent<ShieldController>().ActivateShield();
+    } else {
       isBlocking = false;
+      shield.GetComponent<ShieldController>().DeactivateShield();
     }
   }
 
