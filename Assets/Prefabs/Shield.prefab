@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 451690}
   - 33: {fileID: 3359722}
   - 23: {fileID: 2347580}
-  - 114: {fileID: 11443910}
+  - 114: {fileID: 11432768}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193626}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11443910
+--- !u!114 &11432768
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -71,9 +71,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 193626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155dd5961ea56ff47a7184549a579a0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ade382c47321c44e826ed0d3bd2df7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cooldown: 5
+  ShieldActiveTime: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -84,6 +86,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Cooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShieldActiveTime
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
