@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 //TODO dash CD
 
@@ -17,8 +18,9 @@ public class PlayerController : MonoBehaviour {
   private float primaryAbilityCooldownTimer = 0;
 
   // Blocking ability initialization.
-  public GameObject shield;
-  private bool isBlocking = false;
+  public GameObject Shield;
+  private bool shieldOn = false;
+  private float shieldCooldownTimer = 0;
 
   public float DashCooldown = 1.0f;
   public float DashPower = 15.0f;
@@ -28,17 +30,13 @@ public class PlayerController : MonoBehaviour {
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
-  void Start() {
-    shield = (GameObject)Instantiate(shield, transform.position, transform.rotation);
-    shield.transform.parent = transform;
-  }
-
-  // Update is called once per frame
+  // Process inputs that do not rely on physics updates.
   void Update() {
     processPrimaryAbilityInput();
     processBlockInput();
   }
 
+  // Process all other actions that do rely on physics updates.
   void FixedUpdate() {
     //Execute movement of the player. Code was way too similar, with the exception of one variable
     //so I left it as one function :P
@@ -56,8 +54,12 @@ public class PlayerController : MonoBehaviour {
     executeDash();
   }
 
-  public bool IsBlocking() {
-    return isBlocking;
+  public bool IsShieldOn() {
+    return shieldOn;
+  }
+
+  public void SetShieldOn(bool shieldState) {
+    shieldOn = shieldState;
   }
 
   public void Kill() {
@@ -154,7 +156,7 @@ public class PlayerController : MonoBehaviour {
   // Fire a bullet if the player is not performing other actions and
   // the cooldown is off. Reduce the cooldown if it is on.
   private void processPrimaryAbilityInput() {
-    if (isBlocking) { return; }
+    if (shieldOn) { return; }
     if (primaryAbilityCooldownTimer <= 0 && (!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0 || UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0)) {
       PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
       primaryAbilityCooldownTimer = PrimaryAbility.GetComponent<AbstractAbility>().Cooldown;
@@ -163,14 +165,14 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  // Activate a shield if the cooldown is off. Reduce the cooldown
+  // if it is on.
   private void processBlockInput() {
-    // Check if a player is trying to block
-    if ((UseKeyboardControl && Input.GetAxis("BlockK") != 0) || (!UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0)) {
-      isBlocking = true;
-      shield.GetComponent<ShieldController>().ActivateShield();
-    } else if (isBlocking) {
-      isBlocking = false;
-      shield.GetComponent<ShieldController>().DeactivateShield();
+    if (shieldCooldownTimer <= 0 && (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0)) {
+      Shield.GetComponent<ReflectiveShield>().Cast(this);
+      shieldCooldownTimer = Shield.GetComponent<ReflectiveShield>().Cooldown;
+    } else if (shieldCooldownTimer > 0) {
+      shieldCooldownTimer -= Time.deltaTime;
     }
   }
 }

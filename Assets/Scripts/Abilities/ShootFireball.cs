@@ -21,7 +21,7 @@ public class ShootFireball : AbstractAbility {
   // in the opposite direction if they are.
   void OnTriggerEnter2D(Collider2D col) {
     if (col.GetComponent<PlayerController>()) {
-      if (col.gameObject.GetComponent<PlayerController>().IsBlocking()) {
+      if (col.gameObject.GetComponent<PlayerController>().IsShieldOn()) {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         Speed = -Speed;
         GetComponent<Rigidbody2D>().AddForce(transform.up * -Speed);
@@ -32,7 +32,7 @@ public class ShootFireball : AbstractAbility {
     }
   }
 
-  // Instantiate the bullet prefab if the cooldown is off.
+  // Instantiate the bullet prefab.
   public override void Cast(PlayerController player) {
     Instantiate(gameObject, player.transform.position + (-player.transform.up * 1), player.transform.rotation);
   }
