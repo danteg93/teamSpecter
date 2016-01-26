@@ -5,6 +5,10 @@ using System.Collections;
 public class Gamemode : MonoBehaviour {
   private bool gameOverOn = false;
 
+  void Start() {
+    Cursor.visible = false;
+  }
+
   // Update is called once per frame
   void Update() {
     PlayerController[] players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
