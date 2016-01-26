@@ -70,9 +70,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 121064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 394990ace3c27455c93541a4e7a12a21, type: 3}
+  m_Script: {fileID: 11500000, guid: 3029f66c5bee67c458b24ea0864d8e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cooldown: 0.5
+  TimeToLive: 2
+  Speed: 500
 --- !u!212 &21205026
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -109,7 +112,23 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: Speed
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: TimeToLive
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Cooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cooldownTimer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121064}

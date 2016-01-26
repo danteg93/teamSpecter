@@ -1,39 +1,41 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 //TODO dash CD
 
 public class PlayerController : MonoBehaviour {
 
-  // Use this for initialization
+  // Basic player initialization.
   public bool UseKeyboardControl = false;
   public int PlayerNumber = 0;
-  public float ProjectileCooldown = 1.0f;
-  public float DashCooldown = 1.0f;
+
+  // Base attributes of the player object.
   public float Speed = 0f;
-  public GameObject projectile;
-  public GameObject shield;
   public float AccelerationFactor = 0.55f;
+
+  // Primary ability initialization.
+  public GameObject PrimaryAbility;
+  private float primaryAbilityCooldownTimer = 0;
+
+  // Blocking ability initialization.
+  public GameObject shield;
+  private bool isBlocking = false;
+
+  public float DashCooldown = 1.0f;
   public float DashPower = 15.0f;
   
-  private bool isPressingAttack = false;
   private bool isPressingDash = false;
-  private bool isBlocking = false;
-  private float projectileCooldownTimer;
-  private float dashCooldownTimer;
+  private float dashCooldownTimer = 0;
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
   void Start() {
-    projectileCooldownTimer = ProjectileCooldown;
-    dashCooldownTimer = DashCooldown;
     shield = (GameObject)Instantiate(shield, transform.position, transform.rotation);
     shield.transform.parent = transform;
   }
 
   // Update is called once per frame
   void Update() {
-    processShootBullet();
+    processPrimaryAbilityInput();
     processBlockInput();
   }
 
@@ -41,14 +43,15 @@ public class PlayerController : MonoBehaviour {
     //Execute movement of the player. Code was way too similar, with the exception of one variable
     //so I left it as one function :P
     executeMovement();
+
     // If the player is using the keyboard and mouse, execute that movement. Otherwise,
     // find the appropriate joystick for the player
     if (UseKeyboardControl) {
       executeMouseRotation();
-    }
-    else {
+    } else {
       executeJoyStickRotation();
     }
+
     //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
     executeDash();
   }
@@ -59,7 +62,7 @@ public class PlayerController : MonoBehaviour {
 
   public void Kill() {
     Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-    Destroy(this.gameObject);
+    Destroy(gameObject);
   }
 
   private void executeMovement() {
@@ -85,13 +88,11 @@ public class PlayerController : MonoBehaviour {
     movementDirection = newVelocity.normalized;
   }
 
+  // Calculate the angle from the player to the mouse and set the
+  // rotation of the player to that angle.
   private void executeMouseRotation() {
-    //Vector3 from the object to the mouse
     Vector3 objectToMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-    objectToMouse.Normalize();
-    //Good old arctan2 lmao
-    float angleToMouse = (Mathf.Atan2(objectToMouse.y, objectToMouse.x) * Mathf.Rad2Deg) + 90.0f; //The 90 assumes that the front of the sprite is the bottom part.  
-    //Do you even quaternion bro?
+    float angleToMouse = (Mathf.Atan2(objectToMouse.y, objectToMouse.x) * Mathf.Rad2Deg) + 90.0f; //The 90 assumes that the front of the sprite is the bottom part.
     transform.rotation = Quaternion.Euler(0f, 0f, angleToMouse);
   }
 
@@ -150,38 +151,15 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  // Removed until our first character is complete.
-  private void processSlashInput() {
-    float slashInput;
-    if (UseKeyboardControl) {
-      slashInput = Input.GetAxis("SlashK");
-    } else {
-      slashInput = Input.GetAxis("SlashJ" + PlayerNumber);
-    }
- 
-    // Perform an attack if the player is pressing an attack key
-    if (slashInput != 0) {
-      // Prevent the attack from occurring multiple times in one key press and
-      // the player from using multiple abilities at once (i.e. attack & block)
-      if (!isPressingAttack) {
-        isPressingAttack = true;
-
-        // Find all objects in range of the player, and push other player objects away
-        // TODO: This needs to only select things in front of the player
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1);
-        int i = 0;
-        while (i < hitColliders.Length) {
-          if (hitColliders[i].GetComponent<PlayerController>() != null) {
-            PlayerController player = hitColliders[i].GetComponent<PlayerController>();
-            if (player != this && !player.IsBlocking()) {
-              player.Kill();
-            }
-          }
-          i++;
-        }
-      }
-    } else if (slashInput == 0) {
-      isPressingAttack = false;
+  // Fire a bullet if the player is not performing other actions and
+  // the cooldown is off. Reduce the cooldown if it is on.
+  private void processPrimaryAbilityInput() {
+    if (isBlocking) { return; }
+    if (primaryAbilityCooldownTimer <= 0 && (!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0 || UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0)) {
+      PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
+      primaryAbilityCooldownTimer = PrimaryAbility.GetComponent<AbstractAbility>().Cooldown;
+    } else if (primaryAbilityCooldownTimer > 0) {
+      primaryAbilityCooldownTimer -= Time.deltaTime;
     }
   }
 
@@ -190,26 +168,9 @@ public class PlayerController : MonoBehaviour {
     if ((UseKeyboardControl && Input.GetAxis("BlockK") != 0) || (!UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0)) {
       isBlocking = true;
       shield.GetComponent<ShieldController>().ActivateShield();
-    } else {
+    } else if (isBlocking) {
       isBlocking = false;
       shield.GetComponent<ShieldController>().DeactivateShield();
-    }
-  }
-
-  private void processShootBullet() {
-    //If player is using keyboard controls then listen for keyboard press
-    //else, listen for joystick press
-    //also, projectileCooldown needs to be reset
-    if (((!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0) || (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0)) && projectileCooldownTimer == ProjectileCooldown) {
-      ProjectileController temp = ((GameObject)Instantiate(projectile, transform.position, transform.rotation)).GetComponent<ProjectileController>();
-      temp.SetOwnerAndShoot(transform.gameObject.name);
-      projectileCooldownTimer -= Time.deltaTime;
-    }
-    else if (projectileCooldownTimer < ProjectileCooldown && projectileCooldownTimer > 0) {
-      projectileCooldownTimer -= Time.deltaTime;
-    }
-    else if (projectileCooldownTimer <= 0) {
-      projectileCooldownTimer = ProjectileCooldown;
     }
   }
 }
