@@ -24,7 +24,6 @@ public class ReflectiveShield : AbstractAbility {
 
   // Destroy the shield if the player cancels it.
   public override void Uncast() {
-    print("uncast");
     Destroy(gameObject);
   }
 }

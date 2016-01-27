@@ -176,8 +176,6 @@ public class PlayerController : MonoBehaviour {
     if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0) {
       if (!isUsingSecondaryAbility) {
         isUsingSecondaryAbility = true;
-        print(Shield);
-        print(shieldOn);
         if (shieldOn) {
           secondaryAbilityCastList[0].GetComponent<AbstractAbility>().Uncast();
           shieldOn = false;
