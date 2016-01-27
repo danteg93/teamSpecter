@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 474906}
   - 212: {fileID: 21294044}
   - 50: {fileID: 5037976}
-  - 61: {fileID: 6165318}
   - 114: {fileID: 11477018}
+  - 58: {fileID: 5851420}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -77,8 +77,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &6165318
-BoxCollider2D:
+--- !u!58 &5851420
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -90,7 +90,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 6.2, y: 5.1299996}
+  m_Radius: 2.6
 --- !u!114 &11477018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,6 +204,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: 2.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
