@@ -56,6 +56,10 @@ public class PlayerController : MonoBehaviour {
     executeDash();
   }
 
+  public void ShieldDestroyed() {
+    if (shieldOn) { shieldOn = false; }
+  }
+
   public bool IsShieldOn() {
     return shieldOn;
   }

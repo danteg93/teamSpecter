@@ -10,7 +10,9 @@ public class ReflectiveShield : AbstractAbility {
   // the time is out or the player goes away (potentially from
   // dieing).
   void Update() {
-    if (ShieldActiveTime <= 0 || !player) { Destroy(gameObject); }
+    if (ShieldActiveTime <= 0 || !player) {
+      destroyShield();
+    }
     ShieldActiveTime -= Time.deltaTime;
     if (player) { transform.position = player.transform.position; }
   }
@@ -26,4 +28,12 @@ public class ReflectiveShield : AbstractAbility {
   public override void Uncast() {
     Destroy(gameObject);
   }
+
+  private void destroyShield() {
+    if (player) {
+      player.ShieldDestroyed();
+    }
+    Destroy(gameObject);
+  }
+
 }
