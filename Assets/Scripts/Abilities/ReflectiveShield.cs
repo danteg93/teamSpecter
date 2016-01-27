@@ -26,11 +26,11 @@ public class ReflectiveShield : AbstractAbility {
 
   // Destroy the shield if the player cancels it.
   public override void Uncast() {
-    Destroy(gameObject);
+    destroyShield();
   }
 
   private void destroyShield() {
-    if (player) {
+    if (player) { //let player know that shield will be destroyed, in case the player didn't toggle it
       player.ShieldDestroyed();
     }
     Destroy(gameObject);
