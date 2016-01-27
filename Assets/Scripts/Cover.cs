@@ -11,4 +11,9 @@ public class Cover : MonoBehaviour {
       Destroy(gameObject);
     }
   }
+
+  public void Break() {
+    if (IsBreakable) { Destroy(gameObject); }
+  }
+
 }

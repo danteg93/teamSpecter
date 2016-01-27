@@ -22,7 +22,7 @@ public class ShootFireball : AbstractAbility {
   void OnCollisionEnter2D(Collision2D col) {
     if (col.gameObject.GetComponent<PlayerController>()) {
       if (col.gameObject.GetComponent<PlayerController>().IsShieldOn()) {
-        reflectFireball();
+        reflectFireball(col.contacts[0].normal);
       } else {
         col.transform.gameObject.GetComponent<PlayerController>().Kill();
         Destroy(gameObject);
@@ -31,6 +31,10 @@ public class ShootFireball : AbstractAbility {
     else if (col.gameObject.GetComponent<Cover>()) { // Didnt combine with the first check, to keep it readable.
       if (!col.gameObject.GetComponent<Cover>().IsBreakable) {
         reflectFireball(col.contacts[0].normal);
+      }
+      else {
+        col.gameObject.GetComponent<Cover>().Break();
+        Destroy(gameObject);
       }
     }
   }
