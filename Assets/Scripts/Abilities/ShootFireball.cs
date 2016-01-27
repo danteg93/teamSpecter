@@ -19,18 +19,18 @@ public class ShootFireball : AbstractAbility {
   // On collision with an object
   // Kill players that are not currently blocking, or bounce
   // in the opposite direction if they are.
-  void OnTriggerEnter2D(Collider2D col) {
-    if (col.GetComponent<PlayerController>()) {
+  void OnCollisionEnter2D(Collision2D col) {
+    if (col.gameObject.GetComponent<PlayerController>()) {
       if (col.gameObject.GetComponent<PlayerController>().IsShieldOn()) {
-        revertDirection();
+        reflectFireball();
       } else {
         col.transform.gameObject.GetComponent<PlayerController>().Kill();
         Destroy(gameObject);
       }
     }
-    else if (col.GetComponent<Cover>()) { // Didnt combine with the first check, to keep it readable.
-      if (!col.GetComponent<Cover>().IsBreakable) {
-        revertDirection();
+    else if (col.gameObject.GetComponent<Cover>()) { // Didnt combine with the first check, to keep it readable.
+      if (!col.gameObject.GetComponent<Cover>().IsBreakable) {
+        reflectFireball(col.contacts[0].normal);
       }
     }
   }
@@ -39,7 +39,11 @@ public class ShootFireball : AbstractAbility {
     return Instantiate(gameObject, player.transform.position + (-player.transform.up * 1), player.transform.rotation) as GameObject;
   }
   //made this into a class since it gets used a lot
-  private void revertDirection() {
+  private void reflectFireball() {
     GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity * -1;
+  }
+  //This function will take a normal and revert collision based on that normal
+  private void reflectFireball(Vector2 collidingSurfaceNormal) {
+    GetComponent<Rigidbody2D>().velocity = Vector2.Reflect(GetComponent<Rigidbody2D>().velocity, collidingSurfaceNormal);
   }
 }

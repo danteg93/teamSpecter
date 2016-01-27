@@ -3,11 +3,14 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Gamemode : MonoBehaviour {
+
+  public bool DisplayMouse = true;
+
   private bool gameOverOn = false;
   private int winningPlayerNumber = 0;
 
   void Start() {
-    Cursor.visible = false;
+    Cursor.visible = DisplayMouse;
   }
 
   // Update is called once per frame
