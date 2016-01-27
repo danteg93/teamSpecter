@@ -25,7 +25,7 @@ public class ShootFireball : AbstractAbility {
         reflectFireball(col.contacts[0].normal);
       } else {
         col.transform.gameObject.GetComponent<PlayerController>().Kill();
-        Destroy(gameObject);
+        DestroyFireball();
       }
     }
     else if (col.gameObject.GetComponent<Cover>()) { // Didnt combine with the first check, to keep it readable.
@@ -34,13 +34,20 @@ public class ShootFireball : AbstractAbility {
       }
       else {
         col.gameObject.GetComponent<Cover>().Break();
-        Destroy(gameObject);
+        DestroyFireball();
       }
+    }
+    else if (col.gameObject.GetComponent<ShootFireball>()) { //Refkect fireballs if they collide.
+      reflectFireball(col.contacts[0].normal);
     }
   }
   // Instantiate the bullet prefab.
   public override GameObject Cast(PlayerController player) {
     return Instantiate(gameObject, player.transform.position + (-player.transform.up * 1), player.transform.rotation) as GameObject;
+  }
+  //this is here for the future, when there are aniamtions and other stuff
+  public void DestroyFireball() {
+    Destroy(gameObject);
   }
   //made this into a class since it gets used a lot
   private void reflectFireball() {
