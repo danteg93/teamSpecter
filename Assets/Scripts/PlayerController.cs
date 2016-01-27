@@ -60,10 +60,6 @@ public class PlayerController : MonoBehaviour {
     return shieldOn;
   }
 
-  public void SetShieldOn(bool shieldState) {
-    shieldOn = shieldState;
-  }
-
   public void Kill() {
     Cameraman.cameraman.CameraShake(0.5f, 0.1f);
     Destroy(gameObject);
@@ -180,10 +176,14 @@ public class PlayerController : MonoBehaviour {
     if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0) {
       if (!isUsingSecondaryAbility) {
         isUsingSecondaryAbility = true;
+        print(Shield);
+        print(shieldOn);
         if (shieldOn) {
           secondaryAbilityCastList[0].GetComponent<AbstractAbility>().Uncast();
+          shieldOn = false;
         } else if (shieldCooldownTimer <= 0) {
           secondaryAbilityCastList[0] = Shield.GetComponent<AbstractAbility>().Cast(this);
+          shieldOn = true;
           shieldCooldownTimer = Shield.GetComponent<AbstractAbility>().Cooldown;
         }
       }
