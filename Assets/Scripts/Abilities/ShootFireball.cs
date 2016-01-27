@@ -40,8 +40,6 @@ public class ShootFireball : AbstractAbility {
   }
   //made this into a class since it gets used a lot
   private void revertDirection() {
-    GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-    Speed = -Speed;
-    GetComponent<Rigidbody2D>().AddForce(transform.up * -Speed);
+    GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity * -1;
   }
 }
