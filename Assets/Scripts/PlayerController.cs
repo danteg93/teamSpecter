@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
   // Primary ability initialization.
   public GameObject PrimaryAbility;
+  private bool isUsingPrimaryAbility = false;
   private float primaryAbilityCooldownTimer = 0;
 
   // Blocking ability initialization.
@@ -156,12 +157,18 @@ public class PlayerController : MonoBehaviour {
   // the cooldown is off. Reduce the cooldown if it is on.
   private void processPrimaryAbilityInput() {
     if (shieldOn) { return; }
-    if (primaryAbilityCooldownTimer <= 0 && (!UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0 || UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0)) {
-      PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
-      primaryAbilityCooldownTimer = PrimaryAbility.GetComponent<AbstractAbility>().Cooldown;
-    } else if (primaryAbilityCooldownTimer > 0) {
-      primaryAbilityCooldownTimer -= Time.deltaTime;
+
+    if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 || !UseKeyboardControl && Input.GetAxis("ShootProjectileJ" + PlayerNumber) != 0) {
+      if (!isUsingPrimaryAbility && primaryAbilityCooldownTimer <= 0) {
+        isUsingPrimaryAbility = true;
+        PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
+        primaryAbilityCooldownTimer = PrimaryAbility.GetComponent<AbstractAbility>().Cooldown;
+      }
+    } else if (isUsingPrimaryAbility) {
+      isUsingPrimaryAbility = false;
     }
+
+    if (primaryAbilityCooldownTimer > 0) { primaryAbilityCooldownTimer -= Time.deltaTime; }
   }
 
   // Activate a shield if the cooldown is off. Reduce the cooldown
