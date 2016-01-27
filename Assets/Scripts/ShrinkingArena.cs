@@ -14,11 +14,15 @@ public class ShrinkingArena : MonoBehaviour {
     //Shrink the arena starting 15 seconds in and every 10 seconds after.
     InvokeRepeating("Shrink", 3, 3);
   }
-
   // Update is called once per frame
   void Update() {
     if (transform.localScale.x <= 0.5 && transform.localScale.y <= 0.5) {
       CancelInvoke("Shrink");
+    }
+  }
+  void OnTriggerExit2D(Collider2D coll) {
+    if (coll.tag == "Player") {
+      coll.transform.GetComponent<PlayerController>().Kill();
     }
   }
 }

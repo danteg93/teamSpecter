@@ -25,12 +25,6 @@ public class Gamemode : MonoBehaviour {
     }
   }
 
-  void OnTriggerExit2D(Collider2D coll) {
-    if (coll.tag == "Player") {
-      coll.transform.GetComponent<PlayerController>().Kill();
-    }
-  }
-
   void OnGUI() {
     if (gameOverOn) {
       displayGameOverGUI();
