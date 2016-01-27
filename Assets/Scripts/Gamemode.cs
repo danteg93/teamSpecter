@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Gamemode : MonoBehaviour {
   private bool gameOverOn = false;
+  private int winningPlayerNumber = 0;
 
   void Start() {
     Cursor.visible = false;
@@ -11,8 +12,12 @@ public class Gamemode : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
+    if (gameOverOn) { return; }
     PlayerController[] players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
-    if (players.Length <= 1) {
+    if (players.Length == 1) {
+      gameOverOn = true;
+      winningPlayerNumber = players[0].PlayerNumber;
+    } else if (players.Length == 0) {
       gameOverOn = true;
     }
   }
@@ -29,19 +34,16 @@ public class Gamemode : MonoBehaviour {
     }
   }
 
+  // Display who won and a button to restart the level.
   private void displayGameOverGUI() {
-    // Find the still living player to display who won, or make the text displayed
-    // say there was a tie
-    PlayerController winningPlayer = FindObjectOfType(typeof(PlayerController)) as PlayerController;
     string winText = "Game Over. ";
-    if (winningPlayer) {
-      winText += "Player " + winningPlayer.PlayerNumber + " wins!";
+    if (winningPlayerNumber != 0) {
+      winText += "Player " + winningPlayerNumber + " wins!";
     } else {
       winText += "The game ended in a tie!";
     }
     winText += "\nPress \'Start\' to Restart";
 
-    // Display the game over text and a button to restart the level
     GUI.Box(new Rect(0, 0, Screen.width, Screen.height), winText);
     if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("GeneralPause") != 0) {
       gameOverOn = false;
