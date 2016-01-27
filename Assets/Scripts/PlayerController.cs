@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
 
   // Blocking ability initialization.
   public GameObject Shield;
+  private bool isUsingSecondaryAbility = false;
+  private GameObject[] secondaryAbilityCastList = new GameObject[1];
   private bool shieldOn = false;
   private float shieldCooldownTimer = 0;
 
@@ -171,14 +173,24 @@ public class PlayerController : MonoBehaviour {
     if (primaryAbilityCooldownTimer > 0) { primaryAbilityCooldownTimer -= Time.deltaTime; }
   }
 
-  // Activate a shield if the cooldown is off. Reduce the cooldown
-  // if it is on.
+  // Deactivate the shield if the player already has an active shield
+  // on them. Activate a shield if the cooldown is off. Reduce the
+  // cooldown if it is on.
   private void processBlockInput() {
-    if (shieldCooldownTimer <= 0 && (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0)) {
-      Shield.GetComponent<ReflectiveShield>().Cast(this);
-      shieldCooldownTimer = Shield.GetComponent<ReflectiveShield>().Cooldown;
-    } else if (shieldCooldownTimer > 0) {
-      shieldCooldownTimer -= Time.deltaTime;
+    if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis("BlockJ" + PlayerNumber) != 0) {
+      if (!isUsingSecondaryAbility) {
+        isUsingSecondaryAbility = true;
+        if (shieldOn) {
+          secondaryAbilityCastList[0].GetComponent<AbstractAbility>().Uncast();
+        } else if (shieldCooldownTimer <= 0) {
+          secondaryAbilityCastList[0] = Shield.GetComponent<AbstractAbility>().Cast(this);
+          shieldCooldownTimer = Shield.GetComponent<AbstractAbility>().Cooldown;
+        }
+      }
+    } else if (isUsingSecondaryAbility) {
+      isUsingSecondaryAbility = false;
     }
+
+    if (shieldCooldownTimer > 0) { shieldCooldownTimer -= Time.deltaTime; }
   }
 }

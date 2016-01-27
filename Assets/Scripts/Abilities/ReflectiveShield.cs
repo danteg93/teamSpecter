@@ -19,9 +19,16 @@ public class ReflectiveShield : AbstractAbility {
   }
 
   // Instantiate a new shield prefab and set the player.
-  public override void Cast(PlayerController player) {
+  public override GameObject Cast(PlayerController player) {
     GameObject shield = Instantiate(gameObject, player.transform.position, player.transform.rotation) as GameObject;
     shield.GetComponent<ReflectiveShield>().player = player;
     player.SetShieldOn(true);
+    return shield;
+  }
+
+  // Destroy the shield if the player cancels it.
+  public override void Uncast() {
+    print("uncast");
+    Destroy(gameObject);
   }
 }
