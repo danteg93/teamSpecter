@@ -22,18 +22,24 @@ public class ShootFireball : AbstractAbility {
   void OnTriggerEnter2D(Collider2D col) {
     if (col.GetComponent<PlayerController>()) {
       if (col.gameObject.GetComponent<PlayerController>().IsShieldOn()) {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        Speed = -Speed;
-        GetComponent<Rigidbody2D>().AddForce(transform.up * -Speed);
+        revertDirection();
       } else {
         col.transform.gameObject.GetComponent<PlayerController>().Kill();
         Destroy(gameObject);
       }
     }
+    else if (col.GetComponent<Cover>()) { // Didnt combine with the first check, to keep it readable.
+      if (!col.GetComponent<Cover>().IsBreakable) {
+        revertDirection();
+      }
+    }
   }
-
   // Instantiate the bullet prefab.
   public override void Cast(PlayerController player) {
     Instantiate(gameObject, player.transform.position + (-player.transform.up * 1), player.transform.rotation);
+  }
+  //made this into a class since it gets used a lot
+  private void revertDirection() {
+    GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity * -1;
   }
 }
