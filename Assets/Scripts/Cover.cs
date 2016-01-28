@@ -7,8 +7,8 @@ public class Cover : MonoBehaviour {
 
   void OnTriggerEnter2D(Collider2D col) {
     if (IsBreakable && col.GetComponent<ShootFireball>()) {
-      Destroy(col.gameObject);
-      Destroy(gameObject);
+	  col.GetComponent<ShootFireball>().DestroyFireball();
+	  Destroy(gameObject);
     }
   }
 
