@@ -3,11 +3,14 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Gamemode : MonoBehaviour {
+
+  public bool DisplayMouse = true;
+
   private bool gameOverOn = false;
   private int winningPlayerNumber = 0;
 
   void Start() {
-    Cursor.visible = false;
+    Cursor.visible = DisplayMouse;
   }
 
   // Update is called once per frame
@@ -19,12 +22,6 @@ public class Gamemode : MonoBehaviour {
       winningPlayerNumber = players[0].PlayerNumber;
     } else if (players.Length == 0) {
       gameOverOn = true;
-    }
-  }
-
-  void OnTriggerExit2D(Collider2D coll) {
-    if (coll.tag == "Player") {
-      coll.transform.GetComponent<PlayerController>().Kill();
     }
   }
 

@@ -24,11 +24,13 @@ public class PlayerController : MonoBehaviour {
   private bool shieldOn = false;
   private float shieldCooldownTimer = 0;
 
+  // Dash ability initialization.
   public float DashCooldown = 1.0f;
   public float DashPower = 15.0f;
-  
   private bool isPressingDash = false;
   private float dashCooldownTimer = 0;
+
+  //Delta related variables
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
@@ -54,6 +56,10 @@ public class PlayerController : MonoBehaviour {
 
     //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
     executeDash();
+  }
+
+  public void ShieldDestroyed() {
+    if (shieldOn) { shieldOn = false; }
   }
 
   public bool IsShieldOn() {
