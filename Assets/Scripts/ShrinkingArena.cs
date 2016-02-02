@@ -17,7 +17,10 @@ public class ShrinkingArena : MonoBehaviour {
       shrinking = true;
     }
 
-    if (shrinking) { transform.localScale -= new Vector3(0.01f, 0.01f, 1); }
+    if (shrinking) {
+	  transform.localScale -= new Vector3(0.01f, 0.01f, 1);
+      // Cameraman.cameraman.shrinkCamera(0.8F, 1);
+	}
 
     if (targetScale <= transform.localScale.x) { shrinking = false; }
   }
