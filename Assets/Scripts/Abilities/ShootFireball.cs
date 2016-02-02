@@ -29,10 +29,10 @@ public class ShootFireball : AbstractAbility {
       }
     }
     else if (col.gameObject.GetComponent<Cover>()) { // Didnt combine with the first check, to keep it readable.
-      if (!col.gameObject.GetComponent<Cover>().IsBreakable) {
+      if (col.gameObject.GetComponent<Cover>().IsReflecting) {
         reflectFireball(col.contacts[0].normal);
       }
-      else {
+      else if (col.gameObject.GetComponent<Cover>().IsBreakable) {
         col.gameObject.GetComponent<Cover>().Break();
         DestroyFireball();
       }
