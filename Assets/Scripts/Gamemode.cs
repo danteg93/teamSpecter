@@ -42,7 +42,7 @@ public class Gamemode : MonoBehaviour {
     winText += "\nPress \'Start\' to Restart";
 
     GUI.Box(new Rect(0, 0, Screen.width, Screen.height), winText);
-    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("GeneralPause") != 0) {
+    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("KB_Pause") != 0 || Input.GetAxis("XBOX_Pause") != 0 || Input.GetAxis("PS4_Pause") != 0) {
       gameOverOn = false;
       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
