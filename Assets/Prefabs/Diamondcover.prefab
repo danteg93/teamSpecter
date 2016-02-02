@@ -460,6 +460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11428762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -472,6 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11432722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -484,6 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11435150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -496,6 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 1
 --- !u!114 &11446782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -508,6 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11454930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -520,6 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11456246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -532,6 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11483450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -544,6 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11483966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -556,6 +564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!114 &11487760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -568,6 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBreakable: 0
+  IsReflecting: 0
 --- !u!212 &21204768
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -844,7 +854,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: IsReflecting
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 114992}
