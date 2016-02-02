@@ -322,6 +322,10 @@ Prefab:
       propertyPath: DashPower
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: XBOX
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -475,6 +479,10 @@ Prefab:
       propertyPath: DashPower
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: XBOX
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -574,7 +582,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: UseKeyboardControl
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 438626, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_RootOrder
@@ -603,6 +611,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: PS4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -785,6 +797,10 @@ Prefab:
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: DashPower
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: XBOX
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -1141,7 +1157,7 @@ GameObject:
   - 4: {fileID: 1583897011}
   - 114: {fileID: 1583897010}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Gamemode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
