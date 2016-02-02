@@ -10,7 +10,7 @@ public class ShrinkingArena : MonoBehaviour {
   private bool shrinking;
 
   void Update() {
-    if (transform.localScale.x <= 1.5) { return; }
+    if (transform.localScale.x <= 1.5 || StartTime == 0) { return; }
 
     if (!shrinking && (int)Time.time >= StartTime && (int)Time.time % Interval == 0) {
       targetScale = transform.localScale.x - 0.2f;
