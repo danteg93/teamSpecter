@@ -8,6 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/levelSelect.unity
   - enabled: 1
-    path: Assets/Scenes/SandArena.unity
-  - enabled: 1
     path: Assets/Scenes/ShrinkingSands.unity
+  - enabled: 1
+    path: Assets/Scenes/SandArena.unity
