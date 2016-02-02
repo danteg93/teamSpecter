@@ -194,6 +194,10 @@ Prefab:
       propertyPath: UseKeyboardControl
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: XBOX
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_IsPrefabParent: 0
@@ -562,6 +566,10 @@ Prefab:
       propertyPath: PlayerNumber
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: XBOX
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_IsPrefabParent: 0
@@ -829,6 +837,10 @@ Prefab:
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: PlayerNumber
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: XBOX
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -2159,6 +2171,10 @@ Prefab:
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: PlayerNumber
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: ControllerType
+      value: XBOX
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
