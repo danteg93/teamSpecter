@@ -1744,7 +1744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca80ada75f38a4248aeb318071fd319d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTime: 6
+  ShrinkStartTime: 6
   Interval: 5
 --- !u!1 &1986786346
 GameObject:
