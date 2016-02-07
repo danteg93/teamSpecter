@@ -3,24 +3,27 @@ using System.Collections;
 
 public class ShrinkingArena : MonoBehaviour {
 
-  public int StartTime;
+  public int ShrinkStartTime;
   public int Interval;
 
   private float targetScale;
-  private bool shrinking;
+	private bool shrinking = false;
+	private int sceneStartingTime;
 
+	void Start(){
+		sceneStartingTime = (int)Time.time;
+	}
   void Update() {
-    if (transform.localScale.x <= 1.5 || StartTime == 0) { return; }
+		if (transform.localScale.x <= 1.5 || ShrinkStartTime == 0) { return; }
 
-    if (!shrinking && (int)Time.time >= StartTime && (int)Time.time % Interval == 0) {
-      targetScale = transform.localScale.x - 0.2f;
+		if (!shrinking && (int)Time.time >= (ShrinkStartTime + sceneStartingTime) && (int)Time.time % Interval == 0) {
       shrinking = true;
+      targetScale = transform.localScale.x - 0.2f;
     }
 
     if (shrinking) {
-	  transform.localScale -= new Vector3(0.01f, 0.01f, 1);
-      // Cameraman.cameraman.shrinkCamera(0.8F, 1);
-	}
+	    transform.localScale -= new Vector3(0.01f, 0.01f, 1);
+    }
 
     if (targetScale <= transform.localScale.x) { shrinking = false; }
   }
