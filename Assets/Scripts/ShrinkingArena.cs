@@ -12,13 +12,13 @@ public class ShrinkingArena : MonoBehaviour {
 
 	void Start(){
 		sceneStartingTime = (int)Time.time;
-    targetScale = transform.localScale.x - 0.2f;
 	}
   void Update() {
 		if (transform.localScale.x <= 1.5 || ShrinkStartTime == 0) { return; }
 
 		if (!shrinking && (int)Time.time >= (ShrinkStartTime + sceneStartingTime) && (int)Time.time % Interval == 0) {
       shrinking = true;
+      targetScale = transform.localScale.x - 0.2f;
     }
 
     if (shrinking) {
