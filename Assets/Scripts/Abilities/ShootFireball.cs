@@ -43,7 +43,7 @@ public class ShootFireball : AbstractAbility {
   }
   // Instantiate the bullet prefab.
   public override GameObject Cast(PlayerController player) {
-    return Instantiate(gameObject, player.transform.position + (-player.transform.up * 1), player.transform.rotation) as GameObject;
+    return Instantiate(gameObject, player.transform.position + (-player.transform.up * 0.7f), player.transform.rotation) as GameObject;
   }
   //this is here for the future, when there are aniamtions and other stuff
   public void DestroyFireball() {
