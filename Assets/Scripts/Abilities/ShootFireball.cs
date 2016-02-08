@@ -17,7 +17,6 @@ public class ShootFireball : AbstractAbility {
   void Update() {
     if (TimeToLive <= 0) { Destroy(gameObject); }
     TimeToLive -= Time.deltaTime;
-    Debug.Log(GetComponent<Rigidbody2D>().velocity.magnitude);
     //This makes it so that if the fireball slows down enough then it blows up.
     //Also, the Time.time > timeSpawned + 0.1f makes it so that the fireball doesnt blow up 
     //before it has a chance to catch some speed. 
