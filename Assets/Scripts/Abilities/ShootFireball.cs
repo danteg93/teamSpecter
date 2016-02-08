@@ -5,8 +5,11 @@ public class ShootFireball : AbstractAbility {
   public float TimeToLive;
   public float Speed;
 
+  private float timeSpawned;
+
   void Start() {
     GetComponent<Rigidbody2D>().AddForce(transform.up * -Speed);
+    timeSpawned = Time.time;
   }
 
   // Decrease the time to live every frame for the bullet and
@@ -14,6 +17,13 @@ public class ShootFireball : AbstractAbility {
   void Update() {
     if (TimeToLive <= 0) { Destroy(gameObject); }
     TimeToLive -= Time.deltaTime;
+    Debug.Log(GetComponent<Rigidbody2D>().velocity.magnitude);
+    //This makes it so that if the fireball slows down enough then it blows up.
+    //Also, the Time.time > timeSpawned + 0.1f makes it so that the fireball doesnt blow up 
+    //before it has a chance to catch some speed. 
+    if (Time.time > timeSpawned + 0.1f && GetComponent<Rigidbody2D>().velocity.magnitude < 8.0f) {
+      DestroyFireball();
+    }
   }
 
   // On collision with an object
