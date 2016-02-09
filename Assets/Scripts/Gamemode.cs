@@ -4,13 +4,21 @@ using System.Collections;
 
 public class Gamemode : MonoBehaviour {
 
-  public bool DisplayMouse = true;
+  public static Gamemode gamemode;
 
+  public bool DisplayMouse = true;
   private bool gameOverOn = false;
   private int winningPlayerNumber = 0;
+  public bool gameStart = false;
+  private string readyTime = "";
 
+  void Awake()
+  {
+    gamemode = this;
+  }
   void Start() {
     Cursor.visible = DisplayMouse;
+    StartCoroutine(displayCountDown());
   }
 
   // Update is called once per frame
@@ -26,6 +34,11 @@ public class Gamemode : MonoBehaviour {
   }
 
   void OnGUI() {
+
+    if (readyTime != "")
+    {
+      GUI.Box(new Rect((Screen.width / 2) - 25, (Screen.height / 2) - 25, 50, 50), readyTime);
+    }
     if (gameOverOn) {
       displayGameOverGUI();
     }
@@ -50,7 +63,7 @@ public class Gamemode : MonoBehaviour {
       cleanAndLoadScene("levelSelect");
     }
   }
-
+  
   private void cleanAndLoadScene(string sceneName) {
     GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
     foreach (GameObject projectile in projectiles) {
@@ -58,5 +71,21 @@ public class Gamemode : MonoBehaviour {
       projectile.gameObject.GetComponent<ShootFireball>().DestroyProjectile();
     }
     SceneManager.LoadScene(sceneName);
+  }
+  
+  // Display a countdown timer before game start
+  IEnumerator displayCountDown()
+  {
+    readyTime = "3";
+    yield return new WaitForSeconds(1);
+    readyTime = "2";
+    yield return new WaitForSeconds(1);
+    readyTime = "1";
+    yield return new WaitForSeconds(1);
+    readyTime = "GO!";
+    yield return new WaitForSeconds(1);
+    gameStart = true;
+    readyTime = "";
+    // display text, can be replaced by sprites for better visual
   }
 }

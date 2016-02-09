@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System;
 //TODO dash CD
 
 public class PlayerController : MonoBehaviour {
@@ -35,28 +35,42 @@ public class PlayerController : MonoBehaviour {
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
+  //gameStart from Gamemode.cs
+  private bool gameStart;
+
   // Process inputs that do not rely on physics updates.
   void Update() {
-    processPrimaryAbilityInput();
-    processBlockInput();
+
+
+    if (Gamemode.gamemode.gameStart == true)
+    {
+      processPrimaryAbilityInput();
+      processBlockInput();
+    }
+
+   
   }
 
   // Process all other actions that do rely on physics updates.
   void FixedUpdate() {
     //Execute movement of the player. Code was way too similar, with the exception of one variable
     //so I left it as one function :P
-    executeMovement();
+    if (Gamemode.gamemode.gameStart == true)
+    {
+      executeMovement();
 
-    // If the player is using the keyboard and mouse, execute that movement. Otherwise,
-    // find the appropriate joystick for the player
-    if (UseKeyboardControl) {
+      //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
+      executeDash();
+    }
+
+      // If the player is using the keyboard and mouse, execute that movement. Otherwise,
+      // find the appropriate joystick for the player
+      if (UseKeyboardControl) {
       executeMouseRotation();
     } else {
       executeJoyStickRotation();
     }
 
-    //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
-    executeDash();
   }
 
   public void ShieldDestroyed() {
