@@ -4,13 +4,18 @@ using System.Collections;
 
 public class Gamemode : MonoBehaviour {
 
-  public bool DisplayMouse = true;
+  public static Gamemode gamemode;
 
+  public bool DisplayMouse = true;
   private bool gameOverOn = false;
   private int winningPlayerNumber = 0;
-  private bool gameStart = false;
+  public bool gameStart = false;
   private string readyTime = "";
 
+  void Awake()
+  {
+    gamemode = this;
+  }
   void Start() {
     Cursor.visible = DisplayMouse;
     StartCoroutine(displayCountDown());
