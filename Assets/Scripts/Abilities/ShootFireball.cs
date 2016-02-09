@@ -21,7 +21,7 @@ public class ShootFireball : AbstractAbility {
     //Also, the Time.time > timeSpawned + 0.1f makes it so that the fireball doesnt blow up 
     //before it has a chance to catch some speed. 
     if (Time.time > timeSpawned + 0.1f && GetComponent<Rigidbody2D>().velocity.magnitude < 8.0f) {
-      DestroyFireball();
+      DestroyProjectile();
     }
   }
 
