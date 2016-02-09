@@ -326,6 +326,10 @@ Prefab:
       propertyPath: ControllerType
       value: XBOX
       objectReference: {fileID: 0}
+    - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
+      propertyPath: UseKeyboardControl
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -487,6 +491,34 @@ Prefab:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &634488449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 1383459357}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 634488450}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &634488450
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 1383459357}
+  m_GameObject: {fileID: 634488449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 686250778}
+  m_Father: {fileID: 1986833168}
+  m_RootOrder: 2
 --- !u!1001 &661870360
 Prefab:
   m_ObjectHideFlags: 0
@@ -533,10 +565,18 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fb9188327299a24abd33ead93001efd, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &686250778 stripped
+--- !u!4 &686250778
 Transform:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 419056, guid: 9ea397599c5c73f4dbd35fc3c1831870, type: 2}
   m_PrefabInternal: {fileID: 1383459357}
+  m_GameObject: {fileID: 1181337429}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 634488450}
+  m_RootOrder: 0
 --- !u!1001 &698269642
 Prefab:
   m_ObjectHideFlags: 0
@@ -944,6 +984,21 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fb9188327299a24abd33ead93001efd, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1181337429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 1383459357}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 686250778}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1267544605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,7 +1327,7 @@ Transform:
   m_Children:
   - {fileID: 337387561}
   - {fileID: 1466107184}
-  - {fileID: 686250778}
+  - {fileID: 634488450}
   - {fileID: 81249196}
   - {fileID: 1877368078}
   - {fileID: 1978491758}
