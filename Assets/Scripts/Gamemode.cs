@@ -12,16 +12,15 @@ public class Gamemode : MonoBehaviour {
   public bool gameStart = false;
   private string readyTime = "";
 
-  void Awake()
-  {
+  void Awake() {
     gamemode = this;
   }
+
   void Start() {
     Cursor.visible = DisplayMouse;
     StartCoroutine(displayCountDown());
   }
 
-  // Update is called once per frame
   void Update() {
     if (gameOverOn) { return; }
     PlayerController[] players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
@@ -34,8 +33,7 @@ public class Gamemode : MonoBehaviour {
   }
 
   void OnGUI() {
-
-    if (readyTime != "")
+    if (!gameStart)
     {
       GUI.Box(new Rect((Screen.width / 2) - 25, (Screen.height / 2) - 25, 50, 50), readyTime);
     }
@@ -85,7 +83,6 @@ public class Gamemode : MonoBehaviour {
     readyTime = "GO!";
     yield return new WaitForSeconds(1);
     gameStart = true;
-    readyTime = "";
     // display text, can be replaced by sprites for better visual
   }
 }

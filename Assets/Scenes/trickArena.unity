@@ -601,7 +601,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: UseKeyboardControl
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 438626, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_RootOrder
@@ -727,7 +727,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: ControllerType
-      value: PS4
+      value: XBOX
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -1088,6 +1088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
+  gameStart: 0
 --- !u!4 &1502292730
 Transform:
   m_ObjectHideFlags: 0

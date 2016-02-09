@@ -35,42 +35,31 @@ public class PlayerController : MonoBehaviour {
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
-  //gameStart from Gamemode.cs
-  private bool gameStart;
-
   // Process inputs that do not rely on physics updates.
   void Update() {
-
-
-    if (Gamemode.gamemode.gameStart == true)
-    {
-      processPrimaryAbilityInput();
-      processBlockInput();
-    }
-
-   
+    if (Gamemode.gamemode.gameStart == false) { return; }
+    processPrimaryAbilityInput();
+    processBlockInput();
   }
 
   // Process all other actions that do rely on physics updates.
   void FixedUpdate() {
-    //Execute movement of the player. Code was way too similar, with the exception of one variable
-    //so I left it as one function :P
-    if (Gamemode.gamemode.gameStart == true)
-    {
-      executeMovement();
-
-      //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
-      executeDash();
-    }
-
-      // If the player is using the keyboard and mouse, execute that movement. Otherwise,
-      // find the appropriate joystick for the player
-      if (UseKeyboardControl) {
+    // If the player is using the keyboard and mouse, execute that movement. Otherwise,
+    // find the appropriate joystick for the player
+    if (UseKeyboardControl) {
       executeMouseRotation();
     } else {
       executeJoyStickRotation();
     }
+    
+    // Anything below this line will not be executed until the game countdown hits 0.
+    if (Gamemode.gamemode.gameStart == false) { return; }
 
+    //Execute movement of the player.
+    executeMovement();
+
+    //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
+    executeDash();
   }
 
   public void ShieldDestroyed() {
