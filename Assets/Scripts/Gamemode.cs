@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Gamemode : MonoBehaviour {
 
@@ -22,7 +23,6 @@ public class Gamemode : MonoBehaviour {
   }
 
   void Update() {
-    Debug.Log(Input.GetAxis("XBOX_J1_Pause"));
     if (gameOverOn) { return; }
     PlayerController[] players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     if (players.Length == 1) {
@@ -63,14 +63,19 @@ public class Gamemode : MonoBehaviour {
     }
   }
 
+  //TODO: It's a known issue that pressing the right trigger in the ps4 controller will act as the pause button of an xbox controller
+  //I've been trying to fix this issue forawhile but I need to step away and take a breather
+  //If anyone wants to see whats up then please do
   private bool checkPause() {
     string[] joystikcsConnected = InputController.inputController.GetPlayerMappings();
-    Debug.Log(Input.GetAxis("PS4_J3_Pause"));
-    Debug.Log(Input.GetAxis("XBOX_J1_Pause"));
+    List<int> ps4Controllers = InputController.inputController.GetPS4Controllers();
     for (int i = 0; i < joystikcsConnected.Length; i++) {
-      if(joystikcsConnected[i] != "k" && Input.GetAxis(joystikcsConnected[i] + "_Pause") != 0){
-        Debug.Log(joystikcsConnected[i] +  "pressed start from index " + i );
-        return true;
+      if (joystikcsConnected[i] != "k" && Input.GetAxis(joystikcsConnected[i] + "_Pause") != 0) {
+        for (int j = 0; j < ps4Controllers.Count; i++) {
+          if (Input.GetAxis(joystikcsConnected[ps4Controllers[j]] + "_Primary") != 1) {
+            return true;
+          }
+        }
       }
     }
       return false;

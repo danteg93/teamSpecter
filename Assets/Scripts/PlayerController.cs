@@ -5,8 +5,11 @@ using System;
 public class PlayerController : MonoBehaviour {
 
   // Basic player initialization.
-  public bool UseKeyboardControl = false;
   public int PlayerNumber = 0;
+  //made this private because it automatically gets mapped by the input controller
+  //this way, we only have to set a player number
+  //Once we do automatic scene population we can rethink this. But this makes the thing look cleaner for now
+  private bool UseKeyboardControl = false;
   private string inputMapping;
 
   // Base attributes of the player object.
