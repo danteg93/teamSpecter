@@ -4,8 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Cover
+  - StartMenuGUI
+  - MainMenuGUI
+  - GameOverGUI
   - Projectile
+  - Cover
   layers:
   - Default
   - TransparentFX
