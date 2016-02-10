@@ -680,7 +680,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: ControllerType
-      value: XBOX
+      value: PS4
       objectReference: {fileID: 0}
     - target: {fileID: 21255130, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_Color.g
