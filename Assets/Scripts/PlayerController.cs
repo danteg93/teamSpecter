@@ -6,8 +6,8 @@ public class PlayerController : MonoBehaviour {
 
   // Basic player initialization.
   public bool UseKeyboardControl = false;
-  public string ControllerType;
   public int PlayerNumber = 0;
+  private string inputMapping;
 
   // Base attributes of the player object.
   public float Speed = 0f;
@@ -36,6 +36,16 @@ public class PlayerController : MonoBehaviour {
   private Vector2 movementDirection = Vector2.zero;
 
   // Process inputs that do not rely on physics updates.
+  void Start() {
+    inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
+    //Debug.Log("player " + PlayerNumber + " mapped to " + inputMapping);
+    if (inputMapping == "k") {
+      UseKeyboardControl = true;
+    }
+    else {
+      UseKeyboardControl = false;
+    }
+  }
   void Update() {
     if (Gamemode.gamemode.gameStart == false) { return; }
     processPrimaryAbilityInput();
@@ -83,7 +93,7 @@ public class PlayerController : MonoBehaviour {
       newVelocity = new Vector2(Input.GetAxisRaw("HorizontalMovementK") * Speed, Input.GetAxisRaw("VerticalMovementK") * Speed);
     }
     else {
-      newVelocity = new Vector2(Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_HorizontalMovement") * Speed, -Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_VerticalMovement") * Speed);
+      newVelocity = new Vector2(Input.GetAxis(inputMapping + "_HorizontalMovement") * Speed, -Input.GetAxis(inputMapping + "_VerticalMovement") * Speed);
     }
     //if the direction of the movement has changed and you are not static then you will want to "deaccelerate"
     if (newVelocity.magnitude - previousVelocity.magnitude < 0.0f && GetComponent<Rigidbody2D>().velocity.magnitude != 0.0f) {
@@ -108,7 +118,7 @@ public class PlayerController : MonoBehaviour {
 
   private void executeJoyStickRotation() {
     //Vector2 that says where the joystick is
-    Vector2 joyStickLocation = new Vector2(Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_HorizontalRotation"), Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_VerticalRotation"));
+    Vector2 joyStickLocation = new Vector2(Input.GetAxis(inputMapping + "_HorizontalRotation"), Input.GetAxis(inputMapping + "_VerticalRotation"));
     if (joyStickLocation.magnitude != 0) { //this wont reset your rotation if you randomly let go off the controller
       joyStickLocation.Normalize();
       float angleToStick = (Mathf.Atan2(joyStickLocation.x, joyStickLocation.y) * Mathf.Rad2Deg);
@@ -124,7 +134,7 @@ public class PlayerController : MonoBehaviour {
       dashInput = Input.GetAxis("DashK");
     }
     else {
-      dashInput = Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_Dash");
+      dashInput = Input.GetAxis(inputMapping + "_Dash");
     }
     //makes sure that this doesnt get called a million times
     if (dashInput != 0 && !isPressingDash && dashCooldownTimer == DashCooldown) {
@@ -166,7 +176,7 @@ public class PlayerController : MonoBehaviour {
   private void processPrimaryAbilityInput() {
     if (shieldOn) { return; }
 
-    if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 || !UseKeyboardControl && Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_Primary") > 0) {
+    if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 || !UseKeyboardControl && Input.GetAxis(inputMapping + "_Primary") > 0) {
       if (!isUsingPrimaryAbility && primaryAbilityCooldownTimer <= 0) {
         isUsingPrimaryAbility = true;
         PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
@@ -183,7 +193,7 @@ public class PlayerController : MonoBehaviour {
   // on them. Activate a shield if the cooldown is off. Reduce the
   // cooldown if it is on.
   private void processBlockInput() {
-    if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_Secondary") > 0) {
+    if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis(inputMapping + "_Secondary") > 0) {
       if (!isUsingSecondaryAbility) {
         isUsingSecondaryAbility = true;
         if (shieldOn) {

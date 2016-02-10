@@ -22,6 +22,7 @@ public class Gamemode : MonoBehaviour {
   }
 
   void Update() {
+    Debug.Log(Input.GetAxis("XBOX_J1_Pause"));
     if (gameOverOn) { return; }
     PlayerController[] players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     if (players.Length == 1) {
@@ -53,7 +54,7 @@ public class Gamemode : MonoBehaviour {
     winText += "\nPress \'Start\' to Restart";
 
     GUI.Box(new Rect(0, 0, Screen.width, Screen.height), winText);
-    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("KB_Pause") != 0 || Input.GetAxis("XBOX_Pause") != 0 || Input.GetAxis("PS4_Pause") != 0) {
+    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("KB_Pause") != 0 || checkPause()) {
       gameOverOn = false;
       cleanAndLoadScene(SceneManager.GetActiveScene().name);
     } else if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 250, 200, 100), "Level Select")) {
@@ -61,7 +62,20 @@ public class Gamemode : MonoBehaviour {
       cleanAndLoadScene("levelSelect");
     }
   }
-  
+
+  private bool checkPause() {
+    string[] joystikcsConnected = InputController.inputController.GetPlayerMappings();
+    Debug.Log(Input.GetAxis("PS4_J3_Pause"));
+    Debug.Log(Input.GetAxis("XBOX_J1_Pause"));
+    for (int i = 0; i < joystikcsConnected.Length; i++) {
+      if(joystikcsConnected[i] != "k" && Input.GetAxis(joystikcsConnected[i] + "_Pause") != 0){
+        Debug.Log(joystikcsConnected[i] +  "pressed start from index " + i );
+        return true;
+      }
+    }
+      return false;
+  }
+
   private void cleanAndLoadScene(string sceneName) {
     GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
     foreach (GameObject projectile in projectiles) {
