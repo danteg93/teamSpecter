@@ -250,11 +250,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: UseKeyboardControl
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: ControllerType
-      value: XBOX
+      value: PS4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -680,7 +680,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: ControllerType
-      value: XBOX
+      value: PS4
       objectReference: {fileID: 0}
     - target: {fileID: 21255130, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_Color.g
@@ -891,6 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
+  gameStart: 0
 --- !u!4 &736733614
 Transform:
   m_ObjectHideFlags: 0
@@ -1714,7 +1715,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1943872396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 4.089245, y: 4.089245, z: 0}
   m_Children: []
   m_Father: {fileID: 0}

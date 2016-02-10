@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
+  gameStart: 0
 --- !u!4 &10978518
 Transform:
   m_ObjectHideFlags: 0
@@ -232,11 +233,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: UseKeyboardControl
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: ControllerType
-      value: XBOX
+      value: PS4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -884,7 +885,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11477018, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: ControllerType
-      value: XBOX
+      value: PS4
       objectReference: {fileID: 0}
     - target: {fileID: 21255130, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
       propertyPath: m_Color.r
@@ -2646,7 +2647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca80ada75f38a4248aeb318071fd319d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTime: 0
+  ShrinkStartTime: 0
   Interval: 0
 --- !u!4 &1948332695 stripped
 Transform:

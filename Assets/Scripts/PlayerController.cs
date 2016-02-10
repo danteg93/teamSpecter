@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System;
 //TODO dash CD
 
 public class PlayerController : MonoBehaviour {
@@ -37,16 +37,13 @@ public class PlayerController : MonoBehaviour {
 
   // Process inputs that do not rely on physics updates.
   void Update() {
+    if (Gamemode.gamemode.gameStart == false) { return; }
     processPrimaryAbilityInput();
     processBlockInput();
   }
 
   // Process all other actions that do rely on physics updates.
   void FixedUpdate() {
-    //Execute movement of the player. Code was way too similar, with the exception of one variable
-    //so I left it as one function :P
-    executeMovement();
-
     // If the player is using the keyboard and mouse, execute that movement. Otherwise,
     // find the appropriate joystick for the player
     if (UseKeyboardControl) {
@@ -54,6 +51,12 @@ public class PlayerController : MonoBehaviour {
     } else {
       executeJoyStickRotation();
     }
+    
+    // Anything below this line will not be executed until the game countdown hits 0.
+    if (Gamemode.gamemode.gameStart == false) { return; }
+
+    //Execute movement of the player.
+    executeMovement();
 
     //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
     executeDash();
