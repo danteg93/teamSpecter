@@ -29,12 +29,10 @@ public class ShrinkingArena : MonoBehaviour {
   }
 
   void OnTriggerExit2D(Collider2D coll) {
-    print(coll.tag);
     if (coll.tag == "Player") {
       coll.transform.GetComponent<PlayerController>().Kill();
     }
     else if (coll.tag == "Cover") {
-      print("here");
       Destroy(coll);
     }
   }

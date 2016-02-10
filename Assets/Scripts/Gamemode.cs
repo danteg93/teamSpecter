@@ -59,7 +59,7 @@ public class Gamemode : MonoBehaviour {
       cleanAndLoadScene(SceneManager.GetActiveScene().name);
     } else if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 250, 200, 100), "Level Select")) {
       gameOverOn = false;
-      cleanAndLoadScene("levelSelect");
+      cleanAndLoadScene("Menu");
     }
   }
 
