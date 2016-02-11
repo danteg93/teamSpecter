@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour {
   // on them. Activate a shield if the cooldown is off. Reduce the
   // cooldown if it is on.
   private void processBlockInput() {
-    if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_Secondary") > 0) {
+		if (UseKeyboardControl && Input.GetAxis("BlockK") != 0 || !UseKeyboardControl && Input.GetAxis(ControllerType + "_J" + PlayerNumber + "_Secondary") > 0 ||(Input.GetKeyDown(KeyCode.C) && PlayerNumber == 1)) {
       if (!isUsingSecondaryAbility) {
         isUsingSecondaryAbility = true;
         if (shieldOn) {
@@ -196,6 +196,21 @@ public class PlayerController : MonoBehaviour {
       isUsingSecondaryAbility = false;
     }
 
-    if (shieldCooldownTimer > 0) { shieldCooldownTimer -= Time.deltaTime; }
+		if (shieldCooldownTimer > 0) { 
+			shieldCooldownTimer -= Time.deltaTime; 
+			if (PlayerNumber == 1) {this.GetComponent<SpriteRenderer> ().color = Color.black;
+			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.black;
+			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.black;
+			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.black;
+			}
+		
+		} else {
+			if (PlayerNumber == 1) { GetComponent<SpriteRenderer> ().color = Color.red;
+			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.blue;
+			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.yellow;
+			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.green;
+			}
+
+		}
   }
 }
