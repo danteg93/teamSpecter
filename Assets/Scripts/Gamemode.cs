@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Gamemode : MonoBehaviour {
 
@@ -53,7 +54,7 @@ public class Gamemode : MonoBehaviour {
     winText += "\nPress \'Start\' to Restart";
 
     GUI.Box(new Rect(0, 0, Screen.width, Screen.height), winText);
-    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("KB_Pause") != 0 || Input.GetAxis("XBOX_Pause") != 0 || Input.GetAxis("PS4_Pause") != 0) {
+    if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Restart") || Input.GetAxis("KB_Pause") != 0 || checkPause()) {
       gameOverOn = false;
       cleanAndLoadScene(SceneManager.GetActiveScene().name);
     } else if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 250, 200, 100), "Level Select")) {
@@ -61,7 +62,25 @@ public class Gamemode : MonoBehaviour {
       cleanAndLoadScene("Menu");
     }
   }
-  
+
+  //TODO: It's a known issue that pressing the right trigger in the ps4 controller will act as the pause button of an xbox controller
+  //I've been trying to fix this issue forawhile but I need to step away and take a breather
+  //If anyone wants to see whats up then please do
+  private bool checkPause() {
+    string[] joystikcsConnected = InputController.inputController.GetPlayerMappings();
+    List<int> ps4Controllers = InputController.inputController.GetPS4Controllers();
+    for (int i = 0; i < joystikcsConnected.Length; i++) {
+      if (joystikcsConnected[i] != "k" && Input.GetAxis(joystikcsConnected[i] + "_Pause") != 0) {
+        for (int j = 0; j < ps4Controllers.Count; i++) {
+          if (Input.GetAxis(joystikcsConnected[ps4Controllers[j]] + "_Primary") != 1) {
+            return true;
+          }
+        }
+      }
+    }
+      return false;
+  }
+
   private void cleanAndLoadScene(string sceneName) {
     GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
     foreach (GameObject projectile in projectiles) {
