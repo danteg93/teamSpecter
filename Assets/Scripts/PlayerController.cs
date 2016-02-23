@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
     }
   }
   void Update() {
-    if (Gamemode.gamemode.gameStart == false) { return; }
+    if (!Gamemode.gamemode.RoundStarted()) { return; }
     processPrimaryAbilityInput();
     processBlockInput();
   }
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour {
     }
     
     // Anything below this line will not be executed until the game countdown hits 0.
-    if (Gamemode.gamemode.gameStart == false) { return; }
+    if (!Gamemode.gamemode.RoundStarted()) { return; }
 
     //Execute movement of the player.
     executeMovement();

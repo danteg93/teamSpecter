@@ -117,7 +117,7 @@ Transform:
   - {fileID: 1808656487}
   - {fileID: 163880248}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1001 &95744633
 Prefab:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
-  gameStart: 0
+  WinningScore: 3
 --- !u!4 &278590849 stripped
 Transform:
   m_PrefabParentObject: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
-  gameStart: 0
+  WinningScore: 3
 --- !u!4 &405125173 stripped
 Transform:
   m_PrefabParentObject: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}
@@ -774,7 +774,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1 &1207998633
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,47 +835,6 @@ Transform:
   m_LocalScale: {x: 6.6666665, y: 6.6666665, z: 4.821228}
   m_Children: []
   m_Father: {fileID: 2130666309}
-  m_RootOrder: 1
---- !u!1 &1268298337
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1268298339}
-  - 114: {fileID: 1268298338}
-  m_Layer: 0
-  m_Name: GameMode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1268298338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1268298337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 739c2bc88e0cf2c49914f6282f79acc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DisplayMouse: 1
-  gameStart: 0
---- !u!4 &1268298339
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1268298337}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02147563, y: 0.35638592, z: -3.8554688}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!4 &1294058252 stripped
 Transform:
@@ -955,7 +914,7 @@ Transform:
   m_LocalScale: {x: 2.4320607, y: 1, z: 1.390499}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1001 &1380953577
 Prefab:
   m_ObjectHideFlags: 0
@@ -1026,7 +985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
-  gameStart: 0
+  WinningScore: 3
 --- !u!1001 &1533540566
 Prefab:
   m_ObjectHideFlags: 0
@@ -1323,7 +1282,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!114 &2020864136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,7 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
-  gameStart: 0
+  WinningScore: 3
 --- !u!4 &2130666309 stripped
 Transform:
   m_PrefabParentObject: {fileID: 474906, guid: 0de3696851399479185a8ce1a04df22f, type: 2}

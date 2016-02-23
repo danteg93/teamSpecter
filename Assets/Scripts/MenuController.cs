@@ -27,17 +27,11 @@ public class MenuController : MonoBehaviour {
     }
   }
 
-  public void StartGame() {
-    currentPage = Page.Main;
-  }
+  public void StartGame() { currentPage = Page.Main; }
 
-  public void LoadScene(int sceneNumber) {
-    SceneManager.LoadScene(sceneNumber);
-  }
+  public void LoadScene(int sceneNumber) { SceneManager.LoadScene(sceneNumber); }
 
-  public void Quit() {
-    Application.Quit();
-  }
+  public void Quit() { Application.Quit(); }
 
   private void showStartMenu() {
     startMenuGUI.SetActive(true);
