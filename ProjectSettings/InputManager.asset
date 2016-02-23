@@ -102,8 +102,8 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: XBOX_Pause
-    descriptiveName: Xbox Pause
+    m_Name: XBOX_J1_Pause
+    descriptiveName: Xbox P1 Pause
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 7
@@ -116,7 +116,55 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: XBOX_J2_Pause
+    descriptiveName: Xbox P2 Pause
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 7
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: XBOX_J3_Pause
+    descriptiveName: Xbox P3 Pause
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 7
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 3
+  - serializedVersion: 3
+    m_Name: XBOX_J4_Pause
+    descriptiveName: Xbox P4 Pause
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 7
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 4
   - serializedVersion: 3
     m_Name: XBOX_J1_HorizontalMovement
     descriptiveName: Xbox 360 P1 Horizontal Movement
@@ -566,8 +614,8 @@ InputManager:
     axis: 0
     joyNum: 4
   - serializedVersion: 3
-    m_Name: PS4_Pause
-    descriptiveName: PS4 Pause Button
+    m_Name: PS4_J1_Pause
+    descriptiveName: PS4 P1 Pause Button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 9
@@ -580,7 +628,55 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: PS4_J2_Pause
+    descriptiveName: PS4 P2 Pause Button
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 9
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: PS4_J3_Pause
+    descriptiveName: PS4 P3 Pause Button
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 9
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 3
+  - serializedVersion: 3
+    m_Name: PS4_J4_Pause
+    descriptiveName: PS4 P4 Pause Button
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 9
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.3
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 4
   - serializedVersion: 3
     m_Name: PS4_J1_HorizontalMovement
     descriptiveName: PS4 P1 Horizontal Movement

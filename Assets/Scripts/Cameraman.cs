@@ -9,6 +9,7 @@ public class Cameraman : MonoBehaviour {
 
   private float shrinkTimer;
   private float shrinkValue;
+  private Vector3 cameraPosition;
 
   // Use this for initialization
   void Awake() {
@@ -20,7 +21,7 @@ public class Cameraman : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    if (shakeTimer >= 0) {
+    if (shakeTimer > 0) {
       executeCameraShake();
     }
 
@@ -31,14 +32,21 @@ public class Cameraman : MonoBehaviour {
   }
 
   public void CameraShake(float shakeDuration, float shakePower) {
+    cameraPosition = new Vector3(transform.position.x , transform.position.y, transform.position.z);
     shakeAmount = shakePower;
     shakeTimer = shakeDuration;
   }
 
   private void executeCameraShake() {
     Vector2 ShakePos = Random.insideUnitCircle * shakeAmount;
-    transform.position = new Vector3(transform.position.x + ShakePos.x, transform.position.y, transform.position.z);
+    transform.position = new Vector3(transform.position.x + ShakePos.x, transform.position.y + ShakePos.y, transform.position.z);
     shakeTimer -= Time.deltaTime;
+    // camera moves back to center after shake
+    if (shakeTimer <= 0)
+    {
+      transform.position = cameraPosition;
+    }
+
   }
 
   public void shrinkCamera(float shrinkPower, float shrinkDuration)
@@ -52,6 +60,5 @@ public class Cameraman : MonoBehaviour {
   {
     Camera.main.orthographicSize -= shrinkValue;
     shrinkTimer -= Time.deltaTime;
-
   }
 }
