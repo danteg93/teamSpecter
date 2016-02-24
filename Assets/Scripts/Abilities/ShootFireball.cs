@@ -33,7 +33,7 @@ public class ShootFireball : AbstractAbility {
   void OnCollisionEnter2D(Collision2D col) {
     if (col.gameObject.GetComponent<PlayerController>()) {
       if (col.gameObject.GetComponent<PlayerController>().IsShieldOn()) {
-        col.rigidbody.AddForce(transform.up * -1500);
+        col.rigidbody.AddForce(-GetComponent<Rigidbody2D>().velocity.normalized * -1500);
         reflectFireball(col.contacts[0].normal);
       } else {
         col.gameObject.GetComponent<PlayerController>().Kill();
