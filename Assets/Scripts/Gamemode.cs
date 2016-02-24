@@ -108,11 +108,11 @@ public class Gamemode : MonoBehaviour {
     string scoreboardText = "Game Over. ";
     if (roundWinnerNumber != 0) {
       scoreboardText += "Player " + roundWinnerNumber;
-      scoreboardText += scores.Contains(3) ? " wins the game!" : " wins this round!";
+      scoreboardText += gameOver ? " wins the game!" : " wins this round!";
     } else {
       scoreboardText += "This round ended in a tie!";
     }
-    scoreboardText += "\n\n Current Scores:\n";
+    scoreboardText += gameOver ? "\n\n Final Scores:\n" : "\n\n Current Scores:\n";
     for (int i = 0; i < 4; i++) {
       scoreboardText += "\nPlayer " + (i + 1) + ": " + scores[i];
     }
