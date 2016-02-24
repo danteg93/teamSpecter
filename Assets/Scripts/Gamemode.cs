@@ -26,8 +26,12 @@ public class Gamemode : MonoBehaviour {
   // Make the Gamemode accessible from any script and
   // ensure it persists between scene loads.
   void Awake() {
-    gamemode = this;
-    DontDestroyOnLoad(this);
+    if (gamemode == null) {
+      gamemode = this;
+      DontDestroyOnLoad(gameObject);
+    } else if (gamemode != this) {
+      Destroy(gameObject);
+    }
   }
 
   // Turn off the cursor if the editor told us to.
@@ -139,10 +143,9 @@ public class Gamemode : MonoBehaviour {
     }
     SceneManager.LoadScene(sceneName);
   }
-  
+
   // Display a countdown timer before each round starts.
-  IEnumerator displayCountDown()
-  {
+  IEnumerator displayCountDown() {
     for (int i = 3; i >= 0; i--) {
       countdownText = i == 0 ? "GO!" : i.ToString();
       yield return new WaitForSeconds(1);
