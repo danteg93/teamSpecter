@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class MenuController : MonoBehaviour {
 
@@ -29,13 +30,18 @@ public class MenuController : MonoBehaviour {
     }
   }
 
+  public void StartGame() {
+    //This line is here so that the button is actually highlighted on entry
+    mainMenuGUI.SetActive(true);
+    EventSystem.current.SetSelectedGameObject(mainMenuGUI.transform.GetChild(0).gameObject);
+    currentPage = Page.Main; 
+  }
+
   IEnumerator TutorialLoad (float loadTime, int sceneNumber) {
     loadingImage.SetActive(true);
     yield return new WaitForSeconds(loadTime);
     SceneManager.LoadScene(sceneNumber);
   }
-
-  public void StartGame() { currentPage = Page.Main; }
 
   public void LoadScene(int sceneNumber) {
         if (sceneNumber == 1 || sceneNumber == 2|| sceneNumber == 3)
