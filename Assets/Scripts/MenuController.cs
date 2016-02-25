@@ -6,6 +6,8 @@ public class MenuController : MonoBehaviour {
 
   enum Page { Start, Main, GameOver }
 
+    public GameObject loadingImage;
+
   private Page currentPage = Page.Start;
   private GameObject startMenuGUI;
   private GameObject mainMenuGUI;
@@ -27,9 +29,25 @@ public class MenuController : MonoBehaviour {
     }
   }
 
+  IEnumerator TutorialLoad (float loadTime, int sceneNumber) {
+    loadingImage.SetActive(true);
+    yield return new WaitForSeconds(loadTime);
+    SceneManager.LoadScene(sceneNumber);
+  }
+
   public void StartGame() { currentPage = Page.Main; }
 
-  public void LoadScene(int sceneNumber) { SceneManager.LoadScene(sceneNumber); }
+  public void LoadScene(int sceneNumber) {
+        if (sceneNumber == 1 || sceneNumber == 2|| sceneNumber == 3)
+        {
+            StartCoroutine(TutorialLoad(5, sceneNumber));
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneNumber);
+        }
+        
+    }
 
   public void Quit() { Application.Quit(); }
 
