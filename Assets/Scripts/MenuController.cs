@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class MenuController : MonoBehaviour {
 
@@ -27,7 +28,12 @@ public class MenuController : MonoBehaviour {
     }
   }
 
-  public void StartGame() { currentPage = Page.Main; }
+  public void StartGame() {
+    //This line is here so that the button is actually highlighted on entry
+    mainMenuGUI.SetActive(true);
+    EventSystem.current.SetSelectedGameObject(mainMenuGUI.transform.GetChild(0).gameObject);
+    currentPage = Page.Main; 
+  }
 
   public void LoadScene(int sceneNumber) { SceneManager.LoadScene(sceneNumber); }
 
