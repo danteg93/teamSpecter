@@ -124,7 +124,7 @@ public class Gamemode : MonoBehaviour {
     string[] joystikcsConnected = InputController.inputController.GetPlayerMappings();
     List<int> ps4Controllers = InputController.inputController.GetPS4Controllers();
     for (int i = 0; i < joystikcsConnected.Length; i++) {
-      if (joystikcsConnected[i] != "k" && Input.GetAxis(joystikcsConnected[i] + "_Pause") > 0) {
+      if (joystikcsConnected[i] != "k" && Input.GetAxis(joystikcsConnected[i] + "_Pause") != 0) {
         for (int j = 0; j < ps4Controllers.Count; i++) {
           if (Input.GetAxis(joystikcsConnected[ps4Controllers[j]] + "_Primary") != 1) {
             return true;
