@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
   }
 
   public void kill() {
-    Destroy(this.gameObject);
+    Destroy(gameObject);
   }
 
   private void setUpGame() {
