@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
   void Awake() {
     if (gameManager == null) {
       DontDestroyOnLoad(gameObject);
-
       gameManager = this;
     }
     else if (gameManager != this) {
@@ -37,6 +36,10 @@ public class GameManager : MonoBehaviour {
         break;
 
     }
+  }
+
+  public void kill() {
+    Destroy(this.gameObject);
   }
 
   private void setUpGame() {

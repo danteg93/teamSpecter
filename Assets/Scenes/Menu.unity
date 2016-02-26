@@ -195,7 +195,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1486590885}
+      - m_Target: {fileID: 894011816}
         m_MethodName: setGameMode
         m_Mode: 3
         m_Arguments:
@@ -412,7 +412,7 @@ GameObject:
   - 114: {fileID: 405174406}
   m_Layer: 5
   m_Name: Game Title
-  m_TagString: Untagged
+  m_TagString: TitleLabel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -633,7 +633,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1486590885}
+      - m_Target: {fileID: 894011816}
         m_MethodName: setGameMode
         m_Mode: 3
         m_Arguments:
@@ -643,7 +643,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &455518796
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1457817878}
+  m_FirstSelected: {fileID: 455518791}
   m_sendNavigationEvents: 1
   m_DragThreshold: 5
 --- !u!4 &888968105
@@ -1982,7 +1982,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: First To Five
+  m_Text: First To 5
 --- !u!222 &1880797746
 CanvasRenderer:
   m_ObjectHideFlags: 0

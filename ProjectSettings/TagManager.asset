@@ -6,7 +6,7 @@ TagManager:
   tags:
   - SelectGameModeGUI
   - MainMenuGUI
-  - GameOverGUI
+  - TitleLabel
   - Projectile
   - Cover
   layers:
