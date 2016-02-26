@@ -27,6 +27,8 @@ public class Gamemode : MonoBehaviour {
   private int roundWinnerNumber = 0;
   private bool roundSetUp = false;
 
+  //Cleaning variables
+  private bool cleaning;
   // Make the Gamemode accessible from any script and
   // ensure it persists between scene loads.
   // This will get destroyed when endGame() gets called
@@ -48,6 +50,7 @@ public class Gamemode : MonoBehaviour {
     if (!roundSetUp) {
       setUpRound();
     }
+    cleaning = false;
   }
 
   // Check every frame of a round to see if there is a winner yet. If there is,
@@ -83,6 +86,7 @@ public class Gamemode : MonoBehaviour {
   }
 
   void OnLevelWasLoaded(int level) {
+    cleaning = false;
     setUpRound();
   }
 
@@ -101,7 +105,6 @@ public class Gamemode : MonoBehaviour {
   private void displayRoundOverGUI() {
     GUI.Box(new Rect(Screen.width / 2 - 200, 100, 400, 300), scoreboardText());
     if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 35, 150, 70), "Next Round") || Input.GetAxis("KB_Pause") != 0 || checkPause()) {
-      Debug.Log("Calling cleand and load from display round over GUI");
       cleanAndLoadScene(SceneManager.GetActiveScene().name);
     }
   }
@@ -147,13 +150,15 @@ public class Gamemode : MonoBehaviour {
   }
 
   private void cleanAndLoadScene(string sceneName) {
-    Debug.Log("being called in cleand load");
-    GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
-    foreach (GameObject projectile in projectiles) {
-      //Changed the function name in case we ever have other projectiles. This might change lat0r.  
-      projectile.gameObject.GetComponent<ShootFireball>().DestroyProjectile();
+    if (!cleaning) {
+      cleaning = true;
+      GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
+      foreach (GameObject projectile in projectiles) {
+        //Changed the function name in case we ever have other projectiles. This might change lat0r.  
+        projectile.gameObject.GetComponent<ShootFireball>().DestroyProjectile();
+      }
+      SceneManager.LoadScene(sceneName);
     }
-    SceneManager.LoadScene(sceneName);
   }
 
   private void setUpRound() {
