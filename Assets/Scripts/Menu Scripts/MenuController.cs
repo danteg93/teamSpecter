@@ -29,7 +29,12 @@ public class MenuController : MonoBehaviour {
     GameManager.gameManager.setGameMode(gameMode);
     ShowLevelSelect();
   }
-  public void ShowLevelSelect() {
+  public void ShowSelectGameMode(){
+    selectGameModeGUI.SetActive(true);
+    mainMenuGUI.SetActive(false);
+    EventSystem.current.SetSelectedGameObject(selectGameModeGUI.transform.GetChild(0).gameObject);
+  }
+  private void ShowLevelSelect() {
     selectGameModeGUI.SetActive(false);
     mainMenuGUI.SetActive(true);
     EventSystem.current.SetSelectedGameObject(mainMenuGUI.transform.GetChild(0).gameObject);
