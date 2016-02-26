@@ -69,7 +69,7 @@ public class Gamemode : MonoBehaviour {
   // when game levels load. Maybe even use this function and just check if
   // PlayerControllers exist in the scene.
   void OnLevelWasLoaded(int level) {
-    if (level == 3 || level == 4 || level == 5) {
+    if (level == 3 || level == 4 || level == 5 || level == 1) {
       roundStarted = false;
       roundOver = false;
       // TODO: This should be a prefab we instantiate that kills itself.
