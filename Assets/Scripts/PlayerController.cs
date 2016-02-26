@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour {
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
+  //Movement ability variables
+  private bool movementAndShootingAllowed = true;
+  //
+
   // Process inputs that do not rely on physics updates.
   void Start() {
     inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour {
     }
   }
   void Update() {
-    if (!Gamemode.gamemode.RoundStarted()) { return; }
+    if (!movementAndShootingAllowed) { return; }
     processPrimaryAbilityInput();
     processBlockInput();
   }
@@ -66,7 +70,7 @@ public class PlayerController : MonoBehaviour {
     }
     
     // Anything below this line will not be executed until the game countdown hits 0.
-    if (!Gamemode.gamemode.RoundStarted()) { return; }
+    if (!movementAndShootingAllowed) { return; }
 
     //Execute movement of the player.
     executeMovement();
@@ -86,6 +90,10 @@ public class PlayerController : MonoBehaviour {
   public void Kill() {
     Cameraman.cameraman.CameraShake(0.5f, 0.1f);
     Destroy(gameObject);
+  }
+
+  public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
+    movementAndShootingAllowed = allowMoveAndShoot;
   }
 
   private void executeMovement() {

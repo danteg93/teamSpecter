@@ -1094,7 +1094,7 @@ GameObject:
   - 4: {fileID: 1911058177}
   - 114: {fileID: 1911058176}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Gamemode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayMouse: 1
-  WinningScore: 3
+  WinningScore: 1
 --- !u!4 &1911058177
 Transform:
   m_ObjectHideFlags: 0
@@ -1124,7 +1124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
 --- !u!1 &2020864130
 GameObject:
   m_ObjectHideFlags: 0

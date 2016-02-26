@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 public class MenuController : MonoBehaviour {
 
   public GameObject LoadingImage;
+  public bool DisplayMouse = true;
 
   private GameObject mainMenuGUI;
 
   void Start() {
+    Cursor.visible = DisplayMouse;
     mainMenuGUI = GameObject.FindGameObjectWithTag("MainMenuGUI");
     mainMenuGUI.SetActive(true);
   }
@@ -21,12 +23,6 @@ public class MenuController : MonoBehaviour {
   }
   //Called by the canvas Buttons
   public void LoadScene(int sceneNumber) {
-    //if (sceneNumber == 3 || sceneNumber == 4 || sceneNumber == 5) {
-    //  StartCoroutine(TutorialLoad(5, sceneNumber));
-    //}
-    //else {
-    //  SceneManager.LoadScene(sceneNumber);
-    //}
     StartCoroutine(TutorialLoad(5, sceneNumber));
   }
   //Called by the canvas Buttons

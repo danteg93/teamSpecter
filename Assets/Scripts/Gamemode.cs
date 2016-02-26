@@ -16,12 +16,15 @@ public class Gamemode : MonoBehaviour {
   private int[] scores = new int[4] { 0, 0, 0, 0 };
   private bool gameOver = false;
 
+  private PlayerController[] players;
+
   // Per round variables needed for saving round specific information.
   private bool showCountdown = false;
   private string countdownText = "";
   private bool roundStarted = false;
   private bool roundOver = false;
   private int roundWinnerNumber = 0;
+  private bool roundSetUp = false;
 
   // Make the Gamemode accessible from any script and
   // ensure it persists between scene loads.
@@ -29,26 +32,35 @@ public class Gamemode : MonoBehaviour {
     if (gamemode == null) {
       gamemode = this;
       DontDestroyOnLoad(gameObject);
-    } else if (gamemode != this) {
+    }
+    else if (gamemode != this) {
       Destroy(gameObject);
     }
   }
 
-  // Turn off the cursor if the editor told us to.
-  void Start() { Cursor.visible = DisplayMouse; }
+  void Start() {
+    //Turn off the cursor if the editor told us to.
+    Cursor.visible = DisplayMouse;
+    if (!roundSetUp) {
+      setUpRound();
+    }
+  }
 
   // Check every frame of a round to see if there is a winner yet. If there is,
   // end the round and show the end round GUI.
   void Update() {
     if (!roundStarted || roundOver) { return; }
-    PlayerController[] players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     if (players.Length == 1) {
       roundOver = true;
+      roundSetUp = false;
       roundWinnerNumber = players[0].PlayerNumber;
       scores[roundWinnerNumber - 1] += 1;
       if (scores.Contains(WinningScore)) { gameOver = true; }
-    } else if (players.Length == 0) {
+    }
+    else if (players.Length == 0) {
       roundOver = true;
+      roundSetUp = false;
     }
   }
 
@@ -59,27 +71,16 @@ public class Gamemode : MonoBehaviour {
     if (roundOver) {
       if (gameOver) {
         displayGameOverGUI();
-      } else {
+      }
+      else {
         displayRoundOverGUI();
       }
     }
   }
 
-  // TODO: We can probably do this much better by having a custom event fire
-  // when game levels load. Maybe even use this function and just check if
-  // PlayerControllers exist in the scene.
   void OnLevelWasLoaded(int level) {
-    if (level == 3 || level == 4 || level == 5 || level == 1) {
-      roundStarted = false;
-      roundOver = false;
-      // TODO: This should be a prefab we instantiate that kills itself.
-      showCountdown = true;
-      StartCoroutine(displayCountDown());
-    }
+    setUpRound();
   }
-
-  // Return whether the round has started and if players can move.
-  public bool RoundStarted() { return roundStarted && !roundOver; }
 
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.
@@ -109,7 +110,8 @@ public class Gamemode : MonoBehaviour {
     if (roundWinnerNumber != 0) {
       scoreboardText += "Player " + roundWinnerNumber;
       scoreboardText += gameOver ? " wins the game!" : " wins this round!";
-    } else {
+    }
+    else {
       scoreboardText += "This round ended in a tie!";
     }
     scoreboardText += gameOver ? "\n\n Final Scores:\n" : "\n\n Current Scores:\n";
@@ -144,6 +146,23 @@ public class Gamemode : MonoBehaviour {
     SceneManager.LoadScene(sceneName);
   }
 
+  private void setUpRound() {
+    setAllPlayersMoveAndShoot(false);
+
+    roundStarted = false;
+    roundOver = false;
+    // TODO: This should be a prefab we instantiate that kills itself.
+    showCountdown = true;
+    StartCoroutine(displayCountDown());
+  }
+
+  private void setAllPlayersMoveAndShoot(bool allowMoveAndShoot) {
+    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    for (int i = 0; i < players.Length; i++) {
+      players[i].SetPlayerMoveAndShoot(allowMoveAndShoot);
+    }
+  }
+
   // Display a countdown timer before each round starts.
   IEnumerator displayCountDown() {
     for (int i = 3; i >= 0; i--) {
@@ -152,5 +171,6 @@ public class Gamemode : MonoBehaviour {
     }
     showCountdown = false;
     roundStarted = true;
+    setAllPlayersMoveAndShoot(true);
   }
 }
