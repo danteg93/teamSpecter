@@ -28,6 +28,7 @@ public class Gamemode : MonoBehaviour {
 
   // Make the Gamemode accessible from any script and
   // ensure it persists between scene loads.
+  // This will get destroyed when endGame() gets called
   void Awake() {
     if (gamemode == null) {
       gamemode = this;

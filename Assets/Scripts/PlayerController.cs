@@ -38,9 +38,9 @@ public class PlayerController : MonoBehaviour {
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
-  //Movement ability variables
+  //Ability toogle variables
   private bool movementAndShootingAllowed = true;
-  //
+  private bool invincible = false;
 
   // Process inputs that do not rely on physics updates.
   void Start() {
@@ -88,12 +88,18 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void Kill() {
-    Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-    Destroy(gameObject);
+    if (!invincible) {
+      Cameraman.cameraman.CameraShake(0.5f, 0.1f);
+      Destroy(gameObject);
+    }
   }
 
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
     movementAndShootingAllowed = allowMoveAndShoot;
+  }
+
+  public void SetPlayerInvincibility(bool invincibility) {
+    invincible = invincibility;
   }
 
   private void executeMovement() {
