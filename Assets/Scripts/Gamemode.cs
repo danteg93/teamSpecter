@@ -29,6 +29,7 @@ public class Gamemode : MonoBehaviour {
 
   //Cleaning variables
   private bool cleaning;
+
   // Make the Gamemode accessible from any script and
   // ensure it persists between scene loads.
   // This will get destroyed when endGame() gets called
@@ -56,19 +57,8 @@ public class Gamemode : MonoBehaviour {
   // Check every frame of a round to see if there is a winner yet. If there is,
   // end the round and show the end round GUI.
   void Update() {
-    if (!roundStarted || roundOver) { return; }
-    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
-    if (players.Length == 1) {
-      roundOver = true;
-      roundSetUp = false;
-      roundWinnerNumber = players[0].PlayerNumber;
-      scores[roundWinnerNumber - 1] += 1;
-      if (scores.Contains(winningScore)) { gameOver = true; }
-    }
-    else if (players.Length == 0) {
-      roundOver = true;
-      roundSetUp = false;
-    }
+    //Encapsulated the win condition function for further customization
+    checkWinCondition();
   }
 
   // If the countdown timer should display, show that. Otherwise if the game is over,
@@ -93,6 +83,23 @@ public class Gamemode : MonoBehaviour {
   //Set up round number
   public void setUpRoundNumbers(int roundNumber) {
     winningScore = roundNumber;
+  }
+  //We can have this function check parameters set up by the game manager
+  //As of now, only number of rounds won (I know its max score) is checked
+  private void checkWinCondition(){
+    if (!roundStarted || roundOver) { return; }
+    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    if (players.Length == 1) {
+      roundOver = true;
+      roundSetUp = false;
+      roundWinnerNumber = players[0].PlayerNumber;
+      scores[roundWinnerNumber - 1] += 1;
+      if (scores.Contains(winningScore)) { gameOver = true; }
+    }
+    else if (players.Length == 0) {
+      roundOver = true;
+      roundSetUp = false;
+    }
   }
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.

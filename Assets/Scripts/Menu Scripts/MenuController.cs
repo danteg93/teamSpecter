@@ -25,6 +25,7 @@ public class MenuController : MonoBehaviour {
     yield return new WaitForSeconds(loadTime);
     SceneManager.LoadScene(sceneNumber);
   }
+  //function called by GUI to select the game mode
   public void setGameMode(int gameMode) {
     GameManager.gameManager.setGameMode(gameMode);
     ShowLevelSelect();
@@ -34,6 +35,7 @@ public class MenuController : MonoBehaviour {
     mainMenuGUI.SetActive(false);
     EventSystem.current.SetSelectedGameObject(selectGameModeGUI.transform.GetChild(0).gameObject);
   }
+  //Could be public but nothing else uses it so why add a memory pointer
   private void ShowLevelSelect() {
     selectGameModeGUI.SetActive(false);
     mainMenuGUI.SetActive(true);

@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour {
   // Process inputs that do not rely on physics updates.
   void Start() {
     inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
-    //Debug.Log("player " + PlayerNumber + " mapped to " + inputMapping);
     if (inputMapping == "k") {
       UseKeyboardControl = true;
     }
@@ -93,11 +92,11 @@ public class PlayerController : MonoBehaviour {
       Destroy(gameObject);
     }
   }
-
+  //This function gets called by game mode to allow players to do stuff once the timer ends
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
     movementAndShootingAllowed = allowMoveAndShoot;
   }
-
+  //Added these for the lulz (power ups, game modes etc)
   public void SetPlayerInvincibility(bool invincibility) {
     invincible = invincibility;
   }
