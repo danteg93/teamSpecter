@@ -42,6 +42,8 @@ public class Gamemode : MonoBehaviour {
   void Start() {
     //Turn off the cursor if the editor told us to.
     Cursor.visible = DisplayMouse;
+    //This is here in case the level was loaded from the editor
+    //(makes it so scene doesn't have to be linked to menu to test)
     if (!roundSetUp) {
       setUpRound();
     }
@@ -83,6 +85,10 @@ public class Gamemode : MonoBehaviour {
     setUpRound();
   }
 
+  //Set up round number
+  public void setUpRoundNumbers(int roundNumber) {
+    WinningScore = roundNumber;
+  }
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.
   private void endGame() {
