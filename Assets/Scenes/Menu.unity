@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingImage: {fileID: 878500077}
-  DisplayMouse: 0
+  DisplayMouse: 1
 --- !u!1 &972080976
 GameObject:
   m_ObjectHideFlags: 0
