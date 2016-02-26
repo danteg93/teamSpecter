@@ -9,8 +9,9 @@ public class Gamemode : MonoBehaviour {
   public static Gamemode gamemode;
 
   public bool DisplayMouse = true;
-  // Temporary variable we can change how many rounds we play in testing.
-  public int WinningScore = 3;
+  
+  //Game Set Up variables
+  private int winningScore = 1;
 
   // Game specific variables that last through all rounds
   private int[] scores = new int[4] { 0, 0, 0, 0 };
@@ -59,7 +60,7 @@ public class Gamemode : MonoBehaviour {
       roundSetUp = false;
       roundWinnerNumber = players[0].PlayerNumber;
       scores[roundWinnerNumber - 1] += 1;
-      if (scores.Contains(WinningScore)) { gameOver = true; }
+      if (scores.Contains(winningScore)) { gameOver = true; }
     }
     else if (players.Length == 0) {
       roundOver = true;
@@ -87,7 +88,7 @@ public class Gamemode : MonoBehaviour {
 
   //Set up round number
   public void setUpRoundNumbers(int roundNumber) {
-    WinningScore = roundNumber;
+    winningScore = roundNumber;
   }
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.

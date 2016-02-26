@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour {
 
   public static GameManager gameManager;
 
-  enum gameMode { Default, FiveRounds };
+  enum gameMode { Default, ThreeRounds, FiveRounds };
   private gameMode currentGameMode = gameMode.Default;
 
   void Awake() {
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
   public void setGameMode(int selectedGameMode) {
     switch (selectedGameMode) {
       case 0: 
-        currentGameMode = gameMode.Default;
+        currentGameMode = gameMode.ThreeRounds;
         break;
       case 1:
         currentGameMode = gameMode.FiveRounds;
@@ -41,11 +41,13 @@ public class GameManager : MonoBehaviour {
 
   private void setUpGame() {
     switch (currentGameMode) {
-      case gameMode.Default:
+      case gameMode.ThreeRounds:
         Gamemode.gamemode.setUpRoundNumbers(3);
         break;
       case gameMode.FiveRounds:
         Gamemode.gamemode.setUpRoundNumbers(5);
+        break;
+      case gameMode.Default:
         break;
     }
   }
