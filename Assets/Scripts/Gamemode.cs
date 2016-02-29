@@ -16,7 +16,7 @@ public class Gamemode : MonoBehaviour {
   private int winningScore = 1;
   private float matchTime = -1.0f;
   private float roundStartTime;
-  private int[] playersAlive = new int[4] { 1, 1, 1, 1 };
+  private bool[] playersAlive = new bool[4] { true, true, true, true };
   private int[] scores = new int[4] { 0, 0, 0, 0 };
   private bool gameOver = false;
 
@@ -107,10 +107,10 @@ public class Gamemode : MonoBehaviour {
   //=================================================================
   //========= Player Death ==========================================
   public void playerDied(int playerNumber) {
-    playersAlive[playerNumber - 1] = 0;
+    playersAlive[playerNumber - 1] = false;
   }
   public void playerDied(int playerNumber, int killedBy) {
-    playersAlive[playerNumber - 1] = 0;
+    playersAlive[playerNumber - 1] = false;
     if (currentScoreType == scoreType.DM) {
       if (playerNumber != killedBy) {
         scores[killedBy - 1] += 1;
@@ -146,7 +146,7 @@ public class Gamemode : MonoBehaviour {
     //playersAlive will contain the winning player if there
     //are less than 3 alive players
     for (int i = 0; i < playersAlive.Length; i++) {
-      if (playersAlive[i] == 0) {
+      if (!playersAlive[i]) {
         numberOfDeadPlayers++;
       }
       else {
@@ -199,9 +199,9 @@ public class Gamemode : MonoBehaviour {
       }
       //If a player has died then tell it to respawn and reset its flag
       for (int i = 0; i < playersAlive.Length; i++) {
-        if (playersAlive[i] == 0) {
+        if (!playersAlive[i]) {
           players[i].respawn();
-          playersAlive[i] = 1;
+          playersAlive[i] = true;
         }
       }
     }
@@ -252,14 +252,14 @@ public class Gamemode : MonoBehaviour {
     setAllPlayersMoveAndShoot(false);
     setAllPlayersInvincible(true);
     //All players are alive when the round starts
-    playersAlive = new int[4] { 1, 1, 1, 1 };
+    playersAlive = new bool[4] { true, true, true, true };
     roundStarted = false;
     roundOver = false;
     showCountdown = true;
     StartCoroutine(displayCountDown());
   }
   private void findPlayers() {
-    //Map all the players in the scene to the appropriate postion 
+    //Map all the players in the scene to the appropriate postion
     //given by their player number
     PlayerController[] tempPlayers = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     for (int i = 0; i < tempPlayers.Length; i++) {

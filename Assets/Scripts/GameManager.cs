@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour {
 
   public static GameManager gameManager;
 
-  private enum gameModeSetup { Default, ThreeRounds, DeathMatch };
+  private enum gameModeSetup { Default, LastManStanding, DeathMatch };
   private gameModeSetup currentGameMode = gameModeSetup.Default;
 
   void Awake() {
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     //This function gets called from the menu controller and it sets the current game type
     switch (selectedGameMode) {
       case 0:
-        currentGameMode = gameModeSetup.ThreeRounds;
+        currentGameMode = gameModeSetup.LastManStanding;
         break;
       case 1:
         currentGameMode = gameModeSetup.DeathMatch;
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour {
     //This is where you tell game mode how to set up its variables
     //At this point in the code, it is guaranteed that game mode exists
     switch (currentGameMode) {
-      case gameModeSetup.ThreeRounds:
+      case gameModeSetup.LastManStanding:
         Gamemode.gamemode.setScoreType(0);
         Gamemode.gamemode.setUpWinningScore(3);
         break;
