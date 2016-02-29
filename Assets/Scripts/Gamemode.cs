@@ -209,7 +209,6 @@ public class Gamemode : MonoBehaviour {
     else {
       //Assume that player 1 has the best score
       int bestScore = scores[0];
-      int winnersFound = 1;
       roundWinnerNumber = 1;
       //loop through the other players to see if anyone has
       //a better or equal score
@@ -221,7 +220,6 @@ public class Gamemode : MonoBehaviour {
         }
         //If the score is the same then there is a tie D:
         else if (scores[i] == bestScore) {
-          winnersFound++;
           roundWinnerNumber = 0;
         }
       }
