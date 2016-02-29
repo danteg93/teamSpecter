@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour {
     //set previous velocity for delta calculations;
     previousVelocity = GetComponent<Rigidbody2D>().velocity;
     //kept newVeloctiy because these methods are asynced, so other functions that might use movementDirection
-    //could potentially access it while being updated. 
+    //could potentially access it while being updated.
     movementDirection = newVelocity.normalized;
   }
 
@@ -250,14 +250,14 @@ public class PlayerController : MonoBehaviour {
       isUsingSecondaryAbility = false;
     }
 
-		if (shieldCooldownTimer > 0) { 
-			shieldCooldownTimer -= Time.deltaTime; 
+		if (shieldCooldownTimer > 0) {
+			shieldCooldownTimer -= Time.deltaTime;
 			if (PlayerNumber == 1) {this.GetComponent<SpriteRenderer> ().color = Color.black;
 			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.black;
 			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.black;
 			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.black;
 			}
-		
+
 		} else {
 			if (PlayerNumber == 1) { GetComponent<SpriteRenderer> ().color = Color.red;
 			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.blue;
@@ -266,11 +266,5 @@ public class PlayerController : MonoBehaviour {
 			}
 
 		}
-  }
-  private void toggleActivateChildren(GameObject g, bool a) {
-    g.SetActive(a);
-    foreach (Transform child in g.transform) {
-      toggleActivateChildren(child.gameObject, a);
-    }
   }
 }
