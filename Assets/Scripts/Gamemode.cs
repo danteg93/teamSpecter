@@ -106,7 +106,10 @@ public class Gamemode : MonoBehaviour {
   public void playerDied(int playerNumber) {
     playersAlive[playerNumber - 1] = 0;
   }
-
+  public void playerDied(int playerNumber, int killedBy) {
+    playersAlive[playerNumber - 1] = 0;
+    Debug.Log(killedBy);
+  }
   private void findPlayers() {
     PlayerController[] tempPlayers = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     for (int i = 0; i < tempPlayers.Length; i++) {
@@ -132,7 +135,6 @@ public class Gamemode : MonoBehaviour {
   }
 
   private void checkLMS(){
-    //players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     int numberOfDeadPlayers = 0;
     int playerAlive = 0;
     for (int i = 0; i < playersAlive.Length; i++) {

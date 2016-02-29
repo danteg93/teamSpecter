@@ -100,6 +100,17 @@ public class PlayerController : MonoBehaviour {
       gameObject.SetActive(false);
     }
   }
+  public void Kill(int killedBy) {
+    if (!invincible) {
+      Cameraman.cameraman.CameraShake(0.5f, 0.1f);
+      //So that this can work without gamemode in the scene
+      if (initializedByGamemode) {
+        Gamemode.gamemode.playerDied(PlayerNumber, killedBy);
+      }
+      //So that players can respawn
+      gameObject.SetActive(false);
+    }
+  }
   //This function gets called by game mode to allow players to do stuff once the timer ends
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
     movementAndShootingAllowed = allowMoveAndShoot;

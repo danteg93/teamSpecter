@@ -36,7 +36,7 @@ public class ShootFireball : AbstractAbility {
         col.rigidbody.AddForce(-GetComponent<Rigidbody2D>().velocity.normalized * -1500);
         reflectFireball(col.contacts[0].normal);
       } else {
-        col.gameObject.GetComponent<PlayerController>().Kill();
+        col.gameObject.GetComponent<PlayerController>().Kill(0);
         DestroyProjectile();
       }
     } else if (col.gameObject.GetComponent<Cover>()) {
