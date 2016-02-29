@@ -38,10 +38,13 @@ public class PlayerController : MonoBehaviour {
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
 
+  //Ability toogle variables
+  private bool movementAndShootingAllowed = true;
+  private bool invincible = false;
+
   // Process inputs that do not rely on physics updates.
   void Start() {
     inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
-    //Debug.Log("player " + PlayerNumber + " mapped to " + inputMapping);
     if (inputMapping == "k") {
       UseKeyboardControl = true;
     }
@@ -50,7 +53,7 @@ public class PlayerController : MonoBehaviour {
     }
   }
   void Update() {
-    if (!Gamemode.gamemode.RoundStarted()) { return; }
+    if (!movementAndShootingAllowed) { return; }
     processPrimaryAbilityInput();
     processBlockInput();
   }
@@ -66,7 +69,7 @@ public class PlayerController : MonoBehaviour {
     }
     
     // Anything below this line will not be executed until the game countdown hits 0.
-    if (!Gamemode.gamemode.RoundStarted()) { return; }
+    if (!movementAndShootingAllowed) { return; }
 
     //Execute movement of the player.
     executeMovement();
@@ -84,8 +87,18 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void Kill() {
-    Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-    Destroy(gameObject);
+    if (!invincible) {
+      Cameraman.cameraman.CameraShake(0.5f, 0.1f);
+      Destroy(gameObject);
+    }
+  }
+  //This function gets called by game mode to allow players to do stuff once the timer ends
+  public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
+    movementAndShootingAllowed = allowMoveAndShoot;
+  }
+  //Added these for the lulz (power ups, game modes etc)
+  public void SetPlayerInvincibility(bool invincibility) {
+    invincible = invincibility;
   }
 
   private void executeMovement() {

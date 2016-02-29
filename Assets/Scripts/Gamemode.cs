@@ -9,12 +9,15 @@ public class Gamemode : MonoBehaviour {
   public static Gamemode gamemode;
 
   public bool DisplayMouse = true;
-  // Temporary variable we can change how many rounds we play in testing.
-  public int WinningScore = 3;
+  
+  //Game Set Up variables
+  private int winningScore = 1;
 
   // Game specific variables that last through all rounds
   private int[] scores = new int[4] { 0, 0, 0, 0 };
   private bool gameOver = false;
+
+  private PlayerController[] players;
 
   // Per round variables needed for saving round specific information.
   private bool showCountdown = false;
@@ -22,34 +25,40 @@ public class Gamemode : MonoBehaviour {
   private bool roundStarted = false;
   private bool roundOver = false;
   private int roundWinnerNumber = 0;
+  private bool roundSetUp = false;
+
+  //Cleaning variables
+  private bool cleaning;
 
   // Make the Gamemode accessible from any script and
   // ensure it persists between scene loads.
+  // This will get destroyed when endGame() gets called
   void Awake() {
     if (gamemode == null) {
       gamemode = this;
       DontDestroyOnLoad(gameObject);
-    } else if (gamemode != this) {
+    }
+    else if (gamemode != this) {
       Destroy(gameObject);
     }
   }
 
-  // Turn off the cursor if the editor told us to.
-  void Start() { Cursor.visible = DisplayMouse; }
+  void Start() {
+    //Turn off the cursor if the editor told us to.
+    Cursor.visible = DisplayMouse;
+    //This is here in case the level was loaded from the editor
+    //(makes it so scene doesn't have to be linked to menu to test)
+    if (!roundSetUp) {
+      setUpRound();
+    }
+    cleaning = false;
+  }
 
   // Check every frame of a round to see if there is a winner yet. If there is,
   // end the round and show the end round GUI.
   void Update() {
-    if (!roundStarted || roundOver) { return; }
-    PlayerController[] players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
-    if (players.Length == 1) {
-      roundOver = true;
-      roundWinnerNumber = players[0].PlayerNumber;
-      scores[roundWinnerNumber - 1] += 1;
-      if (scores.Contains(WinningScore)) { gameOver = true; }
-    } else if (players.Length == 0) {
-      roundOver = true;
-    }
+    //Encapsulated the win condition function for further customization
+    checkWinCondition();
   }
 
   // If the countdown timer should display, show that. Otherwise if the game is over,
@@ -59,28 +68,39 @@ public class Gamemode : MonoBehaviour {
     if (roundOver) {
       if (gameOver) {
         displayGameOverGUI();
-      } else {
+      }
+      else {
         displayRoundOverGUI();
       }
     }
   }
 
-  // TODO: We can probably do this much better by having a custom event fire
-  // when game levels load. Maybe even use this function and just check if
-  // PlayerControllers exist in the scene.
   void OnLevelWasLoaded(int level) {
-    if (level == 1 || level == 2 || level == 3) {
-      roundStarted = false;
-      roundOver = false;
-      // TODO: This should be a prefab we instantiate that kills itself.
-      showCountdown = true;
-      StartCoroutine(displayCountDown());
-    }
+    cleaning = false;
+    setUpRound();
   }
 
-  // Return whether the round has started and if players can move.
-  public bool RoundStarted() { return roundStarted && !roundOver; }
-
+  //Set up round number
+  public void setUpRoundNumbers(int roundNumber) {
+    winningScore = roundNumber;
+  }
+  //We can have this function check parameters set up by the game manager
+  //As of now, only number of rounds won (I know its max score) is checked
+  private void checkWinCondition(){
+    if (!roundStarted || roundOver) { return; }
+    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    if (players.Length == 1) {
+      roundOver = true;
+      roundSetUp = false;
+      roundWinnerNumber = players[0].PlayerNumber;
+      scores[roundWinnerNumber - 1] += 1;
+      if (scores.Contains(winningScore)) { gameOver = true; }
+    }
+    else if (players.Length == 0) {
+      roundOver = true;
+      roundSetUp = false;
+    }
+  }
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.
   private void endGame() {
@@ -109,7 +129,8 @@ public class Gamemode : MonoBehaviour {
     if (roundWinnerNumber != 0) {
       scoreboardText += "Player " + roundWinnerNumber;
       scoreboardText += gameOver ? " wins the game!" : " wins this round!";
-    } else {
+    }
+    else {
       scoreboardText += "This round ended in a tie!";
     }
     scoreboardText += gameOver ? "\n\n Final Scores:\n" : "\n\n Current Scores:\n";
@@ -136,12 +157,32 @@ public class Gamemode : MonoBehaviour {
   }
 
   private void cleanAndLoadScene(string sceneName) {
-    GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
-    foreach (GameObject projectile in projectiles) {
-      //Changed the function name in case we ever have other projectiles. This might change lat0r.  
-      projectile.gameObject.GetComponent<ShootFireball>().DestroyProjectile();
+    if (!cleaning) {
+      cleaning = true;
+      GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
+      foreach (GameObject projectile in projectiles) {
+        //Changed the function name in case we ever have other projectiles. This might change lat0r.  
+        projectile.gameObject.GetComponent<ShootFireball>().DestroyProjectile();
+      }
+      SceneManager.LoadScene(sceneName);
     }
-    SceneManager.LoadScene(sceneName);
+  }
+
+  private void setUpRound() {
+    setAllPlayersMoveAndShoot(false);
+
+    roundStarted = false;
+    roundOver = false;
+    // TODO: This should be a prefab we instantiate that kills itself.
+    showCountdown = true;
+    StartCoroutine(displayCountDown());
+  }
+
+  private void setAllPlayersMoveAndShoot(bool allowMoveAndShoot) {
+    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    for (int i = 0; i < players.Length; i++) {
+      players[i].SetPlayerMoveAndShoot(allowMoveAndShoot);
+    }
   }
 
   // Display a countdown timer before each round starts.
@@ -152,5 +193,6 @@ public class Gamemode : MonoBehaviour {
     }
     showCountdown = false;
     roundStarted = true;
+    setAllPlayersMoveAndShoot(true);
   }
 }

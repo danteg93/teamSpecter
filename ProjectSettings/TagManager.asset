@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - StartMenuGUI
+  - SelectGameModeGUI
   - MainMenuGUI
-  - GameOverGUI
+  - TitleLabel
   - Projectile
   - Cover
   layers:
