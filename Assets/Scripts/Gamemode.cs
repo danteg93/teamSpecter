@@ -9,11 +9,13 @@ public class Gamemode : MonoBehaviour {
   public static Gamemode gamemode;
 
   public bool DisplayMouse = true;
-  
-  //Game Set Up variables
-  private int winningScore = 1;
 
   // Game specific variables that last through all rounds
+  private enum scoreType {LMS, DM}
+  private scoreType currentScoreType = scoreType.LMS;
+
+  private int winningScore = 1;
+  private float matchTime = 0.0f
   private int[] scores = new int[4] { 0, 0, 0, 0 };
   private bool gameOver = false;
 
@@ -80,14 +82,41 @@ public class Gamemode : MonoBehaviour {
     setUpRound();
   }
 
+  public void setScoreType(int gameType){
+    switch(gameType){
+      case 0:
+        currentScoreType = gameType.LMS;
+        break;
+      case 1:
+        currentScoreType = gameType.DM;
+        break;
+      case default:
+        currentScoreType = gameType.LMS;
+        break;
+    }
+  }
   //Set up round number
-  public void setUpRoundNumbers(int roundNumber) {
-    winningScore = roundNumber;
+  public void setUpWinningScore(int scoreToWin) {
+    winningScore = scoreToWin;
   }
   //We can have this function check parameters set up by the game manager
   //As of now, only number of rounds won (I know its max score) is checked
   private void checkWinCondition(){
     if (!roundStarted || roundOver) { return; }
+    switch(currentScoreType){
+      case gameType.LMS:
+        checkLMS();
+        break;
+      case gameType.TDM:
+        checkTDM();
+        break;
+      case default:
+        checkLMS();
+        break;
+    }
+  }
+
+  private void checkLMS(){
     players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     if (players.Length == 1) {
       roundOver = true;
@@ -100,6 +129,9 @@ public class Gamemode : MonoBehaviour {
       roundOver = true;
       roundSetUp = false;
     }
+  }
+  private void checkTDM(){
+    
   }
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.
@@ -161,7 +193,7 @@ public class Gamemode : MonoBehaviour {
       cleaning = true;
       GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
       foreach (GameObject projectile in projectiles) {
-        //Changed the function name in case we ever have other projectiles. This might change lat0r.  
+        //Changed the function name in case we ever have other projectiles. This might change lat0r.
         projectile.gameObject.GetComponent<ShootFireball>().DestroyProjectile();
       }
       SceneManager.LoadScene(sceneName);
