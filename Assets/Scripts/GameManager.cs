@@ -50,11 +50,13 @@ public class GameManager : MonoBehaviour {
     //At this point in the code, it is guaranteed that game mode exists
     switch (currentGameMode) {
       case gameModeSetup.ThreeRounds:
-        Gamemode.gamempde.setScoreType(0);
+        Gamemode.gamemode.setScoreType(0);
         Gamemode.gamemode.setUpWinningScore(3);
         break;
       case gameModeSetup.FiveRounds:
-        Gamemode.gamempde.setScoreType(0);
+        //Gamemode.gamemode.setScoreType(0);
+        //Gamemode.gamemode.setUpWinningScore(5);
+        Gamemode.gamemode.setScoreType(1);
         Gamemode.gamemode.setUpWinningScore(5);
         break;
       case gameModeSetup.Default:

@@ -15,11 +15,13 @@ public class Gamemode : MonoBehaviour {
   private scoreType currentScoreType = scoreType.LMS;
 
   private int winningScore = 1;
-  private float matchTime = 0.0f
+  private float matchTime = 20.0f;
+  private float roundStartTime;
+  private int[] playersAlive = new int[4] { 1, 1, 1, 1 };
   private int[] scores = new int[4] { 0, 0, 0, 0 };
   private bool gameOver = false;
 
-  private PlayerController[] players;
+  private PlayerController[] players = new PlayerController[4];
 
   // Per round variables needed for saving round specific information.
   private bool showCountdown = false;
@@ -38,6 +40,10 @@ public class Gamemode : MonoBehaviour {
   void Awake() {
     if (gamemode == null) {
       gamemode = this;
+      PlayerController[] tempPlayers = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+      for (int i = 0; i < tempPlayers.Length; i++) {
+        players[tempPlayers[i].PlayerNumber - 1] = tempPlayers[i];
+      }
       DontDestroyOnLoad(gameObject);
     }
     else if (gamemode != this) {
@@ -85,13 +91,13 @@ public class Gamemode : MonoBehaviour {
   public void setScoreType(int gameType){
     switch(gameType){
       case 0:
-        currentScoreType = gameType.LMS;
+        currentScoreType = scoreType.LMS;
         break;
       case 1:
-        currentScoreType = gameType.DM;
+        currentScoreType = scoreType.DM;
         break;
-      case default:
-        currentScoreType = gameType.LMS;
+      default:
+        currentScoreType = scoreType.LMS;
         break;
     }
   }
@@ -99,25 +105,28 @@ public class Gamemode : MonoBehaviour {
   public void setUpWinningScore(int scoreToWin) {
     winningScore = scoreToWin;
   }
+  public void playerDied(int playerNumber) {
+    playersAlive[playerNumber - 1] = 0;
+  }
   //We can have this function check parameters set up by the game manager
   //As of now, only number of rounds won (I know its max score) is checked
   private void checkWinCondition(){
     if (!roundStarted || roundOver) { return; }
     switch(currentScoreType){
-      case gameType.LMS:
+      case scoreType.LMS:
         checkLMS();
         break;
-      case gameType.TDM:
-        checkTDM();
+      case scoreType.DM:
+        checkDM();
         break;
-      case default:
+      default:
         checkLMS();
         break;
     }
   }
 
   private void checkLMS(){
-    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    //players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     if (players.Length == 1) {
       roundOver = true;
       roundSetUp = false;
@@ -130,8 +139,23 @@ public class Gamemode : MonoBehaviour {
       roundSetUp = false;
     }
   }
-  private void checkTDM(){
-    
+  private void checkDM(){
+    //Debug.Log(matchTime);
+    if (matchTime > 0 ) {
+      //matchTime -= Time.deltaTime;
+      //players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+      for (int i = 0; i < playersAlive.Length; i++) {
+        if (playersAlive[i] == 0) {
+          players[i].respawn();
+          playersAlive[i] = 1;
+        }
+      }
+    }
+    else {
+      roundOver = true;
+      roundSetUp = false;
+      gameOver = true;
+    }
   }
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.
@@ -211,7 +235,7 @@ public class Gamemode : MonoBehaviour {
   }
 
   private void setAllPlayersMoveAndShoot(bool allowMoveAndShoot) {
-    players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    //players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
     for (int i = 0; i < players.Length; i++) {
       players[i].SetPlayerMoveAndShoot(allowMoveAndShoot);
     }

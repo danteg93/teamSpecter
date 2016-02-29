@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour {
   //Delta related variables
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
+  private Vector2 initialPosition = Vector2.zero;
 
   //Ability toogle variables
   private bool movementAndShootingAllowed = true;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour {
   // Process inputs that do not rely on physics updates.
   void Start() {
     inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
+    initialPosition = gameObject.transform.position;
     if (inputMapping == "k") {
       UseKeyboardControl = true;
     }
@@ -89,7 +91,11 @@ public class PlayerController : MonoBehaviour {
   public void Kill() {
     if (!invincible) {
       Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-      Destroy(gameObject);
+     // Debug.Log("dead from player controller " + PlayerNumber);
+      Gamemode.gamemode.playerDied(PlayerNumber);
+      gameObject.SetActive(false);
+      //So that players can respawn
+      //toggleActivateChildren(gameObject, false);
     }
   }
   //This function gets called by game mode to allow players to do stuff once the timer ends
@@ -99,6 +105,14 @@ public class PlayerController : MonoBehaviour {
   //Added these for the lulz (power ups, game modes etc)
   public void SetPlayerInvincibility(bool invincibility) {
     invincible = invincibility;
+  }
+  //Respawn at initial position
+  public void respawn() {
+    //Debug.Log("Player respawning");
+    //Debug.Log(PlayerNumber);
+    gameObject.transform.position = initialPosition;
+    gameObject.SetActive(true);
+   // toggleActivateChildren(gameObject, true);
   }
 
   private void executeMovement() {
@@ -241,5 +255,11 @@ public class PlayerController : MonoBehaviour {
 			}
 
 		}
+  }
+  private void toggleActivateChildren(GameObject g, bool a) {
+    g.SetActive(a);
+    foreach (Transform child in g.transform) {
+      toggleActivateChildren(child.gameObject, a);
+    }
   }
 }
