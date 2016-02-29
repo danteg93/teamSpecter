@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
   public float DashPower = 15.0f;
   private bool isPressingDash = false;
   private float dashCooldownTimer = 0;
+  private bool initializedByGamemode = false;
 
   //Delta related variables
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
@@ -91,11 +92,12 @@ public class PlayerController : MonoBehaviour {
   public void Kill() {
     if (!invincible) {
       Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-     // Debug.Log("dead from player controller " + PlayerNumber);
-      Gamemode.gamemode.playerDied(PlayerNumber);
-      gameObject.SetActive(false);
+      //So that this can work without gamemode in the scene
+      if (initializedByGamemode) {
+        Gamemode.gamemode.playerDied(PlayerNumber);
+      }
       //So that players can respawn
-      //toggleActivateChildren(gameObject, false);
+      gameObject.SetActive(false);
     }
   }
   //This function gets called by game mode to allow players to do stuff once the timer ends
@@ -113,6 +115,10 @@ public class PlayerController : MonoBehaviour {
     gameObject.transform.position = initialPosition;
     gameObject.SetActive(true);
    // toggleActivateChildren(gameObject, true);
+  }
+
+  public void setInitializedByGamemode(bool gamemodeInitialized) {
+    initializedByGamemode = gamemodeInitialized;
   }
 
   private void executeMovement() {

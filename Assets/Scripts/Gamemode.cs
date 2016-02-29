@@ -40,10 +40,7 @@ public class Gamemode : MonoBehaviour {
   void Awake() {
     if (gamemode == null) {
       gamemode = this;
-      PlayerController[] tempPlayers = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
-      for (int i = 0; i < tempPlayers.Length; i++) {
-        players[tempPlayers[i].PlayerNumber - 1] = tempPlayers[i];
-      }
+      findPlayers();
       DontDestroyOnLoad(gameObject);
     }
     else if (gamemode != this) {
@@ -85,6 +82,7 @@ public class Gamemode : MonoBehaviour {
 
   void OnLevelWasLoaded(int level) {
     cleaning = false;
+    findPlayers();
     setUpRound();
   }
 
@@ -108,6 +106,14 @@ public class Gamemode : MonoBehaviour {
   public void playerDied(int playerNumber) {
     playersAlive[playerNumber - 1] = 0;
   }
+
+  private void findPlayers() {
+    PlayerController[] tempPlayers = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+    for (int i = 0; i < tempPlayers.Length; i++) {
+      tempPlayers[i].setInitializedByGamemode(true);
+      players[tempPlayers[i].PlayerNumber - 1] = tempPlayers[i];
+    }
+  }
   //We can have this function check parameters set up by the game manager
   //As of now, only number of rounds won (I know its max score) is checked
   private void checkWinCondition(){
@@ -127,16 +133,27 @@ public class Gamemode : MonoBehaviour {
 
   private void checkLMS(){
     //players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
-    if (players.Length == 1) {
+    int numberOfDeadPlayers = 0;
+    int playerAlive = 0;
+    for (int i = 0; i < playersAlive.Length; i++) {
+      if (playersAlive[i] == 0) {
+        numberOfDeadPlayers++;
+      }
+      else {
+        playerAlive = i;
+      }
+    }
+    if (numberOfDeadPlayers == 3) {
       roundOver = true;
       roundSetUp = false;
-      roundWinnerNumber = players[0].PlayerNumber;
-      scores[roundWinnerNumber - 1] += 1;
+      roundWinnerNumber = playerAlive + 1;
+      scores[playerAlive] += 1;
       if (scores.Contains(winningScore)) { gameOver = true; }
     }
-    else if (players.Length == 0) {
+    else if (numberOfDeadPlayers == 4) {
       roundOver = true;
       roundSetUp = false;
+      roundWinnerNumber = 0;
     }
   }
   private void checkDM(){
@@ -226,7 +243,7 @@ public class Gamemode : MonoBehaviour {
 
   private void setUpRound() {
     setAllPlayersMoveAndShoot(false);
-
+    playersAlive = new int[4] { 1, 1, 1, 1 };
     roundStarted = false;
     roundOver = false;
     // TODO: This should be a prefab we instantiate that kills itself.
