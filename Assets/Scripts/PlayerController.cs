@@ -108,6 +108,12 @@ public class PlayerController : MonoBehaviour {
       gameObject.SetActive(false);
     }
   }
+  //Respawn at initial position
+  //TODO: respawn cool down and invisibility
+  public void respawn() {
+    gameObject.transform.position = initialPosition;
+    gameObject.SetActive(true);
+  }
   //This function gets called by game mode to allow players to do stuff once the timer ends
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
     movementAndShootingAllowed = allowMoveAndShoot;
@@ -116,12 +122,6 @@ public class PlayerController : MonoBehaviour {
   public void SetPlayerInvincibility(bool invincibility) {
     invincible = invincibility;
   }
-  //Respawn at initial position
-  public void respawn() {
-    gameObject.transform.position = initialPosition;
-    gameObject.SetActive(true);
-  }
-
   public void setInitializedByGamemode(bool gamemodeInitialized) {
     initializedByGamemode = gamemodeInitialized;
   }

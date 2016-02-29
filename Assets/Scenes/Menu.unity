@@ -99,7 +99,7 @@ GameObject:
   - 114: {fileID: 175403731}
   - 114: {fileID: 175403730}
   m_Layer: 5
-  m_Name: FirstToFiveButton
+  m_Name: DeathMatchButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1330,7 +1330,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: First to 3
+  m_Text: Last Man Standing (3)
 --- !u!222 &1075935602
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2157,7 +2157,7 @@ GameObject:
   - 222: {fileID: 1880797746}
   - 114: {fileID: 1880797745}
   m_Layer: 5
-  m_Name: FirstToFive
+  m_Name: DeathMatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2212,7 +2212,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: First To 5
+  m_Text: ' Death Match (15)'
 --- !u!222 &1880797746
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour {
 
   public static GameManager gameManager;
 
-  private enum gameModeSetup { Default, ThreeRounds, FiveRounds };
+  private enum gameModeSetup { Default, ThreeRounds, DeathMatch };
   private gameModeSetup currentGameMode = gameModeSetup.Default;
 
   void Awake() {
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
         currentGameMode = gameModeSetup.ThreeRounds;
         break;
       case 1:
-        currentGameMode = gameModeSetup.FiveRounds;
+        currentGameMode = gameModeSetup.DeathMatch;
         break;
       default:
         currentGameMode = gameModeSetup.Default;
@@ -53,12 +53,10 @@ public class GameManager : MonoBehaviour {
         Gamemode.gamemode.setScoreType(0);
         Gamemode.gamemode.setUpWinningScore(3);
         break;
-      case gameModeSetup.FiveRounds:
-        //Gamemode.gamemode.setScoreType(0);
-        //Gamemode.gamemode.setUpWinningScore(5);
+      case gameModeSetup.DeathMatch:
         Gamemode.gamemode.setScoreType(1);
         Gamemode.gamemode.setUpMatchTime(60.0f);
-        Gamemode.gamemode.setUpWinningScore(25);
+        Gamemode.gamemode.setUpWinningScore(15);
         break;
       case gameModeSetup.Default:
         break;
