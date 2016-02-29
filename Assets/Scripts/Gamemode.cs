@@ -15,7 +15,7 @@ public class Gamemode : MonoBehaviour {
   private scoreType currentScoreType = scoreType.LMS;
 
   private int winningScore = 1;
-  private float matchTime = 20.0f;
+  private float matchTime = -1.0f;
   private float roundStartTime;
   private int[] playersAlive = new int[4] { 1, 1, 1, 1 };
   private int[] scores = new int[4] { 0, 0, 0, 0 };
@@ -99,6 +99,9 @@ public class Gamemode : MonoBehaviour {
         break;
     }
   }
+  public void setUpMatchTime(float timeOfMatch) {
+    matchTime = timeOfMatch;
+  }
   //Set up round number
   public void setUpWinningScore(int scoreToWin) {
     winningScore = scoreToWin;
@@ -109,7 +112,12 @@ public class Gamemode : MonoBehaviour {
   public void playerDied(int playerNumber, int killedBy) {
     playersAlive[playerNumber - 1] = 0;
     if (currentScoreType == scoreType.DM) {
-      scores[killedBy - 1] += 1;
+      if (playerNumber != killedBy) {
+        scores[killedBy - 1] += 1;
+      }
+      else {
+        scores[killedBy - 1] -= 1;
+      }
     }
   }
   private void findPlayers() {
@@ -161,7 +169,6 @@ public class Gamemode : MonoBehaviour {
     }
   }
   private void checkDM(){
-    //Debug.Log(matchTime);
     if (scores.Contains(winningScore)) {
       int winnersFound = 0;
       for (int i = 0; i < scores.Length; i++) {
@@ -179,7 +186,9 @@ public class Gamemode : MonoBehaviour {
       gameOver = true; 
     }
     if (matchTime > 0 ) {
-      matchTime -= Time.deltaTime;
+      if (matchTime != -1.0f) {
+        matchTime -= Time.deltaTime;
+      }
       for (int i = 0; i < playersAlive.Length; i++) {
         if (playersAlive[i] == 0) {
           players[i].respawn();
@@ -190,6 +199,7 @@ public class Gamemode : MonoBehaviour {
     else {
       int bestScore = scores[0];
       int winnersFound = 1;
+      roundWinnerNumber = 1;
       for (int i = 1; i < scores.Length; i++) {
         if (scores[i] > bestScore) {
           bestScore = scores[i];

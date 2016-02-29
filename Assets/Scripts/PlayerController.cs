@@ -70,13 +70,10 @@ public class PlayerController : MonoBehaviour {
     } else {
       executeJoyStickRotation();
     }
-    
     // Anything below this line will not be executed until the game countdown hits 0.
     if (!movementAndShootingAllowed) { return; }
-
     //Execute movement of the player.
     executeMovement();
-
     //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
     executeDash();
   }
@@ -94,7 +91,7 @@ public class PlayerController : MonoBehaviour {
       Cameraman.cameraman.CameraShake(0.5f, 0.1f);
       //So that this can work without gamemode in the scene
       if (initializedByGamemode) {
-        Gamemode.gamemode.playerDied(PlayerNumber);
+        Gamemode.gamemode.playerDied(PlayerNumber, PlayerNumber);
       }
       //So that players can respawn
       gameObject.SetActive(false);
@@ -115,17 +112,14 @@ public class PlayerController : MonoBehaviour {
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
     movementAndShootingAllowed = allowMoveAndShoot;
   }
-  //Added these for the lulz (power ups, game modes etc)
+
   public void SetPlayerInvincibility(bool invincibility) {
     invincible = invincibility;
   }
   //Respawn at initial position
   public void respawn() {
-    //Debug.Log("Player respawning");
-    //Debug.Log(PlayerNumber);
     gameObject.transform.position = initialPosition;
     gameObject.SetActive(true);
-   // toggleActivateChildren(gameObject, true);
   }
 
   public void setInitializedByGamemode(bool gamemodeInitialized) {

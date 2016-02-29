@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour {
         //Gamemode.gamemode.setScoreType(0);
         //Gamemode.gamemode.setUpWinningScore(5);
         Gamemode.gamemode.setScoreType(1);
-        Gamemode.gamemode.setUpWinningScore(5);
+        Gamemode.gamemode.setUpMatchTime(60.0f);
+        Gamemode.gamemode.setUpWinningScore(25);
         break;
       case gameModeSetup.Default:
         break;
