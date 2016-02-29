@@ -108,7 +108,9 @@ public class Gamemode : MonoBehaviour {
   }
   public void playerDied(int playerNumber, int killedBy) {
     playersAlive[playerNumber - 1] = 0;
-    Debug.Log(killedBy);
+    if (currentScoreType == scoreType.DM) {
+      scores[killedBy - 1] += 1;
+    }
   }
   private void findPlayers() {
     PlayerController[] tempPlayers = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
@@ -160,9 +162,24 @@ public class Gamemode : MonoBehaviour {
   }
   private void checkDM(){
     //Debug.Log(matchTime);
+    if (scores.Contains(winningScore)) {
+      int winnersFound = 0;
+      for (int i = 0; i < scores.Length; i++) {
+        if (scores[i] == winningScore) {
+          roundWinnerNumber = i + 1;
+          winnersFound++;
+        }
+      }
+      if(winnersFound > 1){
+        roundWinnerNumber = 0;
+      }
+      setAllPlayersMoveAndShoot(false);
+      roundOver = true;
+      roundSetUp = false;
+      gameOver = true; 
+    }
     if (matchTime > 0 ) {
-      //matchTime -= Time.deltaTime;
-      //players = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
+      matchTime -= Time.deltaTime;
       for (int i = 0; i < playersAlive.Length; i++) {
         if (playersAlive[i] == 0) {
           players[i].respawn();
@@ -171,6 +188,19 @@ public class Gamemode : MonoBehaviour {
       }
     }
     else {
+      int bestScore = scores[0];
+      int winnersFound = 1;
+      for (int i = 1; i < scores.Length; i++) {
+        if (scores[i] > bestScore) {
+          bestScore = scores[i];
+          roundWinnerNumber = i + 1;
+        }
+        else if (scores[i] == bestScore) {
+          winnersFound++;
+          roundWinnerNumber = 0;
+        }
+      }
+      setAllPlayersMoveAndShoot(false);
       roundOver = true;
       roundSetUp = false;
       gameOver = true;
