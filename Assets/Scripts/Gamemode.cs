@@ -185,6 +185,7 @@ public class Gamemode : MonoBehaviour {
         roundWinnerNumber = 0;
       }
       setAllPlayersMoveAndShoot(false);
+      setAllPlayersInvincible(true);
       roundOver = true;
       roundSetUp = false;
       gameOver = true;
@@ -226,6 +227,7 @@ public class Gamemode : MonoBehaviour {
       }
       //GUI stuff goes here
       setAllPlayersMoveAndShoot(false);
+      setAllPlayersInvincible(true);
       roundOver = true;
       roundSetUp = false;
       gameOver = true;
@@ -250,6 +252,7 @@ public class Gamemode : MonoBehaviour {
   }
   private void setUpRound() {
     setAllPlayersMoveAndShoot(false);
+    setAllPlayersInvincible(true);
     //All players are alive when the round starts
     playersAlive = new int[4] { 1, 1, 1, 1 };
     roundStarted = false;
@@ -269,6 +272,11 @@ public class Gamemode : MonoBehaviour {
   private void setAllPlayersMoveAndShoot(bool allowMoveAndShoot) {
     for (int i = 0; i < players.Length; i++) {
       players[i].SetPlayerMoveAndShoot(allowMoveAndShoot);
+    }
+  }
+  private void setAllPlayersInvincible(bool isInvinsible) {
+    for (int i = 0; i < players.Length; i++) {
+      players[i].SetPlayerInvincibility(isInvinsible);
     }
   }
   private void cleanAndLoadScene(string sceneName) {
@@ -328,6 +336,7 @@ public class Gamemode : MonoBehaviour {
     showCountdown = false;
     roundStarted = true;
     setAllPlayersMoveAndShoot(true);
+    setAllPlayersInvincible(false);
   }
   //=================================================================
 }
