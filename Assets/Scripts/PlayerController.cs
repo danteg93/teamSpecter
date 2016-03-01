@@ -87,26 +87,24 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void Kill() {
-    if (!invincible) {
-      Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-      //So that this can work without gamemode in the scene
-      if (initializedByGamemode) {
-        Gamemode.gamemode.playerDied(PlayerNumber, PlayerNumber);
-      }
-      //So that players can respawn
-      gameObject.SetActive(false);
+    if(invincible){return;}
+    Cameraman.cameraman.CameraShake(0.5f, 0.1f);
+    //So that this can work without gamemode in the scene
+    if (initializedByGamemode) {
+      Gamemode.gamemode.playerDied(PlayerNumber, PlayerNumber);
     }
+    //So that players can respawn
+    gameObject.SetActive(false);
   }
   public void Kill(int killedBy) {
-    if (!invincible) {
-      Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-      //So that this can work without gamemode in the scene
-      if (initializedByGamemode) {
-        Gamemode.gamemode.playerDied(PlayerNumber, killedBy);
-      }
-      //So that players can respawn
-      gameObject.SetActive(false);
+    if (invincible){return;}
+    Cameraman.cameraman.CameraShake(0.5f, 0.1f);
+    //So that this can work without gamemode in the scene
+    if (initializedByGamemode) {
+      Gamemode.gamemode.playerDied(PlayerNumber, killedBy);
     }
+    //So that players can respawn
+    gameObject.SetActive(false);
   }
   //Respawn at initial position
   //TODO: respawn cool down and invisibility
