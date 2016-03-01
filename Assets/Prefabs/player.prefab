@@ -42,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190828}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
-  m_LocalPosition: {x: 0.5, y: -13.8, z: 4.1944685}
+  m_LocalPosition: {x: 0.5, y: -13.8, z: -0.87}
   m_LocalScale: {x: 2.661913, y: 2.661913, z: 1.9250532}
   m_Children: []
   m_Father: {fileID: 474906}
@@ -102,8 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9a9282c5a65ac41b084477ab4f170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseKeyboardControl: 0
-  ControllerType: 
   PlayerNumber: 1
   Speed: 5
   AccelerationFactor: 0.55
@@ -213,6 +211,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Mass
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.z
+      value: -0.87
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

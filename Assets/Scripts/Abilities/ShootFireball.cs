@@ -4,9 +4,9 @@ public class ShootFireball : AbstractAbility {
 
   public float TimeToLive;
   public float Speed;
+  public int PlayerLastInteracted = -1;
 
   private float timeSpawned;
-
   // On spawn, launch the fireball away from the player.
   void Start() {
     GetComponent<Rigidbody2D>().AddForce(transform.up * -Speed);
@@ -20,8 +20,8 @@ public class ShootFireball : AbstractAbility {
     if (TimeToLive <= 0) { DestroyProjectile(); }
     TimeToLive -= Time.deltaTime;
     //This makes it so that if the fireball slows down enough then it blows up.
-    //Also, the Time.time > timeSpawned + 0.1f makes it so that the fireball doesnt blow up 
-    //before it has a chance to catch some speed. 
+    //Also, the Time.time > timeSpawned + 0.1f makes it so that the fireball doesnt blow up
+    //before it has a chance to catch some speed.
     if (Time.time > timeSpawned + 0.1f && GetComponent<Rigidbody2D>().velocity.magnitude < 8.0f) {
       DestroyProjectile();
     }
@@ -33,10 +33,11 @@ public class ShootFireball : AbstractAbility {
   void OnCollisionEnter2D(Collision2D col) {
     if (col.gameObject.GetComponent<PlayerController>()) {
       if (col.gameObject.GetComponent<PlayerController>().IsShieldOn()) {
+        PlayerLastInteracted = col.gameObject.GetComponent<PlayerController>().PlayerNumber;
         col.rigidbody.AddForce(-GetComponent<Rigidbody2D>().velocity.normalized * -1500);
         reflectFireball(col.contacts[0].normal);
       } else {
-        col.gameObject.GetComponent<PlayerController>().Kill();
+        col.gameObject.GetComponent<PlayerController>().Kill(PlayerLastInteracted);
         DestroyProjectile();
       }
     } else if (col.gameObject.GetComponent<Cover>()) {
@@ -47,13 +48,18 @@ public class ShootFireball : AbstractAbility {
         DestroyProjectile();
       }
     } else if (col.gameObject.GetComponent<ShootFireball>()) { //Reflect fireballs if they collide.
+      int temp = col.gameObject.GetComponent<ShootFireball>().PlayerLastInteracted;
       reflectFireball(col.contacts[0].normal);
+      //Here so that there are no weird conflicts when fireballs hit at the same time lol
+      PlayerLastInteracted = temp;
     }
   }
 
   // Instantiate the bullet prefab.
   public override GameObject Cast(PlayerController player) {
-    return Instantiate(gameObject, player.transform.position + (-player.transform.up * 0.7f), player.transform.rotation) as GameObject;
+    GameObject fireBall = Instantiate(gameObject, player.transform.position + (-player.transform.up * 0.7f), player.transform.rotation) as GameObject;
+    fireBall.GetComponent<ShootFireball>().PlayerLastInteracted = player.PlayerNumber;
+    return fireBall;
   }
 
   //this is here for the future, when there are aniamtions and other stuff

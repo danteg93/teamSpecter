@@ -33,10 +33,12 @@ public class PlayerController : MonoBehaviour {
   public float DashPower = 15.0f;
   private bool isPressingDash = false;
   private float dashCooldownTimer = 0;
+  private bool initializedByGamemode = false;
 
   //Delta related variables
   private Vector2 previousVelocity = Vector2.zero; //changed to vector, figured its more valuable than just the magnitude
   private Vector2 movementDirection = Vector2.zero;
+  private Vector2 initialPosition = Vector2.zero;
 
   //Ability toogle variables
   private bool movementAndShootingAllowed = true;
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour {
   // Process inputs that do not rely on physics updates.
   void Start() {
     inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
+    initialPosition = gameObject.transform.position;
     if (inputMapping == "k") {
       UseKeyboardControl = true;
     }
@@ -67,13 +70,10 @@ public class PlayerController : MonoBehaviour {
     } else {
       executeJoyStickRotation();
     }
-    
     // Anything below this line will not be executed until the game countdown hits 0.
     if (!movementAndShootingAllowed) { return; }
-
     //Execute movement of the player.
     executeMovement();
-
     //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
     executeDash();
   }
@@ -87,18 +87,41 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void Kill() {
-    if (!invincible) {
-      Cameraman.cameraman.CameraShake(0.5f, 0.1f);
-      Destroy(gameObject);
+    if(invincible){return;}
+    Cameraman.cameraman.CameraShake(0.5f, 0.1f);
+    //So that this can work without gamemode in the scene
+    if (initializedByGamemode) {
+      Gamemode.gamemode.playerDied(PlayerNumber, PlayerNumber);
     }
+    //So that players can respawn
+    gameObject.SetActive(false);
+  }
+  public void Kill(int killedBy) {
+    if (invincible){return;}
+    Cameraman.cameraman.CameraShake(0.5f, 0.1f);
+    //So that this can work without gamemode in the scene
+    if (initializedByGamemode) {
+      Gamemode.gamemode.playerDied(PlayerNumber, killedBy);
+    }
+    //So that players can respawn
+    gameObject.SetActive(false);
+  }
+  //Respawn at initial position
+  //TODO: respawn cool down and invisibility
+  public void respawn() {
+    gameObject.transform.position = initialPosition;
+    gameObject.SetActive(true);
   }
   //This function gets called by game mode to allow players to do stuff once the timer ends
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
     movementAndShootingAllowed = allowMoveAndShoot;
   }
-  //Added these for the lulz (power ups, game modes etc)
+
   public void SetPlayerInvincibility(bool invincibility) {
     invincible = invincibility;
+  }
+  public void setInitializedByGamemode(bool gamemodeInitialized) {
+    initializedByGamemode = gamemodeInitialized;
   }
 
   private void executeMovement() {
@@ -120,7 +143,7 @@ public class PlayerController : MonoBehaviour {
     //set previous velocity for delta calculations;
     previousVelocity = GetComponent<Rigidbody2D>().velocity;
     //kept newVeloctiy because these methods are asynced, so other functions that might use movementDirection
-    //could potentially access it while being updated. 
+    //could potentially access it while being updated.
     movementDirection = newVelocity.normalized;
   }
 
@@ -225,14 +248,14 @@ public class PlayerController : MonoBehaviour {
       isUsingSecondaryAbility = false;
     }
 
-		if (shieldCooldownTimer > 0) { 
-			shieldCooldownTimer -= Time.deltaTime; 
+		if (shieldCooldownTimer > 0) {
+			shieldCooldownTimer -= Time.deltaTime;
 			if (PlayerNumber == 1) {this.GetComponent<SpriteRenderer> ().color = Color.black;
 			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.black;
 			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.black;
 			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.black;
 			}
-		
+
 		} else {
 			if (PlayerNumber == 1) { GetComponent<SpriteRenderer> ().color = Color.red;
 			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.blue;
