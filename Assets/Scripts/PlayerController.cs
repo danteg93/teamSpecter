@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour {
   private Vector2 initialPosition = Vector2.zero;
 
   //Ability toogle variables
+  private bool dead = false;
   private bool movementAndShootingAllowed = true;
   private bool invincible = false;
 
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour {
 
   // Process all other actions that do rely on physics updates.
   void FixedUpdate() {
+    if (dead) { return; }
     // If the player is using the keyboard and mouse, execute that movement. Otherwise,
     // find the appropriate joystick for the player
     if (UseKeyboardControl) {
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour {
       executeJoyStickRotation();
     }
     // Anything below this line will not be executed until the game countdown hits 0.
-    if (!movementAndShootingAllowed) { return; }
+    if (!movementAndShootingAllowed || dead) { return; }
     // Execute movement of the player.
     executeMovement();
     executeDash();
@@ -107,16 +109,17 @@ public class PlayerController : MonoBehaviour {
   // movement, and play a sound on death. The object is not destroyed so that the player
   // can respawn.
   IEnumerator deathAnimation() {
-    movementAndShootingAllowed = false;
+    dead = true;
     GetComponent<Rigidbody2D>().isKinematic = true;
     playAudioDeath();
-    yield return new WaitForSeconds(2);
+    yield return new WaitForSeconds(1.8f);
     gameObject.SetActive(false);
   }
 
   //Respawn at initial position
   //TODO: respawn cool down and invisibility
   public void respawn() {
+    dead = false;
     gameObject.transform.position = initialPosition;
     gameObject.SetActive(true);
   }
