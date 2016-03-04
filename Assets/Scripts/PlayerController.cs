@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour {
   private Vector2 initialPosition = Vector2.zero;
 
   //Ability toogle variables
-  private bool dead = false;
+  private bool dying = false;
+  private bool playerShouldRespawn = false;
   private bool movementAndShootingAllowed = true;
   private bool invincible = false;
 
@@ -65,7 +66,8 @@ public class PlayerController : MonoBehaviour {
 
   // Process all other actions that do rely on physics updates.
   void FixedUpdate() {
-    if (dead) { return; }
+    if (dying) { return; }
+    if (playerShouldRespawn) { executeRespawn(); }
     // If the player is using the keyboard and mouse, execute that movement. Otherwise,
     // find the appropriate joystick for the player
     if (UseKeyboardControl) {
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour {
       executeJoyStickRotation();
     }
     // Anything below this line will not be executed until the game countdown hits 0.
-    if (!movementAndShootingAllowed || dead) { return; }
+    if (!movementAndShootingAllowed) { return; }
     // Execute movement of the player.
     executeMovement();
     executeDash();
@@ -103,25 +105,36 @@ public class PlayerController : MonoBehaviour {
     if (initializedByGamemode) { Gamemode.gamemode.playerDied(PlayerNumber, killedBy); }
     StartCoroutine(deathAnimation());
   }
-
   // TODO: Play death animation here.
   // Coroutine for killing the player. This will paly a death animation, stop all player
   // movement, and play a sound on death. The object is not destroyed so that the player
   // can respawn.
   IEnumerator deathAnimation() {
-    dead = true;
-    GetComponent<Rigidbody2D>().isKinematic = true;
+    dying = true;
+    SetPlayerInvincibility(true);
+    SetPlayerMoveAndShoot(false);
     playAudioDeath();
     yield return new WaitForSeconds(1.8f);
-    gameObject.SetActive(false);
+    dying = false; 
+    if (!playerShouldRespawn) {
+      gameObject.SetActive(false);
+    }
   }
-
-  //Respawn at initial position
-  //TODO: respawn cool down and invisibility
+  //sets respawn flag
   public void respawn() {
-    dead = false;
+    playerShouldRespawn = true;
+  }
+  //Respawn at initial position
+  public void executeRespawn() {
+    SetPlayerMoveAndShoot(true);
+    playerShouldRespawn = false;
     gameObject.transform.position = initialPosition;
-    gameObject.SetActive(true);
+    StartCoroutine(respawnInvincibility());
+  }
+  IEnumerator respawnInvincibility() {
+    //TODO graphical que that dude is invincible
+    yield return new WaitForSeconds(2.0f);
+    SetPlayerInvincibility(false);
   }
   //This function gets called by game mode to allow players to do stuff once the timer ends
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
