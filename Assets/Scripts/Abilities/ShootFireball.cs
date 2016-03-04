@@ -70,11 +70,17 @@ public class ShootFireball : AbstractAbility {
   //This function will take a normal and revert collision based on that normal
   private void reflectFireball(Vector2 collidingSurfaceNormal) {
     GetComponent<Rigidbody2D>().velocity = Vector2.Reflect(GetComponent<Rigidbody2D>().velocity, collidingSurfaceNormal);
+    playAudioBounce();
   }
 
   private void playAudioCast() {
     AudioClip[] castSounds = Resources.LoadAll<AudioClip>("Audio/SFX/Fireball/Cast");
     int castIndex = Random.Range(0, castSounds.Length);
     GetComponent<AudioSource>().PlayOneShot(castSounds[castIndex], 0.5f);
+  }
+
+  private void playAudioBounce() {
+    AudioClip bounceSound = Resources.Load<AudioClip>("Audio/SFX/Fireball/FireballBounce");
+    GetComponent<AudioSource>().PlayOneShot(bounceSound, 0.5f);
   }
 }
