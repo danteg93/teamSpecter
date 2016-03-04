@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 //TODO dash CD
 
 public class PlayerController : MonoBehaviour {
@@ -72,9 +73,8 @@ public class PlayerController : MonoBehaviour {
     }
     // Anything below this line will not be executed until the game countdown hits 0.
     if (!movementAndShootingAllowed) { return; }
-    //Execute movement of the player.
+    // Execute movement of the player.
     executeMovement();
-    //According to unity docs, all rigidbody calculations should happen on FixedUpdate o.o
     executeDash();
   }
 
@@ -90,22 +90,30 @@ public class PlayerController : MonoBehaviour {
     if(invincible){return;}
     Cameraman.cameraman.CameraShake(0.5f, 0.1f);
     //So that this can work without gamemode in the scene
-    if (initializedByGamemode) {
-      Gamemode.gamemode.playerDied(PlayerNumber, PlayerNumber);
-    }
-    //So that players can respawn
-    gameObject.SetActive(false);
+    if (initializedByGamemode) { Gamemode.gamemode.playerDied(PlayerNumber, PlayerNumber); }
+    StartCoroutine(deathAnimation());
   }
+
   public void Kill(int killedBy) {
     if (invincible){return;}
     Cameraman.cameraman.CameraShake(0.5f, 0.1f);
     //So that this can work without gamemode in the scene
-    if (initializedByGamemode) {
-      Gamemode.gamemode.playerDied(PlayerNumber, killedBy);
-    }
-    //So that players can respawn
+    if (initializedByGamemode) { Gamemode.gamemode.playerDied(PlayerNumber, killedBy); }
+    StartCoroutine(deathAnimation());
+  }
+
+  // TODO: Play death animation here.
+  // Coroutine for killing the player. This will paly a death animation, stop all player
+  // movement, and play a sound on death. The object is not destroyed so that the player
+  // can respawn.
+  IEnumerator deathAnimation() {
+    movementAndShootingAllowed = false;
+    GetComponent<Rigidbody2D>().isKinematic = true;
+    playAudioDeath();
+    yield return new WaitForSeconds(2);
     gameObject.SetActive(false);
   }
+
   //Respawn at initial position
   //TODO: respawn cool down and invisibility
   public void respawn() {
@@ -262,7 +270,11 @@ public class PlayerController : MonoBehaviour {
 			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.yellow;
 			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.green;
 			}
-
 		}
+  }
+
+  private void playAudioDeath() {
+    AudioClip deathSound = Resources.Load<AudioClip>("Audio/SFX/Player/PlayerHit");
+    GetComponent<AudioSource>().PlayOneShot(deathSound, 0.5f);
   }
 }
