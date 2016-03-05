@@ -327,8 +327,16 @@ public class Gamemode : MonoBehaviour {
   }
   // Display a countdown timer before each round starts.
   IEnumerator displayCountDown() {
+    AudioClip countdownSound = Resources.Load<AudioClip>("Audio/SFX/Misc/Countdown");
+    GetComponent<AudioSource>().PlayOneShot(countdownSound, 0.5f);
     for (int i = 3; i >= 0; i--) {
-      countdownText = i == 0 ? "GO!" : i.ToString();
+      if (i == 0) {
+        countdownText = "GO!";
+        AudioClip roundStartSound = Resources.Load<AudioClip>("Audio/SFX/Misc/RoundStartHorn");
+        GetComponent<AudioSource>().PlayOneShot(roundStartSound, 0.5f);
+      } else {
+        countdownText = i.ToString();
+      }
       yield return new WaitForSeconds(1);
     }
     showCountdown = false;
