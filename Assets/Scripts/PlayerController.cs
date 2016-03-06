@@ -47,6 +47,10 @@ public class PlayerController : MonoBehaviour {
   private bool movementAndShootingAllowed = true;
   private bool invincible = false;
 
+  //charge counter
+  private int chargeCounter = 0;
+  public static float ballSize = 0.1f;
+
   // Process inputs that do not rely on physics updates.
   void Start() {
     inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
@@ -62,6 +66,8 @@ public class PlayerController : MonoBehaviour {
     if (!movementAndShootingAllowed) { return; }
     processPrimaryAbilityInput();
     processBlockInput();
+    //print(chargeCounter);
+
   }
 
   // Process all other actions that do rely on physics updates.
@@ -240,13 +246,44 @@ public class PlayerController : MonoBehaviour {
     if (shieldOn) { return; }
 
     if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 || !UseKeyboardControl && Input.GetAxis(inputMapping + "_Primary") > 0) {
+      // increase chargeCounter while holding trigger
+      if (chargeCounter <= 100)
+      {
+        chargeCounter += 1;
+      }
       if (!isUsingPrimaryAbility && primaryAbilityCooldownTimer <= 0) {
         isUsingPrimaryAbility = true;
-        PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
         primaryAbilityCooldownTimer = PrimaryAbility.GetComponent<AbstractAbility>().Cooldown;
       }
     } else if (isUsingPrimaryAbility) {
       isUsingPrimaryAbility = false;
+      // use chargeCounter or change ballSize with "PrimaryAbility.transform.localScale" do not work, so I have to use the stupid way. 
+      // But this way we can easily add animation to remind player of the ball size.
+      if (chargeCounter > 25)
+      {
+        ballSize = 0.15f;
+      }
+      if (chargeCounter > 50)
+      {
+        ballSize = 0.2f;
+      }
+      if (chargeCounter > 75)
+      {
+        ballSize = 0.25f;
+      }
+      if (chargeCounter > 100)
+      {
+        ballSize = 0.3f;
+      }
+
+      PrimaryAbility.transform.localScale = new Vector3(ballSize, ballSize, 0.11f);
+      PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
+      chargeCounter = 0;
+      if (chargeCounter == 0)
+      {
+        ballSize = 0.1f;
+      }
+
     }
 
     if (primaryAbilityCooldownTimer > 0) { primaryAbilityCooldownTimer -= Time.deltaTime; }
