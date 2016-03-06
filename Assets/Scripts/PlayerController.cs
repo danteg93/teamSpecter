@@ -203,6 +203,7 @@ public class PlayerController : MonoBehaviour {
     if (dashInput != 0 && !isPressingDash && dashCooldownTimer == DashCooldown) {
       isPressingDash = true;
       dashCooldownTimer -= Time.deltaTime;
+      playAudioDash();
       //movement Direction gets calculated in the executeMovement function.
       //If you are moving, the dash will take you in that direction.
       if (movementDirection.magnitude != 0.0f) {
@@ -292,5 +293,10 @@ public class PlayerController : MonoBehaviour {
   private void playAudioDeath() {
     AudioClip deathSound = Resources.Load<AudioClip>("Audio/SFX/Player/PlayerHit");
     GetComponent<AudioSource>().PlayOneShot(deathSound, 0.5f);
+  }
+
+  private void playAudioDash() {
+    AudioClip dashSound = Resources.Load<AudioClip>("Audio/SFX/Player/DashActivate");
+    GetComponent<AudioSource>().PlayOneShot(dashSound, 0.5f);
   }
 }

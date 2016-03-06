@@ -151,6 +151,21 @@ MonoBehaviour:
   Cooldown: 0.5
   TimeToLive: 2
   Speed: 500
+  PlayerLastInteracted: -1
+  FireballCastSound1: {fileID: 8300000, guid: 4b184148b99d0e240bf6d4bf0f5fc57d, type: 3}
+  FireballCastSound2: {fileID: 8300000, guid: e982d8a2b36a16e43924aac6c3348d0e, type: 3}
+  FireballCastSound3: {fileID: 8300000, guid: 0c00fa9912c746148a803b4c55317b99, type: 3}
+  FireballCastSound4: {fileID: 8300000, guid: 2d6c31d827e4fd94b9a26d5c347017c0, type: 3}
+  FireballBounceSound1: {fileID: 8300000, guid: 01331b8f111e718459954828865b33cc,
+    type: 3}
+  FireballBounceSound2: {fileID: 8300000, guid: afcb1e0c40dad7f44a0e723d4c503a7c,
+    type: 3}
+  FireballBounceSound3: {fileID: 8300000, guid: 800ecce6becef464eab593dcaeeeeb09,
+    type: 3}
+  FireballBounceSound4: {fileID: 8300000, guid: b38232b23eb725549a48ae883f3e8974,
+    type: 3}
+  FireballDissipateSound: {fileID: 8300000, guid: 629be66e3ba06ef41b10966f859bd556,
+    type: 3}
 --- !u!212 &21205026
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -224,6 +239,42 @@ Prefab:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: FireballCastSound1
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b184148b99d0e240bf6d4bf0f5fc57d, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballCastSound2
+      value: 
+      objectReference: {fileID: 8300000, guid: e982d8a2b36a16e43924aac6c3348d0e, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballCastSound3
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c00fa9912c746148a803b4c55317b99, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballCastSound4
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d6c31d827e4fd94b9a26d5c347017c0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballBounceSound1
+      value: 
+      objectReference: {fileID: 8300000, guid: 01331b8f111e718459954828865b33cc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballBounceSound2
+      value: 
+      objectReference: {fileID: 8300000, guid: afcb1e0c40dad7f44a0e723d4c503a7c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballBounceSound3
+      value: 
+      objectReference: {fileID: 8300000, guid: 800ecce6becef464eab593dcaeeeeb09, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballBounceSound4
+      value: 
+      objectReference: {fileID: 8300000, guid: b38232b23eb725549a48ae883f3e8974, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FireballDissipateSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 629be66e3ba06ef41b10966f859bd556, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121064}
