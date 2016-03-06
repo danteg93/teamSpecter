@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour {
     SetPlayerMoveAndShoot(false);
     playAudioDeath();
     GetComponent<SpriteRenderer>().enabled = false;
+    GetComponent<CircleCollider2D>().enabled = false;
     GetComponent<Rigidbody2D>().isKinematic = true;
     //Particle initiation
     GameObject tempBoom = Instantiate(explosionParticle, transform.position, transform.rotation) as GameObject;
@@ -134,6 +135,7 @@ public class PlayerController : MonoBehaviour {
   //Respawn at initial position
   public void executeRespawn() {
     GetComponent<SpriteRenderer>().enabled = true;
+    GetComponent<CircleCollider2D>().enabled = true;
     GetComponent<Rigidbody2D>().isKinematic = false;
     SetPlayerMoveAndShoot(true);
     playerShouldRespawn = false;
