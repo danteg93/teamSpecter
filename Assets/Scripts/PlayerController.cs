@@ -116,7 +116,11 @@ public class PlayerController : MonoBehaviour {
     SetPlayerInvincibility(true);
     SetPlayerMoveAndShoot(false);
     playAudioDeath();
-    GetComponent<SpriteRenderer>().enabled = false;
+    //Added this so crossHair would also not show up
+    SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+    foreach (SpriteRenderer spriteRenderer  in spriteRenderers) {
+      spriteRenderer.enabled = false;
+    }
     GetComponent<CircleCollider2D>().enabled = false;
     GetComponent<Rigidbody2D>().isKinematic = true;
     //Particle initiation
@@ -124,6 +128,7 @@ public class PlayerController : MonoBehaviour {
     tempBoom.transform.parent = transform;
     yield return new WaitForSeconds(2.0f);
     dying = false;
+    Destroy(tempBoom);
     if (!playerShouldRespawn) {
       gameObject.SetActive(false);
     }
@@ -134,9 +139,14 @@ public class PlayerController : MonoBehaviour {
   }
   //Respawn at initial position
   public void executeRespawn() {
-    GetComponent<SpriteRenderer>().enabled = true;
+    //Added this so crossHair would also not show up
+    SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+    foreach (SpriteRenderer spriteRenderer  in spriteRenderers) {
+      spriteRenderer.enabled = true;
+    }
     GetComponent<CircleCollider2D>().enabled = true;
     GetComponent<Rigidbody2D>().isKinematic = false;
+  //  GetComponent<crossHair>().enabled = true;
     SetPlayerMoveAndShoot(true);
     playerShouldRespawn = false;
     gameObject.transform.position = initialPosition;
