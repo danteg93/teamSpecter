@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
   private bool shieldOn = false;
   private float shieldCooldownTimer = 0;
 
+  // Particle Effects
+  public GameObject explosionParticle;
   // Dash ability initialization.
   public float DashCooldown = 1.0f;
   public float DashPower = 15.0f;
@@ -114,8 +116,13 @@ public class PlayerController : MonoBehaviour {
     SetPlayerInvincibility(true);
     SetPlayerMoveAndShoot(false);
     playAudioDeath();
-    yield return new WaitForSeconds(1.8f);
-    dying = false; 
+    GetComponent<SpriteRenderer>().enabled = false;
+    GetComponent<Rigidbody2D>().isKinematic = true;
+    //Particle initiation
+    GameObject tempBoom = Instantiate(explosionParticle, transform.position, transform.rotation) as GameObject;
+    tempBoom.transform.parent = transform;
+    yield return new WaitForSeconds(2.0f);
+    dying = false;
     if (!playerShouldRespawn) {
       gameObject.SetActive(false);
     }
@@ -126,6 +133,8 @@ public class PlayerController : MonoBehaviour {
   }
   //Respawn at initial position
   public void executeRespawn() {
+    GetComponent<SpriteRenderer>().enabled = true;
+    GetComponent<Rigidbody2D>().isKinematic = false;
     SetPlayerMoveAndShoot(true);
     playerShouldRespawn = false;
     gameObject.transform.position = initialPosition;
@@ -188,7 +197,6 @@ public class PlayerController : MonoBehaviour {
       transform.rotation = Quaternion.Euler(0f, 0f, angleToStick);
     }
   }
-
   private void executeDash() {
     Vector2 dashVector;
     //get the value for the dash input

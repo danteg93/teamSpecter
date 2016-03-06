@@ -7,6 +7,9 @@ public class ShootFireball : AbstractAbility {
   public float Speed;
   public int PlayerLastInteracted = -1;
 
+  //Smoke Particle
+  public GameObject smokeParticle;
+
   // Sounds related to this object.
   public AudioClip FireballCastSound1;
   public AudioClip FireballCastSound2;
@@ -90,6 +93,9 @@ public class ShootFireball : AbstractAbility {
 
   IEnumerator destroyAnimation() {
     audioSource.PlayOneShot(FireballDissipateSound, 0.5f);
+    //Smoke stuff
+    GameObject tempSmoke = Instantiate(smokeParticle, transform.position, transform.rotation) as GameObject;
+    tempSmoke.transform.parent = transform;
     yield return new WaitForSeconds(0.3f);
     Destroy(gameObject);
   }
