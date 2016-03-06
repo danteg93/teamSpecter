@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class ShootFireball : AbstractAbility {
 
@@ -6,7 +7,25 @@ public class ShootFireball : AbstractAbility {
   public float Speed;
   public int PlayerLastInteracted = -1;
 
+  // Sounds related to this object.
+  public AudioClip FireballCastSound1;
+  public AudioClip FireballCastSound2;
+  public AudioClip FireballCastSound3;
+  public AudioClip FireballCastSound4;
+  public AudioClip FireballBounceSound1;
+  public AudioClip FireballBounceSound2;
+  public AudioClip FireballBounceSound3;
+  public AudioClip FireballBounceSound4;
+  public AudioClip FireballDissipateSound;
+
   private float timeSpawned;
+  private bool destroying = false;
+  private AudioSource audioSource;
+
+  void Awake() {
+    audioSource = GetComponent<AudioSource>();
+  }
+
   // On spawn, launch the fireball away from the player.
   void Start() {
     GetComponent<Rigidbody2D>().AddForce(transform.up * -Speed);
@@ -64,6 +83,14 @@ public class ShootFireball : AbstractAbility {
 
   //this is here for the future, when there are aniamtions and other stuff
   public void DestroyProjectile() {
+    if (destroying) { return; }
+    destroying = true;
+    StartCoroutine(destroyAnimation());
+  }
+
+  IEnumerator destroyAnimation() {
+    audioSource.PlayOneShot(FireballDissipateSound, 0.5f);
+    yield return new WaitForSeconds(0.3f);
     Destroy(gameObject);
   }
 
@@ -74,13 +101,14 @@ public class ShootFireball : AbstractAbility {
   }
 
   private void playAudioCast() {
-    AudioClip[] castSounds = Resources.LoadAll<AudioClip>("Audio/SFX/Fireball/Cast");
+    AudioClip[] castSounds = { FireballCastSound1, FireballCastSound2, FireballCastSound3, FireballCastSound4 };
     int castIndex = Random.Range(0, castSounds.Length);
-    GetComponent<AudioSource>().PlayOneShot(castSounds[castIndex], 0.5f);
+    audioSource.PlayOneShot(castSounds[castIndex], 0.5f);
   }
 
   private void playAudioBounce() {
-    AudioClip bounceSound = Resources.Load<AudioClip>("Audio/SFX/Fireball/FireballBounce");
-    GetComponent<AudioSource>().PlayOneShot(bounceSound, 0.5f);
+    AudioClip[] bounceSounds = { FireballBounceSound1, FireballBounceSound2, FireballBounceSound3, FireballBounceSound4 };
+    int bounceIndex = Random.Range(0, bounceSounds.Length);
+    audioSource.PlayOneShot(bounceSounds[bounceIndex], 0.5f);
   }
 }

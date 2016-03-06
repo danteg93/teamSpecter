@@ -5,8 +5,12 @@ public class GameManager : MonoBehaviour {
 
   public static GameManager gameManager;
 
+  public AudioClip MenuMusic;
+  public AudioClip BattleMusic;
+
   private enum gameModeSetup { Default, LastManStanding, DeathMatch };
   private gameModeSetup currentGameMode = gameModeSetup.Default;
+  private AudioSource audioSource;
 
   void Awake() {
     //This keeps it alive during gameplay.
@@ -17,11 +21,26 @@ public class GameManager : MonoBehaviour {
     else if (gameManager != this) {
       Destroy(gameObject);
     }
+    audioSource = GetComponent<AudioSource>();
   }
 
   void OnLevelWasLoaded(int level) {
     //If you are loading the menu then dont do anything because gamemode doesnt exist yet
-    if (level == 2) { return; }
+    if (level == 2) {
+      if (audioSource.clip != MenuMusic) {
+        audioSource.Stop();
+        audioSource.clip = MenuMusic;
+        audioSource.volume = 1;
+        audioSource.Play();
+      }
+      return;
+    }
+    if (audioSource.clip != BattleMusic) {
+      audioSource.Stop();
+      audioSource.clip = BattleMusic;
+      audioSource.volume = 0.5f;
+      audioSource.Play();
+    }
     setUpGame();
   }
 
