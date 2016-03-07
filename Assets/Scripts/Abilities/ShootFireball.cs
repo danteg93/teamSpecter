@@ -7,6 +7,9 @@ public class ShootFireball : AbstractAbility {
   public float Speed;
   public int PlayerLastInteracted = -1;
 
+  //Smoke Particle
+  public GameObject smokeParticle;
+
   // Sounds related to this object.
   public AudioClip FireballCastSound1;
   public AudioClip FireballCastSound2;
@@ -57,7 +60,7 @@ public class ShootFireball : AbstractAbility {
         reflectFireball(col.contacts[0].normal);
       } else {
         col.gameObject.GetComponent<PlayerController>().Kill(PlayerLastInteracted);
-        DestroyProjectile();
+        DestroyProjectileInstant();
       }
     } else if (col.gameObject.GetComponent<Cover>()) {
       if (col.gameObject.GetComponent<Cover>().IsReflecting) {
@@ -85,11 +88,25 @@ public class ShootFireball : AbstractAbility {
   public void DestroyProjectile() {
     if (destroying) { return; }
     destroying = true;
-    StartCoroutine(destroyAnimation());
+    StartCoroutine(destroyAnimation(false));
+  }
+  //Added it like this because not sure how many external things use DestroyProjectile
+  public void DestroyProjectileInstant() {
+    if (destroying) { return; }
+    destroying = true;
+    StartCoroutine(destroyAnimation(true));
   }
 
-  IEnumerator destroyAnimation() {
+  IEnumerator destroyAnimation(bool instantDestroy) {
+    if(instantDestroy){
+      Destroy(gameObject);
+      //Have to return something for IEnumerator
+      return true;
+    }
     audioSource.PlayOneShot(FireballDissipateSound, 0.5f);
+    //Smoke stuff
+    GameObject tempSmoke = Instantiate(smokeParticle, transform.position, transform.rotation) as GameObject;
+    tempSmoke.transform.parent = transform;
     yield return new WaitForSeconds(0.3f);
     Destroy(gameObject);
   }

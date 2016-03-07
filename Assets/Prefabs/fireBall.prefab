@@ -152,6 +152,7 @@ MonoBehaviour:
   TimeToLive: 2
   Speed: 500
   PlayerLastInteracted: -1
+  smokeParticle: {fileID: 131048, guid: a17ac24b47d4745428939fe0297455a2, type: 2}
   FireballCastSound1: {fileID: 8300000, guid: 4b184148b99d0e240bf6d4bf0f5fc57d, type: 3}
   FireballCastSound2: {fileID: 8300000, guid: e982d8a2b36a16e43924aac6c3348d0e, type: 3}
   FireballCastSound3: {fileID: 8300000, guid: 0c00fa9912c746148a803b4c55317b99, type: 3}
@@ -275,6 +276,10 @@ Prefab:
       propertyPath: FireballDissipateSound
       value: 
       objectReference: {fileID: 8300000, guid: 629be66e3ba06ef41b10966f859bd556, type: 3}
+    - target: {fileID: 0}
+      propertyPath: smokeParticle
+      value: 
+      objectReference: {fileID: 131048, guid: a17ac24b47d4745428939fe0297455a2, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121064}
