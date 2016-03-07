@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
     if (audioSource.clip != BattleMusic) {
       audioSource.Stop();
       audioSource.clip = BattleMusic;
-      audioSource.volume = 0.5f;
+      audioSource.volume = 0.25f;
       audioSource.Play();
     }
     setUpGame();
