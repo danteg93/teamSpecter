@@ -301,15 +301,7 @@ public class PlayerController : MonoBehaviour {
 			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.black;
 			}
 
-		} else {
-      // now that we have character sprites, we don't need this
-
-			//if (PlayerNumber == 1) { GetComponent<SpriteRenderer> ().color = Color.red;
-			//} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.blue;
-			//} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.yellow;
-			//} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.green;
-			//}
-		}
+		} 
   }
 
   private void playAudioDeath() {
