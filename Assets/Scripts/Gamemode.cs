@@ -58,8 +58,8 @@ public class Gamemode : MonoBehaviour {
   void Start() {
     //Turn off the cursor if the editor told us to.
     Cursor.visible = DisplayMouse;
-	//Set up initial score UI
-	setScoreText();
+    //Set up initial score UI
+    setScoreText();
 
     //This is here in case the level was loaded from the editor
     //(makes it so scene doesn't have to be linked to menu to test)
@@ -93,8 +93,6 @@ public class Gamemode : MonoBehaviour {
         displayRoundOverGUI();
       }
     }
-	//Score UI
-
   }
   // ========= Game Set Up Stuff (called by GameManager) ============
   public void setScoreType(int gameType) {
@@ -126,12 +124,12 @@ public class Gamemode : MonoBehaviour {
     if (currentScoreType == scoreType.DM) {
       if (playerNumber != killedBy) {
         scores[killedBy - 1] += 1;
-		setScoreText ();
+        setScoreText();
       }
       else {
         //If you commited suicide then you lose a point?
         scores[killedBy - 1] -= 1;
-		setScoreText ();
+        setScoreText();
       }
     }
   }
@@ -173,9 +171,8 @@ public class Gamemode : MonoBehaviour {
       roundSetUp = false;
       roundWinnerNumber = playerAlive + 1;
       scores[playerAlive] += 1;
-	  //Update score
-	  setScoreText ();
-			Debug.Log (scores[0].ToString() + " " + scores[1].ToString() + scores[2].ToString() + scores[3].ToString());
+      //Update score
+      setScoreText ();
       if (scores.Contains(winningScore)) { gameOver = true; }
     }
     //If there is a tie then no one wins
@@ -362,17 +359,14 @@ public class Gamemode : MonoBehaviour {
     setAllPlayersInvincible(false);
   }
 
-	//Sets/updates score UI
-	void setScoreText()
-	{
-		if (playerOneScoreText.gameObject != null) {
-			playerOneScoreText.text = scores [0].ToString ();
-			playerTwoScoreText.text = scores [1].ToString ();
-			playerThreeScoreText.text = scores [2].ToString ();
-			playerFourScoreText.text = scores [3].ToString ();
-		} else {
-			
-		}
-	}
+  //Sets/updates score UI
+  void setScoreText() {
+    if (playerOneScoreText.gameObject != null) {
+      playerOneScoreText.text = scores [0].ToString();
+      playerTwoScoreText.text = scores [1].ToString();
+      playerThreeScoreText.text = scores [2].ToString();
+      playerFourScoreText.text = scores [3].ToString();
+    }
+  }
   //=================================================================
 }
