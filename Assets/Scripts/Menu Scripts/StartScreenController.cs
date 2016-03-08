@@ -9,6 +9,7 @@ public class StartScreenController : MonoBehaviour {
   //We might also want to add more stuff between the start screen and the game set up.
   public bool DisplayMouse = true;
   private PlayerController[] players = new PlayerController[4];
+  private bool loadingScene = false;
 
   void Awake() {
     PlayerController[] tempPlayers = FindObjectsOfType(typeof(PlayerController)) as PlayerController[];
@@ -17,16 +18,27 @@ public class StartScreenController : MonoBehaviour {
       players[tempPlayers[i].PlayerNumber - 1] = tempPlayers[i];
     }
     for (int i = 0; i < players.Length; i++) {
-      players[i].SetPlayerInvincibility(true);
+      players[i].SetPlayerMoveAndShoot(false);
     }
     for (int i = 0; i < players.Length; i++) {
-      players[i].SetPlayerMoveAndShoot(false);
+      players[i].setInitializedByGamemode(false);
     }
   }
   void Start() {
     Cursor.visible = DisplayMouse;
   }
   public void openMenu() {
+    if (!loadingScene) {
+      loadingScene = true;
+      for (int i = 0; i < players.Length; i++) {
+        players[i].Kill();
+      }
+      StartCoroutine(openScene());
+    }
+  }
+  IEnumerator openScene() {
+    //TODO graphical que that dude is invincible
+    yield return new WaitForSeconds(2.0f);
     SceneManager.LoadScene(2);
   }
 }
