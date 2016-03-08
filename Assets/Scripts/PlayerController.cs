@@ -149,8 +149,7 @@ public class PlayerController : MonoBehaviour {
     SetPlayerMoveAndShoot(true);
     playerShouldRespawn = false;
     gameObject.transform.position = initialPosition;
-    GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.4f); ;
-    Debug.Log(GetComponent<SpriteRenderer>().color);
+    GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.4f);
     StartCoroutine(respawnInvincibility());
   }
   IEnumerator respawnInvincibility() {
