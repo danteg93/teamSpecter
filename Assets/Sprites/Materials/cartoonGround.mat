@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: SandAlbedo
+  m_Name: cartoonGround
   m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _DETAIL_MULX2
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
   stringTagMap: {}
@@ -19,8 +19,8 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: bfd675cc0db1d4656b75dc6d6ba91142, type: 3}
-          m_Scale: {x: 1, y: 1}
+          m_Texture: {fileID: 2800000, guid: 5b6d6c2b9ea7e404999897382474c9a5, type: 3}
+          m_Scale: {x: 10, y: 6.48}
           m_Offset: {x: 0, y: 0}
       data:
         first:
@@ -68,8 +68,8 @@ Material:
         first:
           name: _DetailAlbedoMap
         second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
+          m_Texture: {fileID: 2800000, guid: 8153297947dea4d6597afbd1575f86a8, type: 3}
+          m_Scale: {x: 11.17, y: 5.65}
           m_Offset: {x: 0, y: 0}
       data:
         first:
