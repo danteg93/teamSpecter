@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
@@ -26,7 +25,7 @@ public class GameManager : MonoBehaviour {
 
   void OnLevelWasLoaded(int level) {
     //If you are loading the menu then dont do anything because gamemode doesnt exist yet
-    if (level == 2) {
+    if (level == 2 || level == 0) {
       if (audioSource.clip != MenuMusic) {
         audioSource.Stop();
         audioSource.clip = MenuMusic;
