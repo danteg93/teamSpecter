@@ -9,6 +9,7 @@ TagManager:
   - TitleLabel
   - Projectile
   - Cover
+  - PlayerOneScore
   layers:
   - Default
   - TransparentFX
