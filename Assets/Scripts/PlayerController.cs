@@ -146,16 +146,18 @@ public class PlayerController : MonoBehaviour {
     }
     GetComponent<CircleCollider2D>().enabled = true;
     GetComponent<Rigidbody2D>().isKinematic = false;
-  //  GetComponent<crossHair>().enabled = true;
     SetPlayerMoveAndShoot(true);
     playerShouldRespawn = false;
     gameObject.transform.position = initialPosition;
+    GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.4f); ;
+    Debug.Log(GetComponent<SpriteRenderer>().color);
     StartCoroutine(respawnInvincibility());
   }
   IEnumerator respawnInvincibility() {
     //TODO graphical que that dude is invincible
     yield return new WaitForSeconds(2.0f);
     SetPlayerInvincibility(false);
+    GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
   }
   //This function gets called by game mode to allow players to do stuff once the timer ends
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
@@ -295,12 +297,12 @@ public class PlayerController : MonoBehaviour {
 
 		if (shieldCooldownTimer > 0) {
 			shieldCooldownTimer -= Time.deltaTime;
-			if (PlayerNumber == 1) {this.GetComponent<SpriteRenderer> ().color = Color.black;
-			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.black;
-			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.black;
-			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.black;
-			}
-
+      if (shieldCooldownTimer <= 0) {
+        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+      }
+      else {
+        GetComponent<SpriteRenderer>().color = Color.black;
+      }
 		} 
   }
 
