@@ -327,7 +327,8 @@ public class Gamemode : MonoBehaviour {
       StartCoroutine(pauseCoolDown());
     }
   }
-
+  //=================================================================
+  //======================== GUI Functions ==========================
   // Display a countdown timer before each round starts.
   IEnumerator displayCountDown() {
     Countdown.gameObject.SetActive(true);
