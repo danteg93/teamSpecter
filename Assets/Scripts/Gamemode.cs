@@ -312,6 +312,7 @@ public class Gamemode : MonoBehaviour {
 
   // Display a countdown timer before each round starts.
   IEnumerator displayCountDown() {
+    Countdown.gameObject.SetActive(true);
     AudioClip countdownSound = Resources.Load<AudioClip>("Audio/SFX/Misc/Countdown");
     GetComponent<AudioSource>().PlayOneShot(countdownSound, 0.5f);
     for (int i = 3; i >= 0; i--) {
