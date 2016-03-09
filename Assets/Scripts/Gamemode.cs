@@ -309,7 +309,8 @@ public class Gamemode : MonoBehaviour {
     Destroy(this.gameObject);
     cleanAndLoadScene("Menu");
   }
-
+  //=================================================================
+  //======================== GUI Functions ==========================
   // Display a countdown timer before each round starts.
   IEnumerator displayCountDown() {
     Countdown.gameObject.SetActive(true);
