@@ -25,8 +25,6 @@ public class Gamemode : MonoBehaviour {
   private PlayerController[] players = new PlayerController[4];
 
   // Per round variables needed for saving round specific information.
-  private bool showCountdown = false;
-  private string countdownText = "";
   private bool roundStarted = false;
   private bool roundOver = false;
   private int roundWinnerNumber = 0;
@@ -40,6 +38,8 @@ public class Gamemode : MonoBehaviour {
   public Text playerTwoScoreText;
   public Text playerThreeScoreText;
   public Text playerFourScoreText;
+  public GameObject Scoreboard;
+  public Text Countdown;
 
   // Make the Gamemode accessible from any script and
   // ensure it persists between scene loads.
@@ -81,19 +81,7 @@ public class Gamemode : MonoBehaviour {
     findPlayers();
     setUpRound();
   }
-  // If the countdown timer should display, show that. Otherwise if the game is over,
-  // display the end round GUI.
-  void OnGUI() {
-    if (showCountdown) { GUI.Box(new Rect((Screen.width / 2) - 25, (Screen.height / 2) - 25, 50, 50), countdownText); }
-    if (roundOver) {
-      if (gameOver) {
-        displayGameOverGUI();
-      }
-      else {
-        displayRoundOverGUI();
-      }
-    }
-  }
+
   // ========= Game Set Up Stuff (called by GameManager) ============
   public void setScoreType(int gameType) {
     switch (gameType) {
@@ -172,7 +160,8 @@ public class Gamemode : MonoBehaviour {
       roundWinnerNumber = playerAlive + 1;
       scores[playerAlive] += 1;
       //Update score
-      setScoreText ();
+      setScoreText();
+      showScoreboard();
       if (scores.Contains(winningScore)) { gameOver = true; }
     }
     //If there is a tie then no one wins
@@ -180,6 +169,7 @@ public class Gamemode : MonoBehaviour {
       roundOver = true;
       roundSetUp = false;
       roundWinnerNumber = 0;
+      showScoreboard();
     }
   }
   //~~~~~~~~~~~ Rules for Death match ~~~~~~~~~~~~~~~~
@@ -203,6 +193,7 @@ public class Gamemode : MonoBehaviour {
       roundOver = true;
       roundSetUp = false;
       gameOver = true;
+      showScoreboard();
     }
     //This is the match time loop
     //matchTime of -1 means that we want unlimited time
@@ -243,6 +234,7 @@ public class Gamemode : MonoBehaviour {
       roundOver = true;
       roundSetUp = false;
       gameOver = true;
+      showScoreboard();
     }
   }
   //=================================================================
@@ -269,7 +261,6 @@ public class Gamemode : MonoBehaviour {
     playersAlive = new bool[4] { true, true, true, true };
     roundStarted = false;
     roundOver = false;
-    showCountdown = true;
     StartCoroutine(displayCountDown());
   }
   private void findPlayers() {
@@ -302,70 +293,87 @@ public class Gamemode : MonoBehaviour {
       SceneManager.LoadScene(sceneName);
     }
   }
+  public void ReloadLevel() {
+    cleanAndLoadScene(SceneManager.GetActiveScene().name);
+  }
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.
-  private void endGame() {
+  public void EndGame() {
     Destroy(this.gameObject);
     cleanAndLoadScene("Menu");
   }
+
   //=================================================================
   //======================== GUI Fucntions ==========================
-  // Display who won and a button to restart the level.
-  private void displayRoundOverGUI() {
-    GUI.Box(new Rect(Screen.width / 2 - 200, 100, 400, 300), scoreboardText());
-    if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 35, 150, 70), "Next Round") || Input.GetAxis("KB_Pause") != 0 || checkPause()) {
-      cleanAndLoadScene(SceneManager.GetActiveScene().name);
-    }
+
+  // If the countdown timer should display, show that. Otherwise if the game is over,
+  // display the end round GUI.
+  void OnGUI() {
+    if (roundOver) { showScoreboard(); }
   }
-  // Display the end game scores and a button to quit to the main menu.
-  private void displayGameOverGUI() {
-    GUI.Box(new Rect(Screen.width / 2 - 200, 100, 400, 300), scoreboardText());
-    if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 + 35, 150, 70), "Main Menu") || Input.GetAxis("KB_Pause") != 0 || checkPause()) {
-      endGame();
-    }
-  }
-  private string scoreboardText() {
-    string scoreboardText = "Game Over. ";
-    if (roundWinnerNumber != 0) {
-      scoreboardText += "Player " + roundWinnerNumber;
-      scoreboardText += gameOver ? " wins the game!" : " wins this round!";
-    }
-    else {
-      scoreboardText += "This round ended in a tie!";
-    }
-    scoreboardText += gameOver ? "\n\n Final Scores:\n" : "\n\n Current Scores:\n";
-    for (int i = 0; i < 4; i++) {
-      scoreboardText += "\nPlayer " + (i + 1) + ": " + scores[i];
-    }
-    return scoreboardText;
-  }
+
   // Display a countdown timer before each round starts.
   IEnumerator displayCountDown() {
     AudioClip countdownSound = Resources.Load<AudioClip>("Audio/SFX/Misc/Countdown");
     GetComponent<AudioSource>().PlayOneShot(countdownSound, 0.5f);
     for (int i = 3; i >= 0; i--) {
       if (i == 0) {
-        countdownText = "GO!";
+        Countdown.text = "GO!";
         AudioClip roundStartSound = Resources.Load<AudioClip>("Audio/SFX/Misc/RoundStartHorn");
         GetComponent<AudioSource>().PlayOneShot(roundStartSound, 0.5f);
       } else {
-        countdownText = i.ToString();
+        Countdown.text = i.ToString();
       }
       yield return new WaitForSeconds(1);
     }
-    showCountdown = false;
+    Countdown.gameObject.SetActive(false);
     roundStarted = true;
     setAllPlayersMoveAndShoot(true);
     setAllPlayersInvincible(false);
   }
 
-  //Sets/updates score UI
+  // Sets/updates score UI
   void setScoreText() {
-    if (playerOneScoreText.gameObject != null) {
-      playerOneScoreText.text = scores [0].ToString();
-      playerTwoScoreText.text = scores [1].ToString();
-      playerThreeScoreText.text = scores [2].ToString();
-      playerFourScoreText.text = scores [3].ToString();
+    playerOneScoreText.text = scores[0].ToString();
+    playerTwoScoreText.text = scores[1].ToString();
+    playerThreeScoreText.text = scores[2].ToString();
+    playerFourScoreText.text = scores[3].ToString();
+    Text[] scoreboardText = Scoreboard.GetComponentsInChildren<Text>();
+    for (int i = 0; i < scoreboardText.Length; i++) {
+      switch (scoreboardText[i].name) {
+        case "RedPlayerScore":
+          scoreboardText[i].text = scores[0].ToString();
+          break;
+        case "BluePlayerScore":
+          scoreboardText[i].text = scores[1].ToString();
+          break;
+        case "GreenPlayerScore":
+          scoreboardText[i].text = scores[2].ToString();
+          break;
+        case "YellowPlayerScore":
+          scoreboardText[i].text = scores[3].ToString();
+          break;
+      }
+    }
+  }
+
+  // SUper hacky showing of the existing scoreboard.
+  private void showScoreboard() {
+    Scoreboard.SetActive(true);
+    Text[] scoreboardText = Scoreboard.GetComponentsInChildren<Text>();
+    Button[] scoreboardButtons = Scoreboard.GetComponentsInChildren<Button>(true);
+    for (int i = 0; i < scoreboardText.Length; i++) {
+      if (scoreboardText[i].name == "ScoreTitle") {
+        if (gameOver) {
+          scoreboardText[i].text = "Game Over\n Final Scores";
+          scoreboardButtons[0].gameObject.SetActive(true);
+          scoreboardButtons[1].gameObject.SetActive(false);
+        } else {
+          scoreboardText[i].text = "Round Over";
+          scoreboardButtons[0].gameObject.SetActive(false);
+          scoreboardButtons[1].gameObject.SetActive(true);
+        }
+      }
     }
   }
   //=================================================================
