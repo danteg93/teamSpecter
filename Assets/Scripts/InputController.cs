@@ -7,7 +7,8 @@ public class InputController : MonoBehaviour {
   public static InputController inputController;
 
   private string[] playerMappings = new string[4] {"k","k","k","k"};
-  private int controllerDisconnected = -1; 
+  private int controllerDisconnected = -1;
+  private bool controllerDC = false;
 	// Use this for initialization
 	void Awake () {
     if (inputController == null) {
@@ -23,9 +24,11 @@ public class InputController : MonoBehaviour {
     //Pause the game
     if (checkForDisconnects()) {
       Time.timeScale = 0;
+      controllerDC = true;
     }
-    else {
+    if (controllerDC && !checkForDisconnects()) {
       Time.timeScale = 1;
+      controllerDC = false;
     }
   }
   void OnGUI() {

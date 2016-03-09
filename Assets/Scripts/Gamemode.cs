@@ -43,9 +43,11 @@ public class Gamemode : MonoBehaviour {
   public Text playerThreeScoreText;
   public Text playerFourScoreText;
   public GameObject Scoreboard;
+  public GameObject PauseMenu;
   public Text Countdown;
   public Button GameOverButton;
   public Button RoundOverButton;
+  public Button ResumeGameButton;
   public Text ScoreboardTitle;
 
   // Make the Gamemode accessible from any script and
@@ -80,8 +82,9 @@ public class Gamemode : MonoBehaviour {
   // end the round and show the end round GUI.
   void Update() {
     //Started work for pause menu
-    if (!gamePaused && checkPause()) {
+    if (roundStarted && !gamePaused && checkPause()) {
       gamePaused = true;
+      PauseGame();
     }
     //Encapsulated the win condition function for further customization
     checkWinCondition();
@@ -306,8 +309,22 @@ public class Gamemode : MonoBehaviour {
   // Destroy the Gamemode since it will be remade on the menu,
   // and move back to the main menu.
   public void EndGame() {
+    Time.timeScale = 1.0F;
     Destroy(this.gameObject);
     cleanAndLoadScene("Menu");
+  }
+
+  public void PauseGame() {
+    if (!Scoreboard.activeSelf) {
+      Time.timeScale = 0.0F;
+      PauseMenu.SetActive(true);
+      EventSystem.current.SetSelectedGameObject(ResumeGameButton.gameObject);
+    }
+  }
+  public void ResumeGame() {
+    if (PauseMenu.activeSelf) {
+      StartCoroutine(pauseCoolDown());
+    }
   }
 
   // Display a countdown timer before each round starts.
@@ -330,7 +347,13 @@ public class Gamemode : MonoBehaviour {
     setAllPlayersMoveAndShoot(true);
     setAllPlayersInvincible(false);
   }
-
+  // Pause Cooldown
+  IEnumerator pauseCoolDown() {
+    Time.timeScale = 1.0F;
+    PauseMenu.SetActive(false);
+    yield return new WaitForSeconds(0.5f);
+    gamePaused = false;
+  }
   // Sets/updates score UI
   void setScoreText() {
     playerOneScoreText.text = scores[0].ToString();
