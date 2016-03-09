@@ -523,6 +523,7 @@ GameObject:
   - 4: {fileID: 355015335}
   - 68: {fileID: 355015336}
   - 114: {fileID: 355015337}
+  - 68: {fileID: 355015338}
   m_Layer: 0
   m_Name: OuterRing
   m_TagString: Untagged
@@ -593,6 +594,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBreakable: 0
   IsReflecting: 1
+--- !u!68 &355015338
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 355015334}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+  - {x: -9.920153, y: -9.889775}
+  - {x: -1.3520919, y: -9.916005}
+  - {x: -0.0015981942, y: -8.477128}
+  - {x: 1.309227, y: -9.926453}
+  - {x: 9.892383, y: -9.925767}
+  - {x: 9.909656, y: -1.2972133}
+  - {x: 8.553603, y: -0.011995107}
+  - {x: 9.916226, y: 1.3630581}
+  - {x: 9.890275, y: 9.914124}
+  - {x: 1.347277, y: 9.916152}
+  - {x: 0.0040465593, y: 8.471258}
+  - {x: -1.3643063, y: 9.912218}
+  - {x: -9.919071, y: 9.91911}
+  - {x: -9.903536, y: 1.2942952}
+  - {x: -8.686802, y: 0.020152032}
+  - {x: -9.921431, y: -1.3550986}
+  - {x: -9.927033, y: -9.890817}
 --- !u!1001 &591423893
 Prefab:
   m_ObjectHideFlags: 0
