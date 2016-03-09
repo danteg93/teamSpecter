@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour {
   private bool shieldOn = false;
   private float shieldCooldownTimer = 0;
 
-  // Particle Effects
-  public GameObject explosionParticle;
   // Dash ability initialization.
   public float DashCooldown = 1.0f;
   public float DashPower = 15.0f;
@@ -49,6 +47,10 @@ public class PlayerController : MonoBehaviour {
   private bool movementAndShootingAllowed = true;
   private bool invincible = false;
 
+  //charge counter
+  private int chargeCounter = 0;
+  public static float ballSize = 0.1f;
+
   // Process inputs that do not rely on physics updates.
   void Start() {
     inputMapping = InputController.inputController.GetPlayerMapping(PlayerNumber);
@@ -64,6 +66,8 @@ public class PlayerController : MonoBehaviour {
     if (!movementAndShootingAllowed) { return; }
     processPrimaryAbilityInput();
     processBlockInput();
+    //print(chargeCounter);
+
   }
 
   // Process all other actions that do rely on physics updates.
@@ -116,19 +120,8 @@ public class PlayerController : MonoBehaviour {
     SetPlayerInvincibility(true);
     SetPlayerMoveAndShoot(false);
     playAudioDeath();
-    //Added this so crossHair would also not show up
-    SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-    foreach (SpriteRenderer spriteRenderer  in spriteRenderers) {
-      spriteRenderer.enabled = false;
-    }
-    GetComponent<CircleCollider2D>().enabled = false;
-    GetComponent<Rigidbody2D>().isKinematic = true;
-    //Particle initiation
-    GameObject tempBoom = Instantiate(explosionParticle, transform.position, transform.rotation) as GameObject;
-    tempBoom.transform.parent = transform;
-    yield return new WaitForSeconds(2.0f);
-    dying = false;
-    Destroy(tempBoom);
+    yield return new WaitForSeconds(1.8f);
+    dying = false; 
     if (!playerShouldRespawn) {
       gameObject.SetActive(false);
     }
@@ -139,24 +132,15 @@ public class PlayerController : MonoBehaviour {
   }
   //Respawn at initial position
   public void executeRespawn() {
-    //Added this so crossHair would also not show up
-    SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-    foreach (SpriteRenderer spriteRenderer  in spriteRenderers) {
-      spriteRenderer.enabled = true;
-    }
-    GetComponent<CircleCollider2D>().enabled = true;
-    GetComponent<Rigidbody2D>().isKinematic = false;
     SetPlayerMoveAndShoot(true);
     playerShouldRespawn = false;
     gameObject.transform.position = initialPosition;
-    GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.4f);
     StartCoroutine(respawnInvincibility());
   }
   IEnumerator respawnInvincibility() {
     //TODO graphical que that dude is invincible
     yield return new WaitForSeconds(2.0f);
     SetPlayerInvincibility(false);
-    GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
   }
   //This function gets called by game mode to allow players to do stuff once the timer ends
   public void SetPlayerMoveAndShoot(bool allowMoveAndShoot) {
@@ -210,6 +194,7 @@ public class PlayerController : MonoBehaviour {
       transform.rotation = Quaternion.Euler(0f, 0f, angleToStick);
     }
   }
+
   private void executeDash() {
     Vector2 dashVector;
     //get the value for the dash input
@@ -224,7 +209,6 @@ public class PlayerController : MonoBehaviour {
     if (dashInput != 0 && !isPressingDash && dashCooldownTimer == DashCooldown) {
       isPressingDash = true;
       dashCooldownTimer -= Time.deltaTime;
-      playAudioDash();
       //movement Direction gets calculated in the executeMovement function.
       //If you are moving, the dash will take you in that direction.
       if (movementDirection.magnitude != 0.0f) {
@@ -262,13 +246,44 @@ public class PlayerController : MonoBehaviour {
     if (shieldOn) { return; }
 
     if (UseKeyboardControl && Input.GetAxis("ShootProjectileK") != 0 || !UseKeyboardControl && Input.GetAxis(inputMapping + "_Primary") > 0) {
+      // increase chargeCounter while holding trigger
+      if (chargeCounter <= 100)
+      {
+        chargeCounter += 1;
+      }
       if (!isUsingPrimaryAbility && primaryAbilityCooldownTimer <= 0) {
         isUsingPrimaryAbility = true;
-        PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
         primaryAbilityCooldownTimer = PrimaryAbility.GetComponent<AbstractAbility>().Cooldown;
       }
     } else if (isUsingPrimaryAbility) {
       isUsingPrimaryAbility = false;
+      // use chargeCounter or change ballSize with "PrimaryAbility.transform.localScale" do not work, so I have to use the stupid way. 
+      // But this way we can easily add animation to remind player of the ball size.
+      if (chargeCounter > 25)
+      {
+        ballSize = 0.15f;
+      }
+      if (chargeCounter > 50)
+      {
+        ballSize = 0.2f;
+      }
+      if (chargeCounter > 75)
+      {
+        ballSize = 0.25f;
+      }
+      if (chargeCounter > 100)
+      {
+        ballSize = 0.3f;
+      }
+
+      PrimaryAbility.transform.localScale = new Vector3(ballSize, ballSize, 0.11f);
+      PrimaryAbility.GetComponent<AbstractAbility>().Cast(this);
+      chargeCounter = 0;
+      if (chargeCounter == 0)
+      {
+        ballSize = 0.1f;
+      }
+
     }
 
     if (primaryAbilityCooldownTimer > 0) { primaryAbilityCooldownTimer -= Time.deltaTime; }
@@ -296,22 +311,23 @@ public class PlayerController : MonoBehaviour {
 
 		if (shieldCooldownTimer > 0) {
 			shieldCooldownTimer -= Time.deltaTime;
-      if (shieldCooldownTimer <= 0) {
-        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-      }
-      else {
-        GetComponent<SpriteRenderer>().color = Color.black;
-      }
-		} 
+			if (PlayerNumber == 1) {this.GetComponent<SpriteRenderer> ().color = Color.black;
+			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.black;
+			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.black;
+			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.black;
+			}
+
+		} else {
+			if (PlayerNumber == 1) { GetComponent<SpriteRenderer> ().color = Color.red;
+			} else if (PlayerNumber == 2) { GetComponent<SpriteRenderer> ().color = Color.blue;
+			} else if (PlayerNumber == 3) { GetComponent<SpriteRenderer> ().color = Color.yellow;
+			} else if (PlayerNumber == 4) { GetComponent<SpriteRenderer> ().color = Color.green;
+			}
+		}
   }
 
   private void playAudioDeath() {
     AudioClip deathSound = Resources.Load<AudioClip>("Audio/SFX/Player/PlayerHit");
     GetComponent<AudioSource>().PlayOneShot(deathSound, 0.5f);
-  }
-
-  private void playAudioDash() {
-    AudioClip dashSound = Resources.Load<AudioClip>("Audio/SFX/Player/DashActivate");
-    GetComponent<AudioSource>().PlayOneShot(dashSound, 0.5f);
   }
 }
