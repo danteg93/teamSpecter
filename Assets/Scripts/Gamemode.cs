@@ -313,7 +313,6 @@ public class Gamemode : MonoBehaviour {
     Destroy(this.gameObject);
     cleanAndLoadScene("Menu");
   }
-
   public void PauseGame() {
     if (!Scoreboard.activeSelf) {
       Time.timeScale = 0.0F;
