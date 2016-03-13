@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour {
         break;
       case gameModeSetup.DeathMatch:
         Gamemode.gamemode.setScoreType(1);
-        Gamemode.gamemode.setUpMatchTime(60.0f);
+        Gamemode.gamemode.setUpMatchTime(120.0f);
         Gamemode.gamemode.setUpWinningScore(15);
         break;
       case gameModeSetup.Default:

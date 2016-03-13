@@ -306,7 +306,7 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void playAudioDeath() {
-    AudioClip deathSound = Resources.Load<AudioClip>("Audio/SFX/Player/PlayerHit");
+    AudioClip deathSound = Resources.Load<AudioClip>("Audio/SFX/Player/PlayerHitCheer");
     GetComponent<AudioSource>().PlayOneShot(deathSound, 0.5f);
   }
 
