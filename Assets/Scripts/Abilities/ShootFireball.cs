@@ -79,7 +79,8 @@ public class ShootFireball : AbstractAbility {
 
   // Instantiate the bullet prefab.
   public override GameObject Cast(PlayerController player) {
-    GameObject fireBall = Instantiate(gameObject, player.transform.position + (-player.transform.up * 0.7f), player.transform.rotation) as GameObject;
+    // adjust spawn distance based on ball size
+    GameObject fireBall = Instantiate(gameObject, player.transform.position + (-player.transform.up * (0.7f + (PlayerController.ballSize) * 2)), player.transform.rotation) as GameObject;
     fireBall.GetComponent<ShootFireball>().PlayerLastInteracted = player.PlayerNumber;
     return fireBall;
   }
